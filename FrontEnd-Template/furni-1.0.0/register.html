@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - Sign Up</title>
+  
+  <style>
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .register-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin: 30px 0;
+    }
+    
+    .register-card h1 {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    
+    .form-control {
+      padding: 12px 15px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    
+    .form-control:focus {
+      border-color: #3b5d50;
+      box-shadow: 0 0 0 0.2rem rgba(59, 93, 80, 0.25);
+    }
+    
+    .btn-primary {
+      background-color: #3b5d50;
+      border-color: #3b5d50;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background-color: #2d473e;
+      border-color: #2d473e;
+      transform: translateY(-2px);
+    }
+    
+    .password-strength {
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    
+    .strength-bar {
+      height: 4px;
+      background: #e9ecef;
+      border-radius: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+    
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      background: #dc3545;
+      border-radius: 2px;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+    
+    .strength-fill.weak {
+      width: 33%;
+      background: #dc3545;
+    }
+    
+    .strength-fill.medium {
+      width: 66%;
+      background: #ffc107;
+    }
+    
+    .strength-fill.strong {
+      width: 100%;
+      background: #28a745;
+    }
+    
+    .password-requirements {
+      font-size: 14px;
+      color: #6c757d;
+      margin-top: 10px;
+    }
+    
+    .requirement {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .requirement i {
+      margin-right: 8px;
+      font-size: 12px;
+      width: 16px;
+      text-align: center;
+    }
+    
+    .requirement.valid i {
+      color: #28a745;
+    }
+    
+    .requirement.invalid i {
+      color: #dc3545;
+    }
+    
+    .register-benefits {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+    
+    .register-benefits h4 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .benefit-item {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .benefit-item i {
+      color: #3b5d50;
+      margin-right: 10px;
+      margin-top: 3px;
+    }
+    
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #dee2e6;
+    }
+    
+    .social-register {
+      margin-top: 30px;
+    }
+    
+    .social-register .separator {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .social-register .separator::before,
+    .social-register .separator::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .social-register .separator span {
+      padding: 0 15px;
+      color: #6c757d;
+      font-size: 14px;
+    }
+    
+    .social-buttons {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-btn {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      background: white;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .social-btn:hover {
+      background: #f8f9fa;
+      border-color: #3b5d50;
+      color: #3b5d50;
+    }
+    
+    .form-check-input:checked {
+      background-color: #3b5d50;
+      border-color: #3b5d50;
+    }
+    
+    .progress-text {
+      font-size: 12px;
+      margin-top: 5px;
+      text-align: right;
+      color: #6c757d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li><a class="nav-link" href="about.html">About us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li>
+            <a class="nav-link" href="login.html">
+              <img src="images/user.svg">
+            </a>
+          </li>
+          <li>
+            <a class="nav-link position-relative" href="cart.html">
+              <img src="images/cart.svg">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-lg-6">
+          <div class="intro-excerpt">
+            <h1>Join Our Community</h1>
+            <p class="mb-4">Create your Furni account to enjoy exclusive benefits, faster checkout, and personalized shopping experience.</p>
+            <p><a href="#register-form" class="btn btn-secondary me-2">Sign Up Now</a><a href="#benefits" class="btn btn-white-outline">See Benefits</a></p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="hero-img-wrap">
+            <img src="images/register-hero.jpg" class="img-fluid rounded" alt="Sign Up">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Register Section -->
+  <section class="untree_co-section" id="register-form">
+    <div class="container">
+      <div class="row">
+        <!-- Register Form -->
+        <div class="col-lg-8">
+          <div class="register-card">
+            <h1 class="text-center mb-3">Create Your Account</h1>
+            <p class="text-center text-muted mb-4">Fill in your details to get started</p>
+            
+            <form id="registerForm" novalidate>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="firstName" class="form-label">First Name *</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="Enter first name" required>
+                    <div class="invalid-feedback">
+                      Please enter your first name.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="lastName" class="form-label">Last Name *</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Enter last name" required>
+                    <div class="invalid-feedback">
+                      Please enter your last name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group mb-3">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="password" class="form-label">Password *</label>
+                    <input type="password" class="form-control" id="password" placeholder="Create password" required>
+                    <div class="password-strength">
+                      <div class="strength-bar">
+                        <div class="strength-fill" id="strengthFill"></div>
+                      </div>
+                      <div class="progress-text" id="strengthText">Password strength</div>
+                    </div>
+                    <div class="password-requirements" id="passwordRequirements">
+                      <div class="requirement invalid" id="reqLength">
+                        <i class="fas fa-times"></i>
+                        <span>At least 8 characters</span>
+                      </div>
+                      <div class="requirement invalid" id="reqUppercase">
+                        <i class="fas fa-times"></i>
+                        <span>At least one uppercase letter</span>
+                      </div>
+                      <div class="requirement invalid" id="reqLowercase">
+                        <i class="fas fa-times"></i>
+                        <span>At least one lowercase letter</span>
+                      </div>
+                      <div class="requirement invalid" id="reqNumber">
+                        <i class="fas fa-times"></i>
+                        <span>At least one number</span>
+                      </div>
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter a valid password.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+                    <div class="invalid-feedback">
+                      Passwords do not match.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Enter phone number">
+              </div>
+              
+              <div class="form-group mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" rows="3" placeholder="Enter your address"></textarea>
+              </div>
+              
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="terms" required>
+                <label class="form-check-label" for="terms">
+                  I agree to the <a href="#" class="text-primary">Terms & Conditions</a> and <a href="#" class="text-primary">Privacy Policy</a> *
+                </label>
+                <div class="invalid-feedback">
+                  You must agree to the terms and conditions.
+                </div>
+              </div>
+              
+              <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" id="newsletter">
+                <label class="form-check-label" for="newsletter">
+                  Subscribe to newsletter for updates, offers, and furniture tips
+                </label>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-block w-100 mb-3">
+                <i class="fas fa-user-plus me-2"></i>Create Account
+              </button>
+              
+              <div id="registerMessage" class="mt-3"></div>
+              
+              <div class="social-register">
+                <div class="separator">
+                  <span>Or sign up with</span>
+                </div>
+                
+                <div class="social-buttons">
+                  <button type="button" class="social-btn" id="googleRegister">
+                    <i class="fab fa-google"></i>
+                    <span>Google</span>
+                  </button>
+                  <button type="button" class="social-btn" id="facebookRegister">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="login-link">
+                <p class="mb-0">Already have an account? 
+                  <a href="login.html" class="text-primary fw-semibold">Sign in here</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Benefits Sidebar -->
+        <div class="col-lg-4">
+          <div class="register-benefits" id="benefits">
+            <h4>Why Create an Account?</h4>
+            
+            <div class="benefit-item">
+              <i class="fas fa-shipping-fast"></i>
+              <div>
+                <h6>Faster Checkout</h6>
+                <p class="small text-muted mb-0">Save your shipping and payment details for quick purchases</p>
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <i class="fas fa-heart"></i>
+              <div>
+                <h6>Save Wishlists</h6>
+                <p class="small text-muted mb-0">Create and manage multiple wishlists for future purchases</p>
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <i class="fas fa-history"></i>
+              <div>
+                <h6>Order History</h6>
+                <p class="small text-muted mb-0">Track all your purchases and easily reorder favorites</p>
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <i class="fas fa-tags"></i>
+              <div>
+                <h6>Exclusive Offers</h6>
+                <p class="small text-muted mb-0">Get member-only discounts and early access to sales</p>
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <i class="fas fa-star"></i>
+              <div>
+                <h6>Rewards Program</h6>
+                <p class="small text-muted mb-0">Earn points with every purchase redeemable for discounts</p>
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <i class="fas fa-headset"></i>
+              <div>
+                <h6>Priority Support</h6>
+                <p class="small text-muted mb-0">Get faster customer support and dedicated assistance</p>
+              </div>
+            </div>
+            
+            <div class="mt-4 pt-3 border-top">
+              <h6>Need Help?</h6>
+              <p class="small mb-2">Our support team is here to assist you</p>
+              <p class="mb-2 small"><i class="fas fa-envelope me-2"></i> support@furni.com</p>
+              <p class="mb-0 small"><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</p>
+            </div>
+          </div>
+          
+          <div class="register-benefits mt-4">
+            <h5>Account Security</h5>
+            <p class="small text-muted">We take your security seriously:</p>
+            
+            <div class="benefit-item">
+              <i class="fas fa-shield-alt text-success"></i>
+              <div>
+                <h6 class="small">SSL Encryption</h6>
+                <p class="small text-muted mb-0">All data is encrypted for your protection</p>
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <i class="fas fa-lock text-success"></i>
+              <div>
+                <h6 class="small">Secure Passwords</h6>
+                <p class="small text-muted mb-0">Passwords are hashed and never stored in plain text</p>
+              </div>
+            </div>
+            
+            <div class="benefit-item">
+              <i class="fas fa-user-shield text-success"></i>
+              <div>
+                <h6 class="small">Privacy Protected</h6>
+                <p class="small text-muted mb-0">Your data is never shared with third parties</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Creating beautiful living spaces with quality furniture since 2010. Your comfort is our passion.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="shop.html">Nordic Chair</a></li>
+                <li><a href="shop.html">Kruzo Aero</a></li>
+                <li><a href="shop.html">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->  
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Register Page Cart Manager
+    class RegisterCartManager {
+      constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.init();
+      }
+
+      init() {
+        this.updateCartCount();
+        this.setupCartListener();
+        this.setupRegisterForm();
+        this.setupPasswordStrength();
+      }
+
+      updateCartCount() {
+        const cartCount = this.cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = cartCount;
+        }
+      }
+
+      setupCartListener() {
+        // Listen for cart updates from other pages
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.onmessage = (event) => {
+            if (event.data.type === 'cart_updated') {
+              this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+              this.updateCartCount();
+            }
+          };
+        }
+      }
+
+      setupPasswordStrength() {
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthText = document.getElementById('strengthText');
+        
+        if (!passwordInput) return;
+        
+        // Check password strength in real-time
+        passwordInput.addEventListener('input', () => {
+          const password = passwordInput.value;
+          const strength = this.calculatePasswordStrength(password);
+          
+          // Update strength bar
+          strengthFill.className = 'strength-fill ' + strength.class;
+          strengthText.textContent = strength.text;
+          
+          // Update requirements
+          this.updatePasswordRequirements(password);
+          
+          // Check password match
+          this.checkPasswordMatch();
+        });
+        
+        // Check password match in real-time
+        if (confirmPasswordInput) {
+          confirmPasswordInput.addEventListener('input', () => {
+            this.checkPasswordMatch();
+          });
+        }
+      }
+
+      calculatePasswordStrength(password) {
+        let strength = 0;
+        
+        // Length check
+        if (password.length >= 8) strength += 1;
+        
+        // Character type checks
+        if (/[A-Z]/.test(password)) strength += 1; // Uppercase
+        if (/[a-z]/.test(password)) strength += 1; // Lowercase
+        if (/[0-9]/.test(password)) strength += 1; // Numbers
+        if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Special characters
+        
+        // Determine strength level
+        if (password.length === 0) {
+          return { class: '', text: 'Password strength' };
+        } else if (strength <= 2) {
+          return { class: 'weak', text: 'Weak password' };
+        } else if (strength <= 4) {
+          return { class: 'medium', text: 'Medium strength' };
+        } else {
+          return { class: 'strong', text: 'Strong password' };
+        }
+      }
+
+      updatePasswordRequirements(password) {
+        const requirements = {
+          length: password.length >= 8,
+          uppercase: /[A-Z]/.test(password),
+          lowercase: /[a-z]/.test(password),
+          number: /[0-9]/.test(password)
+        };
+        
+        // Update each requirement
+        Object.keys(requirements).forEach(req => {
+          const element = document.getElementById('req' + req.charAt(0).toUpperCase() + req.slice(1));
+          if (element) {
+            if (requirements[req]) {
+              element.classList.remove('invalid');
+              element.classList.add('valid');
+              element.querySelector('i').className = 'fas fa-check';
+            } else {
+              element.classList.remove('valid');
+              element.classList.add('invalid');
+              element.querySelector('i').className = 'fas fa-times';
+            }
+          }
+        });
+      }
+
+      checkPasswordMatch() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const confirmInput = document.getElementById('confirmPassword');
+        
+        if (confirmPassword === '') {
+          confirmInput.classList.remove('is-valid', 'is-invalid');
+          return;
+        }
+        
+        if (password === confirmPassword) {
+          confirmInput.classList.remove('is-invalid');
+          confirmInput.classList.add('is-valid');
+        } else {
+          confirmInput.classList.remove('is-valid');
+          confirmInput.classList.add('is-invalid');
+        }
+      }
+
+      setupRegisterForm() {
+        const form = document.getElementById('registerForm');
+        const registerMessage = document.getElementById('registerMessage');
+        
+        if (!form) return;
+        
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          // Validate form
+          if (!form.checkValidity()) {
+            e.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+          }
+          
+          // Get form data
+          const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            phone: document.getElementById('phone').value,
+            address: document.getElementById('address').value,
+            newsletter: document.getElementById('newsletter').checked,
+            terms: document.getElementById('terms').checked,
+            timestamp: new Date().toISOString(),
+            accountNumber: 'FUR' + Date.now().toString().slice(-8)
+          };
+          
+          // Check password strength
+          const strength = this.calculatePasswordStrength(formData.password);
+          if (strength.class === 'weak') {
+            registerMessage.innerHTML = `
+              <div class="alert alert-warning alert-dismissible fade show">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Weak password detected!</strong> Consider using a stronger password for better security.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            `;
+            return;
+          }
+          
+          // Check password match
+          const password = document.getElementById('password').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+          if (password !== confirmPassword) {
+            registerMessage.innerHTML = `
+              <div class="alert alert-danger alert-dismissible fade show">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <strong>Passwords do not match!</strong> Please ensure both passwords are identical.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            `;
+            return;
+          }
+          
+          // Show loading state
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+          submitBtn.disabled = true;
+          
+          // Simulate registration process
+          setTimeout(() => {
+            // Check if user already exists
+            const existingUsers = JSON.parse(localStorage.getItem('registered_users')) || [];
+            const userExists = existingUsers.some(user => user.email === formData.email);
+            
+            if (userExists) {
+              // Show error message
+              registerMessage.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show">
+                  <i class="fas fa-exclamation-circle me-2"></i>
+                  <strong>Email already registered!</strong> This email is already associated with an account.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              `;
+              
+              // Restore button
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+              return;
+            }
+            
+            // Save user to localStorage
+            existingUsers.push(formData);
+            localStorage.setItem('registered_users', JSON.stringify(existingUsers));
+            
+            // Create user session
+            const userSession = {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              email: formData.email,
+              accountNumber: formData.accountNumber,
+              loggedIn: true,
+              timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('user_session', JSON.stringify(userSession));
+            
+            // Show success message
+            registerMessage.innerHTML = `
+              <div class="alert alert-success alert-dismissible fade show">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>Account created successfully!</strong> Welcome to Furni, ${formData.firstName}! Redirecting to your account...
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            `;
+            
+            // Reset form
+            form.reset();
+            form.classList.remove('was-validated');
+            
+            // Redirect to account page
+            setTimeout(() => {
+              window.location.href = 'account.html';
+            }, 2000);
+            
+          }, 2000);
+        });
+        
+        // Social registration buttons
+        const googleBtn = document.getElementById('googleRegister');
+        const facebookBtn = document.getElementById('facebookRegister');
+        
+        if (googleBtn) {
+          googleBtn.addEventListener('click', () => {
+            registerMessage.innerHTML = `
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Google registration integration would be implemented here in a production environment.
+              </div>
+            `;
+          });
+        }
+        
+        if (facebookBtn) {
+          facebookBtn.addEventListener('click', () => {
+            registerMessage.innerHTML = `
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Facebook registration integration would be implemented here in a production environment.
+              </div>
+            `;
+          });
+        }
+      }
+    }
+
+    // Initialize register cart manager
+    const registerCartManager = new RegisterCartManager();
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for cart updates from localStorage
+      const cartData = localStorage.getItem('cart');
+      if (cartData) {
+        registerCartManager.cart = JSON.parse(cartData);
+        registerCartManager.updateCartCount();
+      }
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

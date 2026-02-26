@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - Blog</title>
+  
+  <style>
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .post-entry {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 30px;
+    }
+    
+    .post-entry:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .post-thumbnail {
+      display: block;
+      overflow: hidden;
+      border-radius: 8px 8px 0 0;
+    }
+    
+    .post-thumbnail img {
+      transition: transform 0.5s ease;
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    
+    .post-entry:hover .post-thumbnail img {
+      transform: scale(1.05);
+    }
+    
+    .post-content-entry {
+      padding: 25px;
+      background: white;
+      border-radius: 0 0 8px 8px;
+      border: 1px solid #eee;
+      border-top: none;
+    }
+    
+    .post-content-entry h3 {
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    
+    .post-content-entry h3 a {
+      color: #333;
+      text-decoration: none;
+    }
+    
+    .post-content-entry h3 a:hover {
+      color: #3b5d50;
+    }
+    
+    .meta {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .meta a {
+      color: #3b5d50;
+      text-decoration: none;
+    }
+    
+    .blog-category {
+      display: inline-block;
+      background: #3b5d50;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .read-time {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .blog-sidebar {
+      padding: 25px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    
+    .blog-sidebar h4 {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #3b5d50;
+    }
+    
+    .sidebar-post {
+      display: flex;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .sidebar-post:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .sidebar-post img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 15px;
+    }
+    
+    .sidebar-post-content h5 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    
+    .pagination {
+      margin-top: 50px;
+    }
+    
+    .page-link {
+      color: #3b5d50;
+      border: 1px solid #dee2e6;
+    }
+    
+    .page-item.active .page-link {
+      background-color: #3b5d50;
+      border-color: #3b5d50;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li><a class="nav-link" href="about.html">About us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li class="active"><a class="nav-link" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="login.html"><img src="images/user.svg"></a></li>
+          <li>
+            <a class="nav-link position-relative" href="cart.html">
+              <img src="images/cart.svg">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+    <div class="hero">
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6">
+            <div class="intro-excerpt">
+              <h1>Our Blog</h1>
+              <p class="mb-4">Discover the latest trends, tips, and inspiration for creating beautiful living spaces. From design ideas to maintenance tips, we've got you covered.</p>
+              <p><a href="#featured-posts" class="btn btn-secondary me-2">Read Articles</a><a href="#categories" class="btn btn-white-outline">Browse Categories</a></p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-img-wrap">
+              <img src="images/blog-hero.jpg" class="img-fluid rounded" alt="Blog Hero">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- End Hero Section -->
+
+  <!-- Blog Content Section -->
+  <div class="blog-section" id="featured-posts">
+    <div class="container">
+      <div class="row">
+        <!-- Main Blog Content -->
+        <div class="col-lg-8">
+          <!-- Featured Post -->
+          <div class="row mb-5">
+            <div class="col-12">
+              <div class="post-entry">
+                <a href="#" class="post-thumbnail">
+                  <img src="images/post-1.jpg" alt="Featured Post" class="img-fluid">
+                </a>
+                <div class="post-content-entry">
+                  <span class="blog-category">Home Decor</span>
+                  <h3><a href="#">First Time Home Owner Ideas</a></h3>
+                  <div class="meta">
+                    <span>by <a href="#">Kristin Watson</a></span> 
+                    <span>on <a href="#">Dec 19, 2021</a></span>
+                    <span class="read-time">• 5 min read</span>
+                  </div>
+                  <p class="mb-3">Moving into your first home is an exciting milestone. Discover practical tips and creative ideas to make your new space feel like home without breaking the bank.</p>
+                  <a href="#" class="btn btn-sm btn-outline-dark">Read More →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog Grid -->
+          <div class="row">
+            <!-- Post 1 -->
+            <div class="col-12 col-sm-6 col-md-4 mb-5">
+              <div class="post-entry">
+                <a href="#" class="post-thumbnail">
+                  <img src="images/post-2.jpg" alt="Image" class="img-fluid">
+                </a>
+                <div class="post-content-entry">
+                  <span class="blog-category">Maintenance</span>
+                  <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
+                  <div class="meta">
+                    <span>by <a href="#">Robert Fox</a></span> 
+                    <span>on <a href="#">Dec 15, 2021</a></span>
+                    <span class="read-time">• 4 min read</span>
+                  </div>
+                  <p>Learn professional cleaning techniques to keep your furniture looking new for years to come...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Post 2 -->
+            <div class="col-12 col-sm-6 col-md-4 mb-5">
+              <div class="post-entry">
+                <a href="#" class="post-thumbnail">
+                  <img src="images/post-3.jpg" alt="Image" class="img-fluid">
+                </a>
+                <div class="post-content-entry">
+                  <span class="blog-category">Small Spaces</span>
+                  <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
+                  <div class="meta">
+                    <span>by <a href="#">Kristin Watson</a></span> 
+                    <span>on <a href="#">Dec 12, 2021</a></span>
+                    <span class="read-time">• 6 min read</span>
+                  </div>
+                  <p>Maximize your apartment's potential with smart furniture choices and space-saving solutions...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Post 3 -->
+            <div class="col-12 col-sm-6 col-md-4 mb-5">
+              <div class="post-entry">
+                <a href="#" class="post-thumbnail">
+                  <img src="images/post-1.jpg" alt="Image" class="img-fluid">
+                </a>
+                <div class="post-content-entry">
+                  <span class="blog-category">Design Trends</span>
+                  <h3><a href="#">2024 Furniture Design Trends</a></h3>
+                  <div class="meta">
+                    <span>by <a href="#">Maria Garcia</a></span> 
+                    <span>on <a href="#">Dec 10, 2021</a></span>
+                    <span class="read-time">• 7 min read</span>
+                  </div>
+                  <p>Discover the latest furniture trends that will dominate home interiors in the coming year...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Post 4 -->
+            <div class="col-12 col-sm-6 col-md-4 mb-5">
+              <div class="post-entry">
+                <a href="#" class="post-thumbnail">
+                  <img src="images/post-2.jpg" alt="Image" class="img-fluid">
+                </a>
+                <div class="post-content-entry">
+                  <span class="blog-category">Eco-Friendly</span>
+                  <h3><a href="#">Sustainable Furniture Choices</a></h3>
+                  <div class="meta">
+                    <span>by <a href="#">James Wilson</a></span> 
+                    <span>on <a href="#">Dec 8, 2021</a></span>
+                    <span class="read-time">• 5 min read</span>
+                  </div>
+                  <p>Make environmentally conscious decisions when selecting furniture for your home...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Post 5 -->
+            <div class="col-12 col-sm-6 col-md-4 mb-5">
+              <div class="post-entry">
+                <a href="#" class="post-thumbnail">
+                  <img src="images/post-3.jpg" alt="Image" class="img-fluid">
+                </a>
+                <div class="post-content-entry">
+                  <span class="blog-category">DIY Projects</span>
+                  <h3><a href="#">DIY Furniture Restoration Guide</a></h3>
+                  <div class="meta">
+                    <span>by <a href="#">Sarah Miller</a></span> 
+                    <span>on <a href="#">Dec 5, 2021</a></span>
+                    <span class="read-time">• 8 min read</span>
+                  </div>
+                  <p>Learn how to restore old furniture pieces and give them a new lease on life...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Post 6 -->
+            <div class="col-12 col-sm-6 col-md-4 mb-5">
+              <div class="post-entry">
+                <a href="#" class="post-thumbnail">
+                  <img src="images/post-1.jpg" alt="Image" class="img-fluid">
+                </a>
+                <div class="post-content-entry">
+                  <span class="blog-category">Office Design</span>
+                  <h3><a href="#">Creating a Productive Home Office</a></h3>
+                  <div class="meta">
+                    <span>by <a href="#">David Chen</a></span> 
+                    <span>on <a href="#">Dec 3, 2021</a></span>
+                    <span class="read-time">• 6 min read</span>
+                  </div>
+                  <p>Transform your home office into a space that boosts productivity and creativity...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <div class="blog-sidebar">
+            <!-- Search -->
+            <div class="mb-5">
+              <h4>Search</h4>
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search articles...">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="mb-5" id="categories">
+              <h4>Categories</h4>
+              <ul class="list-unstyled">
+                <li><a href="#" class="d-flex justify-content-between py-2">Home Decor <span class="text-muted">(12)</span></a></li>
+                <li><a href="#" class="d-flex justify-content-between py-2">Design Trends <span class="text-muted">(8)</span></a></li>
+                <li><a href="#" class="d-flex justify-content-between py-2">Maintenance <span class="text-muted">(6)</span></a></li>
+                <li><a href="#" class="d-flex justify-content-between py-2">DIY Projects <span class="text-muted">(9)</span></a></li>
+                <li><a href="#" class="d-flex justify-content-between py-2">Small Spaces <span class="text-muted">(7)</span></a></li>
+                <li><a href="#" class="d-flex justify-content-between py-2">Eco-Friendly <span class="text-muted">(5)</span></a></li>
+              </ul>
+            </div>
+
+            <!-- Recent Posts -->
+            <div class="mb-5">
+              <h4>Recent Posts</h4>
+              <div class="sidebar-post">
+                <img src="images/post-1.jpg" alt="Recent Post">
+                <div class="sidebar-post-content">
+                  <h5><a href="#">First Time Home Owner Ideas</a></h5>
+                  <div class="meta">
+                    <small>Dec 19, 2021</small>
+                  </div>
+                </div>
+              </div>
+              <div class="sidebar-post">
+                <img src="images/post-2.jpg" alt="Recent Post">
+                <div class="sidebar-post-content">
+                  <h5><a href="#">Furniture Cleaning Guide</a></h5>
+                  <div class="meta">
+                    <small>Dec 15, 2021</small>
+                  </div>
+                </div>
+              </div>
+              <div class="sidebar-post">
+                <img src="images/post-3.jpg" alt="Recent Post">
+                <div class="sidebar-post-content">
+                  <h5><a href="#">Small Space Solutions</a></h5>
+                  <div class="meta">
+                    <small>Dec 12, 2021</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="mb-5">
+              <h4>Newsletter</h4>
+              <p>Subscribe to get the latest articles and updates.</p>
+              <div class="input-group mb-3">
+                <input type="email" class="form-control" placeholder="Your email">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div>
+              <h4>Popular Tags</h4>
+              <div class="mt-3">
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">Interior Design</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">Furniture</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">Home Decor</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">DIY</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">Sustainable</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">Office</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">Living Room</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary mb-2 me-2">Bedroom</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Blog Section -->  
+
+  <!-- Start Testimonial Slider -->
+  <div class="testimonial-section before-footer-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 mx-auto text-center">
+          <h2 class="section-title">What Our Readers Say</h2>
+          <p class="mb-5">Discover why thousands of readers trust our blog for furniture inspiration and advice</p>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="testimonial-slider-wrap text-center">
+
+            <div id="testimonial-nav">
+              <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+              <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+            </div>
+
+            <div class="testimonial-slider">
+              
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;The furniture maintenance tips from this blog saved my favorite armchair! I followed the cleaning guide and it looks brand new again. Thank you for the practical, easy-to-follow advice!&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-1.png" alt="Maria Jones" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Maria Jones</h3>
+                        <span class="position d-block mb-3">Interior Designer, New York</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;As a first-time homeowner, I was overwhelmed with decorating decisions. Your blog provided exactly the guidance I needed to furnish my space beautifully and within budget.&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-2.jpg" alt="James Wilson" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">James Wilson</h3>
+                        <span class="position d-block mb-3">Homeowner, San Francisco</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;The small space solutions article completely transformed my studio apartment. I never thought I could fit so much furniture while keeping it feeling open and airy!&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-3.jpg" alt="Sarah Miller" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Sarah Miller</h3>
+                        <span class="position d-block mb-3">Apartment Dweller, Chicago</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Testimonial Slider -->
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Your trusted source for quality furniture, design inspiration, and practical home improvement advice since 2010.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="shop.html">Nordic Chair</a></li>
+                <li><a href="shop.html">Kruzo Aero</a></li>
+                <li><a href="shop.html">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->  
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Simple Cart Manager for Blog Page
+    class BlogCartManager {
+      constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.init();
+      }
+
+      init() {
+        this.updateCartCount();
+        this.setupCartListener();
+        this.setupBlogInteractions();
+      }
+
+      updateCartCount() {
+        const cartCount = this.cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = cartCount;
+        }
+      }
+
+      setupCartListener() {
+        // Listen for cart updates from other pages
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.onmessage = (event) => {
+            if (event.data.type === 'cart_updated') {
+              this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+              this.updateCartCount();
+            }
+          };
+        }
+      }
+
+      setupBlogInteractions() {
+        // Add click tracking for blog posts
+        const blogPosts = document.querySelectorAll('.post-entry');
+        blogPosts.forEach(post => {
+          post.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+            
+            const link = post.querySelector('h3 a');
+            if (link) {
+              // Track post view (in a real app, you'd send this to analytics)
+              console.log('Viewing post:', link.textContent);
+              
+              // Simulate post view tracking
+              const postId = link.getAttribute('href') || 'unknown';
+              this.trackPostView(postId);
+            }
+          });
+        });
+
+        // Category filter simulation
+        const categoryLinks = document.querySelectorAll('#categories a');
+        categoryLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const category = link.textContent.split('(')[0].trim();
+            this.filterByCategory(category);
+          });
+        });
+      }
+
+      trackPostView(postId) {
+        // In a real app, you would send this data to your analytics
+        const viewedPosts = JSON.parse(localStorage.getItem('viewed_posts')) || [];
+        if (!viewedPosts.includes(postId)) {
+          viewedPosts.push(postId);
+          localStorage.setItem('viewed_posts', JSON.stringify(viewedPosts));
+        }
+      }
+
+      filterByCategory(category) {
+        // Simulate category filtering
+        const posts = document.querySelectorAll('.post-entry');
+        posts.forEach(post => {
+          const categoryElement = post.querySelector('.blog-category');
+          if (categoryElement) {
+            const postCategory = categoryElement.textContent.trim();
+            if (postCategory === category || category === 'All') {
+              post.style.display = 'block';
+            } else {
+              post.style.display = 'none';
+            }
+          }
+        });
+
+        // Show message
+        const message = document.createElement('div');
+        message.className = 'alert alert-info alert-dismissible fade show mt-3';
+        message.innerHTML = `
+          Showing posts in: <strong>${category}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        const container = document.querySelector('.blog-section .container');
+        const existingAlert = container.querySelector('.alert');
+        if (existingAlert) existingAlert.remove();
+        
+        container.insertBefore(message, container.firstChild);
+      }
+    }
+
+    // Initialize cart manager
+    const blogCartManager = new BlogCartManager();
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for cart updates from localStorage
+      const cartData = localStorage.getItem('cart');
+      if (cartData) {
+        blogCartManager.cart = JSON.parse(cartData);
+        blogCartManager.updateCartCount();
+      }
+    });
+  </script>
+</body>
+</html>

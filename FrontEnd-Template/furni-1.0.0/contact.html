@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - Contact Us</title>
+  
+  <style>
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .contact-info-card {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+    
+    .contact-info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: #3b5d50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .contact-icon i {
+      color: white;
+      font-size: 24px;
+    }
+    
+    .contact-form-section {
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+    
+    .form-control {
+      border: 1px solid #dee2e6;
+      padding: 12px 15px;
+      border-radius: 5px;
+    }
+    
+    .form-control:focus {
+      border-color: #3b5d50;
+      box-shadow: 0 0 0 0.2rem rgba(59, 93, 80, 0.25);
+    }
+    
+    .btn-primary-hover-outline {
+      background: #3b5d50;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 5px;
+      border: 2px solid #3b5d50;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary-hover-outline:hover {
+      background: transparent;
+      color: #3b5d50;
+    }
+    
+    .map-container {
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    
+    .office-hours {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+    
+    .office-hours ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .office-hours li {
+      padding: 10px 0;
+      border-bottom: 1px solid #dee2e6;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .office-hours li:last-child {
+      border-bottom: none;
+    }
+    
+    .day {
+      font-weight: 600;
+    }
+    
+    .hours {
+      color: #3b5d50;
+    }
+    
+    .social-contact {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-contact a {
+      width: 40px;
+      height: 40px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-contact a:hover {
+      background: #2d473e;
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li><a class="nav-link" href="about.html">About us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="blog.html">Blog</a></li>
+          <li class="active"><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="login.html"><img src="images/user.svg"></a></li>
+          <li>
+            <a class="nav-link position-relative" href="cart.html">
+              <img src="images/cart.svg">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+    <div class="hero">
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6">
+            <div class="intro-excerpt">
+              <h1>Get In Touch</h1>
+              <p class="mb-4">Have questions, feedback, or need assistance? We're here to help. Reach out to us through any of the channels below or send us a message directly.</p>
+              <p><a href="#contact-form" class="btn btn-secondary me-2">Send Message</a><a href="#contact-info" class="btn btn-white-outline">Contact Info</a></p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-img-wrap">
+              <img src="images/contact-hero.jpg" class="img-fluid rounded" alt="Contact Us">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- End Hero Section -->
+
+  <!-- Contact Info Section -->
+  <div class="untree_co-section" id="contact-info">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="contact-info-card">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h4>Visit Our Store</h4>
+            <p class="mb-3">123 Furniture Street<br>Design District<br>Portland, OR 97205</p>
+            <a href="https://maps.google.com" target="_blank" class="text-primary">Get Directions →</a>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="contact-info-card">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <h4>Call Us</h4>
+            <p class="mb-3">General Inquiries: <strong>+1 (555) 123-4567</strong><br>Customer Support: <strong>+1 (555) 987-6543</strong></p>
+            <p class="mb-0">Mon-Fri: 9am-6pm<br>Sat: 10am-4pm</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="contact-info-card">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h4>Email Us</h4>
+            <p class="mb-3">General: <a href="mailto:info@furni.com">info@furni.com</a><br>Support: <a href="mailto:support@furni.com">support@furni.com</a><br>Sales: <a href="mailto:sales@furni.com">sales@furni.com</a></p>
+            <p>Typically respond within 24 hours</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map & Contact Form Section -->
+  <div class="untree_co-section">
+    <div class="container">
+      <div class="row">
+        <!-- Map -->
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.362660225866!2d-122.68128482340919!3d45.523062471072626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54950a02e2b5e77d%3A0x102ab5c4e6917c44!2sPortland%2C%20OR%2C%20USA!5e0!3m2!1sen!2s!4v1698765432107!5m2!1sen!2s" 
+                    width="100%" 
+                    height="500" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+          
+          <div class="office-hours">
+            <h4 class="mb-4">Business Hours</h4>
+            <ul>
+              <li>
+                <span class="day">Monday - Thursday</span>
+                <span class="hours">9:00 AM - 6:00 PM</span>
+              </li>
+              <li>
+                <span class="day">Friday</span>
+                <span class="hours">9:00 AM - 5:00 PM</span>
+              </li>
+              <li>
+                <span class="day">Saturday</span>
+                <span class="hours">10:00 AM - 4:00 PM</span>
+              </li>
+              <li>
+                <span class="day">Sunday</span>
+                <span class="hours">Closed</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="col-lg-6">
+          <div class="contact-form-section" id="contact-form">
+            <h3 class="mb-4">Send Us a Message</h3>
+            <p class="mb-4">Fill out the form below and we'll get back to you as soon as possible.</p>
+            
+            <form id="contactForm" novalidate>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label class="text-black" for="firstName">First Name *</label>
+                    <input type="text" class="form-control" id="firstName" required>
+                    <div class="invalid-feedback">
+                      Please enter your first name.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="form-group">
+                    <label class="text-black" for="lastName">Last Name *</label>
+                    <input type="text" class="form-control" id="lastName" required>
+                    <div class="invalid-feedback">
+                      Please enter your last name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group mb-3">
+                <label class="text-black" for="email">Email Address *</label>
+                <input type="email" class="form-control" id="email" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
+              </div>
+              
+              <div class="form-group mb-3">
+                <label class="text-black" for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone">
+              </div>
+              
+              <div class="form-group mb-3">
+                <label class="text-black" for="subject">Subject *</label>
+                <select class="form-control" id="subject" required>
+                  <option value="">Select a subject</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="product">Product Question</option>
+                  <option value="order">Order Status</option>
+                  <option value="support">Technical Support</option>
+                  <option value="feedback">Feedback</option>
+                  <option value="other">Other</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a subject.
+                </div>
+              </div>
+              
+              <div class="form-group mb-4">
+                <label class="text-black" for="message">Message *</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+                <div class="invalid-feedback">
+                  Please enter your message.
+                </div>
+              </div>
+              
+              <div class="form-group mb-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="newsletter">
+                  <label class="form-check-label text-black" for="newsletter">
+                    Subscribe to our newsletter for updates and promotions
+                  </label>
+                </div>
+              </div>
+              
+              <button type="submit" class="btn btn-primary-hover-outline">
+                <i class="fas fa-paper-plane me-2"></i>Send Message
+              </button>
+              
+              <div id="formMessage" class="mt-3"></div>
+            </form>
+            
+            <div class="mt-5">
+              <h5 class="mb-3">Connect With Us</h5>
+              <div class="social-contact">
+                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Contact Form Section -->
+
+  <!-- FAQ Section -->
+  <div class="untree_co-section bg-light">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-7 text-center">
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="mb-4">Find quick answers to common questions about our products and services.</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                  What is your return policy?
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  We offer a 30-day return policy on all products. Items must be in original condition with all packaging. Custom orders are not eligible for returns.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                  Do you offer assembly services?
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Yes, we offer professional assembly services for an additional fee. Our team will assemble your furniture at your location, ensuring everything is perfect.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                  How long does shipping take?
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Standard shipping takes 5-7 business days. Express shipping is available for 2-3 business days. Delivery times may vary based on location and product availability.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="accordion" id="faqAccordion2">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                  Can I customize furniture?
+                </button>
+              </h2>
+              <div id="collapseFour" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion2">
+                <div class="accordion-body">
+                  Absolutely! We offer custom furniture options including different fabrics, finishes, and dimensions. Contact our sales team for custom orders.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
+                  Do you have a warranty?
+                </button>
+              </h2>
+              <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
+                <div class="accordion-body">
+                  All our furniture comes with a 5-year warranty against manufacturing defects. This covers structural issues but does not cover normal wear and tear.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix">
+                  How do I care for my furniture?
+                </button>
+              </h2>
+              <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#faqAccordion2">
+                <div class="accordion-body">
+                  Each product comes with specific care instructions. Generally, avoid direct sunlight, clean with appropriate products, and use coasters to prevent water rings.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End FAQ Section -->
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Your premier destination for quality furniture. We're committed to helping you create beautiful, comfortable living spaces that reflect your style.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="shop.html">Nordic Chair</a></li>
+                <li><a href="shop.html">Kruzo Aero</a></li>
+                <li><a href="shop.html">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->  
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Contact Page Cart Manager
+    class ContactCartManager {
+      constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.init();
+      }
+
+      init() {
+        this.updateCartCount();
+        this.setupCartListener();
+        this.setupContactForm();
+      }
+
+      updateCartCount() {
+        const cartCount = this.cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = cartCount;
+        }
+      }
+
+      setupCartListener() {
+        // Listen for cart updates from other pages
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.onmessage = (event) => {
+            if (event.data.type === 'cart_updated') {
+              this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+              this.updateCartCount();
+            }
+          };
+        }
+      }
+
+      setupContactForm() {
+        const form = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+        
+        if (!form) return;
+        
+        // Form validation
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          if (!form.checkValidity()) {
+            e.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+          }
+          
+          // Get form data
+          const formData = {
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value,
+            newsletter: document.getElementById('newsletter').checked,
+            timestamp: new Date().toISOString()
+          };
+          
+          // Show loading state
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+          submitBtn.disabled = true;
+          
+          // Simulate form submission
+          setTimeout(() => {
+            // In a real app, you would send this to your server
+            this.saveContactMessage(formData);
+            
+            // Show success message
+            formMessage.innerHTML = `
+              <div class="alert alert-success alert-dismissible fade show">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>Message sent successfully!</strong> We'll get back to you within 24 hours.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            `;
+            
+            // Reset form
+            form.reset();
+            form.classList.remove('was-validated');
+            
+            // Restore button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            // Scroll to message
+            formMessage.scrollIntoView({ behavior: 'smooth' });
+            
+            // Auto-hide success message after 5 seconds
+            setTimeout(() => {
+              const alert = formMessage.querySelector('.alert');
+              if (alert) {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+              }
+            }, 5000);
+            
+          }, 1500);
+        });
+        
+        // Real-time validation
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+          input.addEventListener('input', () => {
+            if (input.checkValidity()) {
+              input.classList.remove('is-invalid');
+              input.classList.add('is-valid');
+            } else {
+              input.classList.remove('is-valid');
+              input.classList.add('is-invalid');
+            }
+          });
+        });
+      }
+
+      saveContactMessage(formData) {
+        // Save contact message to localStorage (simulating database)
+        const messages = JSON.parse(localStorage.getItem('contact_messages')) || [];
+        messages.push(formData);
+        localStorage.setItem('contact_messages', JSON.stringify(messages));
+        
+        // Log to console (for demo purposes)
+        console.log('Contact message saved:', formData);
+      }
+    }
+
+    // Initialize contact cart manager
+    const contactCartManager = new ContactCartManager();
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for cart updates from localStorage
+      const cartData = localStorage.getItem('cart');
+      if (cartData) {
+        contactCartManager.cart = JSON.parse(cartData);
+        contactCartManager.updateCartCount();
+      }
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

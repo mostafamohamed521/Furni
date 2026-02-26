@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - Services</title>
+  
+  <style>
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .services-hero {
+      background: linear-gradient(rgba(59, 93, 80, 0.9), rgba(59, 93, 80, 0.7)), url('images/services-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 100px 0;
+      margin-bottom: 60px;
+    }
+    
+    .service-card {
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      background: #3b5d50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .service-icon img {
+      width: 35px;
+      height: 35px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .service-number {
+      font-size: 14px;
+      color: #3b5d50;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .service-card h3 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+    
+    .service-card p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+    
+    .service-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+    }
+    
+    .service-features li {
+      padding: 5px 0;
+      color: #666;
+      display: flex;
+      align-items: center;
+    }
+    
+    .service-features li i {
+      color: #3b5d50;
+      margin-right: 10px;
+      font-size: 12px;
+    }
+    
+    .service-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #3b5d50;
+      margin-bottom: 15px;
+    }
+    
+    .service-period {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .process-steps {
+      margin: 60px 0;
+    }
+    
+    .step-card {
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+    
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      font-weight: 600;
+    }
+    
+    .step-connector {
+      position: absolute;
+      top: 20px;
+      right: -15px;
+      width: 30px;
+      height: 2px;
+      background: #dee2e6;
+    }
+    
+    .step-card:last-child .step-connector {
+      display: none;
+    }
+    
+    .services-table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin: 40px 0;
+    }
+    
+    .table-header {
+      background: #3b5d50;
+      color: white;
+      padding: 20px;
+    }
+    
+    .table-row {
+      display: flex;
+      padding: 15px 20px;
+      border-bottom: 1px solid #dee2e6;
+      align-items: center;
+    }
+    
+    .table-row:last-child {
+      border-bottom: none;
+    }
+    
+    .service-name {
+      flex: 2;
+      font-weight: 500;
+    }
+    
+    .service-duration {
+      flex: 1;
+      color: #666;
+    }
+    
+    .service-cost {
+      flex: 1;
+      font-weight: 600;
+      color: #3b5d50;
+    }
+    
+    .cta-section {
+      background: #f8f9fa;
+      padding: 60px 0;
+      margin: 60px 0;
+      text-align: center;
+    }
+    
+    .cta-section h2 {
+      margin-bottom: 20px;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .cta-buttons {
+        flex-direction: column;
+      }
+      
+      .step-connector {
+        display: none;
+      }
+      
+      .table-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+    
+    .product-item {
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    
+    .product-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .product-item .icon-cross {
+      transition: all 0.3s ease;
+    }
+    
+    .product-item:hover .icon-cross {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li><a class="nav-link" href="about.html">About us</a></li>
+          <li class="active"><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="login.html"><img src="images/user.svg"></a></li>
+          <li>
+            <a class="nav-link position-relative" href="cart.html">
+              <img src="images/cart.svg">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Services Hero -->
+  <div class="services-hero">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+          <h1 class="mb-4">Comprehensive Furniture Services</h1>
+          <p class="lead mb-4">From design consultation to delivery and assembly, we provide end-to-end solutions for all your furniture needs.</p>
+          <a href="#services-list" class="btn btn-light btn-lg me-3">View Services</a>
+          <a href="#get-quote" class="btn btn-outline-light btn-lg">Get a Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Section -->
+  <div class="why-choose-section" id="services-list">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-6 mx-auto text-center">
+          <h2 class="section-title mb-4">Our Professional Services</h2>
+          <p class="mb-4">We offer a wide range of services to ensure your furniture journey is seamless and enjoyable.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Service 1 -->
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <img src="images/truck.svg" alt="Delivery">
+            </div>
+            <div class="service-number">Service 01</div>
+            <h3>White Glove Delivery</h3>
+            <p>Professional delivery and placement of your furniture. We handle everything from unloading to perfect placement in your room.</p>
+            <ul class="service-features">
+              <li><i class="fas fa-check"></i> Professional unpacking</li>
+              <li><i class="fas fa-check"></i> Room placement</li>
+              <li><i class="fas fa-check"></i> Debris removal</li>
+              <li><i class="fas fa-check"></i> Next day delivery available</li>
+            </ul>
+            <div class="service-price">From $99</div>
+            <div class="service-period">Per delivery</div>
+            <a href="#get-quote" class="btn btn-primary mt-3">Request Service</a>
+          </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <img src="images/support.svg" alt="Assembly">
+            </div>
+            <div class="service-number">Service 02</div>
+            <h3>Professional Assembly</h3>
+            <p>Expert assembly of your furniture by trained professionals. We ensure everything is put together correctly and safely.</p>
+            <ul class="service-features">
+              <li><i class="fas fa-check"></i> Same day service available</li>
+              <li><i class="fas fa-check"></i> Quality checked assembly</li>
+              <li><i class="fas fa-check"></i> All tools provided</li>
+              <li><i class="fas fa-check"></i> 30-day assembly warranty</li>
+            </ul>
+            <div class="service-price">From $79</div>
+            <div class="service-period">Per piece</div>
+            <a href="#get-quote" class="btn btn-primary mt-3">Request Service</a>
+          </div>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <img src="images/bag.svg" alt="Design">
+            </div>
+            <div class="service-number">Service 03</div>
+            <h3>Interior Design Consultation</h3>
+            <p>Professional design advice to help you create the perfect space. From layout planning to furniture selection.</p>
+            <ul class="service-features">
+              <li><i class="fas fa-check"></i> Room measurement</li>
+              <li><i class="fas fa-check"></i> Layout planning</li>
+              <li><i class="fas fa-check"></i> Furniture recommendations</li>
+              <li><i class="fas fa-check"></i> Color scheme advice</li>
+            </ul>
+            <div class="service-price">From $149</div>
+            <div class="service-period">Per consultation</div>
+            <a href="#get-quote" class="btn btn-primary mt-3">Request Service</a>
+          </div>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <img src="images/return.svg" alt="Cleaning">
+            </div>
+            <div class="service-number">Service 04</div>
+            <h3>Furniture Cleaning & Care</h3>
+            <p>Professional cleaning and maintenance services to keep your furniture looking new for years to come.</p>
+            <ul class="service-features">
+              <li><i class="fas fa-check"></i> Deep cleaning</li>
+              <li><i class="fas fa-check"></i> Stain removal</li>
+              <li><i class="fas fa-check"></i> Leather conditioning</li>
+              <li><i class="fas fa-check"></i> Wood polishing</li>
+            </ul>
+            <div class="service-price">From $69</div>
+            <div class="service-period">Per piece</div>
+            <a href="#get-quote" class="btn btn-primary mt-3">Request Service</a>
+          </div>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-tools" style="font-size: 30px; color: white;"></i>
+            </div>
+            <div class="service-number">Service 05</div>
+            <h3>Repair & Restoration</h3>
+            <p>Expert repair and restoration services to bring your furniture back to life or give it a new look.</p>
+            <ul class="service-features">
+              <li><i class="fas fa-check"></i> Structural repairs</li>
+              <li><i class="fas fa-check"></i> Reupholstering</li>
+              <li><i class="fas fa-check"></i> Refinishing</li>
+              <li><i class="fas fa-check"></i> Hardware replacement</li>
+            </ul>
+            <div class="service-price">From $129</div>
+            <div class="service-period">Project based</div>
+            <a href="#get-quote" class="btn btn-primary mt-3">Request Service</a>
+          </div>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-exchange-alt" style="font-size: 30px; color: white;"></i>
+            </div>
+            <div class="service-number">Service 06</div>
+            <h3>Furniture Relocation</h3>
+            <p>Safe and efficient furniture moving services for your home or office relocation.</p>
+            <ul class="service-features">
+              <li><i class="fas fa-check"></i> Professional packing</li>
+              <li><i class="fas fa-check"></i> Safe transport</li>
+              <li><i class="fas fa-check"></i> Reassembly at new location</li>
+              <li><i class="fas fa-check"></i> Insurance included</li>
+            </ul>
+            <div class="service-price">From $199</div>
+            <div class="service-period">Per move</div>
+            <a href="#get-quote" class="btn btn-primary mt-3">Request Service</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Process Steps -->
+  <div class="process-steps">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="section-title mb-4">Our Service Process</h2>
+          <p class="mb-4">Simple and transparent process from request to completion</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h4>Request Service</h4>
+            <p>Fill out our simple form or call us to schedule your service</p>
+          </div>
+        </div>
+        
+        <div class="col-md-3">
+          <div class="step-card">
+            <div class="step-connector"></div>
+            <div class="step-number">2</div>
+            <h4>Schedule Appointment</h4>
+            <p>Choose a convenient time for our team to visit</p>
+          </div>
+        </div>
+        
+        <div class="col-md-3">
+          <div class="step-card">
+            <div class="step-connector"></div>
+            <div class="step-number">3</div>
+            <h4>Service Completion</h4>
+            <p>Our professionals complete the work with precision</p>
+          </div>
+        </div>
+        
+        <div class="col-md-3">
+          <div class="step-card">
+            <div class="step-connector"></div>
+            <div class="step-number">4</div>
+            <h4>Quality Check</h4>
+            <p>We ensure everything meets our high standards</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Table -->
+  <div class="untree_co-section">
+    <div class="container">
+      <div class="services-table">
+        <div class="table-header">
+          <h3 class="mb-0">Service Pricing Overview</h3>
+          <p class="mb-0">Transparent pricing for all our services</p>
+        </div>
+        
+        <div class="table-row">
+          <div class="service-name">White Glove Delivery</div>
+          <div class="service-duration">2-4 hours</div>
+          <div class="service-cost">$99 - $199</div>
+        </div>
+        
+        <div class="table-row">
+          <div class="service-name">Professional Assembly</div>
+          <div class="service-duration">1-3 hours</div>
+          <div class="service-cost">$79 - $149</div>
+        </div>
+        
+        <div class="table-row">
+          <div class="service-name">Design Consultation</div>
+          <div class="service-duration">2 hours</div>
+          <div class="service-cost">$149 - $299</div>
+        </div>
+        
+        <div class="table-row">
+          <div class="service-name">Furniture Cleaning</div>
+          <div class="service-duration">1-2 hours</div>
+          <div class="service-cost">$69 - $129</div>
+        </div>
+        
+        <div class="table-row">
+          <div class="service-name">Repair & Restoration</div>
+          <div class="service-duration">Varies</div>
+          <div class="service-cost">$129+</div>
+        </div>
+        
+        <div class="table-row">
+          <div class="service-name">Furniture Relocation</div>
+          <div class="service-duration">4-8 hours</div>
+          <div class="service-cost">$199 - $499</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Section -->
+  <div class="cta-section" id="get-quote">
+    <div class="container">
+      <h2>Ready to Transform Your Space?</h2>
+      <p class="mb-4">Contact us today for a free consultation and quote</p>
+      
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-phone me-2"></i>Contact Us
+        </a>
+        <a href="tel:+15551234567" class="btn btn-outline-primary btn-lg">
+          <i class="fas fa-phone-alt me-2"></i>Call Now: (555) 123-4567
+        </a>
+        <a href="mailto:services@furni.com" class="btn btn-outline-dark btn-lg">
+          <i class="fas fa-envelope me-2"></i>Email Us
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="testimonial-section before-footer-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 mx-auto text-center">
+          <h2 class="section-title">What Our Clients Say</h2>
+          <p class="mb-5">Hear from customers who have used our services</p>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="testimonial-slider-wrap text-center">
+
+            <div id="testimonial-nav">
+              <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+              <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+            </div>
+
+            <div class="testimonial-slider">
+              
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;The white glove delivery service was exceptional! The team was professional, careful with my furniture, and even helped rearrange the room perfectly. Worth every penny!&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-1.png" alt="Sarah Johnson" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Sarah Johnson</h3>
+                        <span class="position d-block mb-3">Homeowner, Seattle</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;I used the assembly service for my new office furniture. The technician was punctual, skilled, and left everything perfectly assembled. Will definitely use again!&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-2.jpg" alt="Michael Chen" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Michael Chen</h3>
+                        <span class="position d-block mb-3">Business Owner, Portland</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;The design consultation transformed my living room. The designer understood my style and budget, and helped me choose pieces that work perfectly together.&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-3.jpg" alt="Lisa Rodriguez" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Lisa Rodriguez</h3>
+                        <span class="position d-block mb-3">Interior Design Client, San Francisco</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Providing quality furniture and professional services since 2010. Your comfort and satisfaction are our top priorities.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="shop.html">Nordic Chair</a></li>
+                <li><a href="shop.html">Kruzo Aero</a></li>
+                <li><a href="shop.html">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->  
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Services Page Cart Manager
+    class ServicesCartManager {
+      constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.init();
+      }
+
+      init() {
+        this.updateCartCount();
+        this.setupCartListener();
+        this.setupServiceButtons();
+      }
+
+      updateCartCount() {
+        const cartCount = this.cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = cartCount;
+        }
+      }
+
+      setupCartListener() {
+        // Listen for cart updates from other pages
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.onmessage = (event) => {
+            if (event.data.type === 'cart_updated') {
+              this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+              this.updateCartCount();
+            }
+          };
+        }
+      }
+
+      setupServiceButtons() {
+        // Service request buttons
+        const serviceButtons = document.querySelectorAll('.btn-primary[href="#get-quote"]');
+        serviceButtons.forEach(button => {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Get service details from card
+            const card = button.closest('.service-card');
+            if (card) {
+              const serviceName = card.querySelector('h3').textContent;
+              const servicePrice = card.querySelector('.service-price').textContent;
+              
+              // Store service selection
+              const serviceSelection = {
+                name: serviceName,
+                price: servicePrice,
+                timestamp: new Date().toISOString()
+              };
+              
+              localStorage.setItem('selected_service', JSON.stringify(serviceSelection));
+              
+              // Redirect to contact page
+              window.location.href = 'contact.html?service=' + encodeURIComponent(serviceName);
+            }
+          });
+        });
+
+        // Add cart functionality to products in product section
+        document.querySelectorAll('.product-item').forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const productData = {
+              id: Date.now(),
+              name: item.querySelector('.product-title').textContent,
+              price: parseFloat(item.querySelector('.product-price').textContent.replace('$', '')),
+              image: item.querySelector('img').src.split('/').pop(),
+              quantity: 1
+            };
+            
+            this.addToCart(productData);
+          });
+        });
+      }
+
+      addToCart(product) {
+        const existingItem = this.cart.find(item => item.name === product.name);
+        
+        if (existingItem) {
+          existingItem.quantity += 1;
+          existingItem.total = existingItem.price * existingItem.quantity;
+        } else {
+          const newItem = {
+            ...product,
+            total: product.price
+          };
+          this.cart.push(newItem);
+        }
+        
+        this.saveCart();
+        this.updateCartCount();
+        this.showNotification(`${product.name} added to cart!`, 'success');
+      }
+
+      saveCart() {
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+        this.notifyCartUpdate();
+      }
+
+      showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotifications = document.querySelectorAll('.cart-notification');
+        existingNotifications.forEach(notification => notification.remove());
+        
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type} alert-dismissible fade show cart-notification`;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          z-index: 9999;
+          min-width: 300px;
+        `;
+        notification.innerHTML = `
+          <div class="d-flex align-items-center">
+            <i class="fas fa-shopping-cart me-2"></i>
+            <div>${message}</div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+          </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.remove();
+          }
+        }, 3000);
+      }
+
+      notifyCartUpdate() {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.postMessage({
+            type: 'cart_updated',
+            count: this.cart.reduce((total, item) => total + (item.quantity || 1), 0)
+          });
+          channel.close();
+        }
+      }
+    }
+
+    // Initialize services cart manager
+    const servicesCartManager = new ServicesCartManager();
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for cart updates from localStorage
+      const cartData = localStorage.getItem('cart');
+      if (cartData) {
+        servicesCartManager.cart = JSON.parse(cartData);
+        servicesCartManager.updateCartCount();
+      }
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

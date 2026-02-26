@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - Order Confirmation</title>
+  
+  <style>
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .confirmation-card {
+      background: white;
+      border-radius: 15px;
+      padding: 50px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      background: #28a745;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+    }
+    
+    .success-icon i {
+      color: white;
+      font-size: 50px;
+    }
+    
+    .order-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #3b5d50;
+      margin: 20px 0;
+      background: #f8f9fa;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    
+    .order-timeline {
+      margin: 40px 0;
+      position: relative;
+    }
+    
+    .timeline-step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .timeline-step:last-child {
+      margin-bottom: 0;
+    }
+    
+    .step-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e9ecef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      flex-shrink: 0;
+      font-weight: 600;
+      color: #6c757d;
+    }
+    
+    .timeline-step.active .step-icon {
+      background: #3b5d50;
+      color: white;
+    }
+    
+    .timeline-step.completed .step-icon {
+      background: #28a745;
+      color: white;
+    }
+    
+    .step-content {
+      flex: 1;
+      text-align: left;
+    }
+    
+    .step-content h5 {
+      margin-bottom: 5px;
+      color: #333;
+    }
+    
+    .step-content p {
+      margin: 0;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    .order-summary {
+      background: #f8f9fa;
+      border-radius: 10px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .summary-item:last-child {
+      border-bottom: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .whats-next {
+      background: #e8f4fd;
+      border-radius: 10px;
+      padding: 30px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    
+    .whats-next h4 {
+      color: #3b5d50;
+      margin-bottom: 20px;
+    }
+    
+    .next-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .next-steps li {
+      padding: 10px 0;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .next-steps li i {
+      color: #3b5d50;
+      margin-right: 10px;
+      margin-top: 3px;
+    }
+    
+    .customer-support {
+      background: #fff3cd;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .support-icon {
+      font-size: 2rem;
+      color: #856404;
+      margin-bottom: 15px;
+    }
+    
+    .order-actions {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .action-btn {
+      min-width: 200px;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .action-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    @media (max-width: 768px) {
+      .confirmation-card {
+        padding: 30px 20px;
+      }
+      
+      .order-actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+      }
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #3b5d50;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: confetti-fall 3s linear forwards;
+    }
+    
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li><a class="nav-link" href="about.html">About us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="login.html"><img src="images/user.svg"></a></li>
+          <li>
+            <a class="nav-link position-relative" href="cart.html">
+              <img src="images/cart.svg">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-lg-6">
+          <div class="intro-excerpt">
+            <h1>Order Confirmed!</h1>
+            <p class="mb-4">Thank you for your purchase. Your order has been successfully placed and is being processed.</p>
+            <p><a href="#order-details" class="btn btn-secondary me-2">View Order Details</a><a href="#whats-next" class="btn btn-white-outline">What's Next</a></p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="hero-img-wrap">
+            <img src="images/thankyou-hero.jpg" class="img-fluid rounded" alt="Thank You">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Order Confirmation Section -->
+  <div class="untree_co-section" id="order-details">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="confirmation-card">
+            <div class="success-icon">
+              <i class="fas fa-check"></i>
+            </div>
+            
+            <h2 class="mb-3">Thank You for Your Order!</h2>
+            <p class="lead mb-4">Your order has been confirmed and is being processed.</p>
+            
+            <div class="order-number" id="order-number-display">Loading...</div>
+            
+            <p class="text-muted mb-5">
+              We've sent a confirmation email to your registered email address.
+              You'll receive shipping updates soon.
+            </p>
+            
+            <!-- Order Timeline -->
+            <div class="order-timeline">
+              <div class="timeline-step completed">
+                <div class="step-icon">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="step-content">
+                  <h5>Order Placed</h5>
+                  <p>Your order has been successfully placed</p>
+                </div>
+              </div>
+              
+              <div class="timeline-step active">
+                <div class="step-icon">
+                  <i class="fas fa-box"></i>
+                </div>
+                <div class="step-content">
+                  <h5>Processing</h5>
+                  <p>We're preparing your order for shipment</p>
+                </div>
+              </div>
+              
+              <div class="timeline-step">
+                <div class="step-icon">
+                  <i class="fas fa-shipping-fast"></i>
+                </div>
+                <div class="step-content">
+                  <h5>Shipped</h5>
+                  <p>Your order is on its way to you</p>
+                </div>
+              </div>
+              
+              <div class="timeline-step">
+                <div class="step-icon">
+                  <i class="fas fa-home"></i>
+                </div>
+                <div class="step-content">
+                  <h5>Delivered</h5>
+                  <p>Your order has been delivered</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Order Summary -->
+            <div class="order-summary" id="order-summary">
+              <h4 class="mb-4">Order Summary</h4>
+              <!-- Order summary will be loaded here -->
+            </div>
+            
+            <!-- What's Next -->
+            <div class="whats-next" id="whats-next">
+              <h4>What Happens Next?</h4>
+              <ul class="next-steps">
+                <li>
+                  <i class="fas fa-envelope"></i>
+                  <div>
+                    <strong>Confirmation Email</strong>
+                    <p>Check your email for order confirmation and receipt</p>
+                  </div>
+                </li>
+                <li>
+                  <i class="fas fa-box-open"></i>
+                  <div>
+                    <strong>Order Processing</strong>
+                    <p>We'll prepare your items for shipment within 24 hours</p>
+                  </div>
+                </li>
+                <li>
+                  <i class="fas fa-truck"></i>
+                  <div>
+                    <strong>Shipping Updates</strong>
+                    <p>You'll receive tracking information once your order ships</p>
+                  </div>
+                </li>
+                <li>
+                  <i class="fas fa-calendar-check"></i>
+                  <div>
+                    <strong>Delivery</strong>
+                    <p>Estimated delivery: 3-5 business days</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- Customer Support -->
+            <div class="customer-support">
+              <div class="support-icon">
+                <i class="fas fa-headset"></i>
+              </div>
+              <h4>Need Help?</h4>
+              <p class="mb-3">Our customer support team is here to assist you with any questions about your order.</p>
+              <div class="mb-3">
+                <a href="mailto:support@furni.com" class="text-dark me-3">
+                  <i class="fas fa-envelope me-2"></i>support@furni.com
+                </a>
+                <a href="tel:+15551234567" class="text-dark">
+                  <i class="fas fa-phone me-2"></i>(555) 123-4567
+                </a>
+              </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="order-actions">
+              <a href="shop.html" class="btn btn-outline-primary action-btn">
+                <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+              </a>
+              <a href="index.html" class="btn btn-primary action-btn">
+                <i class="fas fa-home me-2"></i>Back to Home
+              </a>
+              <a href="contact.html" class="btn btn-outline-dark action-btn">
+                <i class="fas fa-question-circle me-2"></i>Contact Support
+              </a>
+            </div>
+            
+            <p class="mt-5 text-muted small">
+              <i class="fas fa-info-circle me-2"></i>
+              You can view your order history anytime by logging into your account.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center">
+              <span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span>
+              <span>Subscribe to Newsletter</span>
+            </h3>
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Thank you for choosing Furni for your furniture needs. We're committed to providing quality products and excellent service.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="shop.html">Nordic Chair</a></li>
+                <li><a href="shop.html">Kruzo Aero</a></li>
+                <li><a href="shop.html">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer Section -->
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Thank You Page Cart Manager
+    class ThankYouCartManager {
+      constructor() {
+        this.cart = [];
+        this.orderData = null;
+        this.init();
+      }
+
+      init() {
+        this.updateCartCount();
+        this.loadOrderData();
+        this.setupCartListener();
+      }
+
+      updateCartCount() {
+        // Clear cart for thank you page
+        this.cart = [];
+        localStorage.removeItem('cart');
+        
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = '0';
+        }
+      }
+
+      setupCartListener() {
+        // Listen for cart updates (though cart should be empty here)
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.onmessage = (event) => {
+            if (event.data.type === 'cart_updated') {
+              this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+              this.updateCartCount();
+            }
+          };
+        }
+      }
+
+      loadOrderData() {
+        // Get order data from URL or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderParam = urlParams.get('order');
+        
+        if (orderParam) {
+          try {
+            this.orderData = JSON.parse(decodeURIComponent(orderParam));
+            this.displayOrderDetails();
+          } catch (error) {
+            console.error('Error parsing order data:', error);
+            this.orderData = this.getOrderFromStorage();
+            this.displayOrderDetails();
+          }
+        } else {
+          this.orderData = this.getOrderFromStorage();
+          this.displayOrderDetails();
+        }
+      }
+
+      getOrderFromStorage() {
+        // Try to get from sessionStorage first
+        let orderData = sessionStorage.getItem('currentOrder');
+        if (orderData) {
+          try {
+            return JSON.parse(orderData);
+          } catch (error) {
+            console.error('Error parsing order from sessionStorage:', error);
+          }
+        }
+        
+        // Try to get from localStorage (orders history)
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        if (orders.length > 0) {
+          return orders[orders.length - 1];
+        }
+        
+        return this.createMockOrder();
+      }
+
+      createMockOrder() {
+        // Create a mock order for demo purposes
+        return {
+          order: {
+            orderNumber: 'ORD-' + Date.now().toString().slice(-8),
+            total: 289.99,
+            subtotal: 269.99,
+            shipping: 20.00,
+            discount: 0,
+            date: new Date().toISOString(),
+            items: [
+              { name: 'Nordic Chair', price: 50.00, quantity: 2, total: 100.00 },
+              { name: 'Ergonomic Chair', price: 78.00, quantity: 1, total: 78.00 },
+              { name: 'Modern Bookshelf', price: 91.99, quantity: 1, total: 91.99 }
+            ]
+          },
+          customer: {
+            firstName: 'John',
+            lastName: 'Doe',
+            email: 'john.doe@example.com',
+            phone: '+1 (555) 123-4567',
+            address: '123 Main Street',
+            city: 'Portland',
+            postcode: '97205',
+            country: 'United States'
+          }
+        };
+      }
+
+      displayOrderDetails() {
+        if (!this.orderData) {
+          this.showNoOrderFound();
+          return;
+        }
+
+        const order = this.orderData.order;
+        
+        // Display order number
+        const orderNumberElement = document.getElementById('order-number-display');
+        if (orderNumberElement) {
+          orderNumberElement.textContent = `Order #${order.orderNumber}`;
+        }
+        
+        // Display order summary
+        const orderSummaryElement = document.getElementById('order-summary');
+        if (orderSummaryElement) {
+          let html = '';
+          
+          // Order items
+          order.items.forEach((item, index) => {
+            const itemTotal = item.price * item.quantity;
+            html += `
+              <div class="summary-item">
+                <span>${item.quantity} × ${item.name}</span>
+                <span>$${itemTotal.toFixed(2)}</span>
+              </div>
+            `;
+          });
+          
+          // Order totals
+          html += `
+            <div class="summary-item">
+              <span>Subtotal</span>
+              <span>$${order.subtotal.toFixed(2)}</span>
+            </div>
+            <div class="summary-item">
+              <span>Shipping</span>
+              <span>$${order.shipping.toFixed(2)}</span>
+            </div>
+          `;
+          
+          if (order.discount > 0) {
+            html += `
+              <div class="summary-item">
+                <span>Discount</span>
+                <span class="text-success">-$${order.discount.toFixed(2)}</span>
+              </div>
+            `;
+          }
+          
+          html += `
+            <div class="summary-item">
+              <span>Total</span>
+              <span>$${order.total.toFixed(2)}</span>
+            </div>
+          `;
+          
+          orderSummaryElement.innerHTML = html;
+        }
+        
+        // Create confetti effect
+        this.createConfetti();
+      }
+
+      showNoOrderFound() {
+        const orderNumberElement = document.getElementById('order-number-display');
+        if (orderNumberElement) {
+          orderNumberElement.textContent = 'No Recent Order Found';
+        }
+        
+        const orderSummaryElement = document.getElementById('order-summary');
+        if (orderSummaryElement) {
+          orderSummaryElement.innerHTML = `
+            <div class="text-center py-4">
+              <i class="fas fa-search fa-3x text-muted mb-3"></i>
+              <h5 class="text-muted">No order details available</h5>
+              <p class="text-muted mb-3">We couldn't find your order details.</p>
+              <a href="shop.html" class="btn btn-primary">Start Shopping</a>
+            </div>
+          `;
+        }
+      }
+
+      createConfetti() {
+        // Create confetti effect
+        const colors = ['#3b5d50', '#28a745', '#17a2b8', '#ffc107', '#dc3545'];
+        
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          
+          // Random properties
+          const left = Math.random() * 100;
+          const size = Math.random() * 10 + 5;
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const animationDuration = Math.random() * 3 + 2;
+          
+          confetti.style.left = left + 'vw';
+          confetti.style.width = size + 'px';
+          confetti.style.height = size + 'px';
+          confetti.style.background = color;
+          confetti.style.animationDuration = animationDuration + 's';
+          confetti.style.animationDelay = Math.random() * 2 + 's';
+          
+          document.body.appendChild(confetti);
+          
+          // Remove confetti after animation
+          setTimeout(() => {
+            if (confetti.parentNode) {
+              confetti.parentNode.removeChild(confetti);
+            }
+          }, 5000);
+        }
+      }
+    }
+
+    // Initialize thank you cart manager
+    const thankYouCartManager = new ThankYouCartManager();
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

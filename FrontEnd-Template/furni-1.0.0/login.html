@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - Login</title>
+  
+  <style>
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .login-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin: 30px 0;
+    }
+    
+    .login-card h1 {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    
+    .form-control {
+      padding: 12px 15px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    
+    .form-control:focus {
+      border-color: #3b5d50;
+      box-shadow: 0 0 0 0.2rem rgba(59, 93, 80, 0.25);
+    }
+    
+    .btn-primary {
+      background-color: #3b5d50;
+      border-color: #3b5d50;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      background-color: #2d473e;
+      border-color: #2d473e;
+      transform: translateY(-2px);
+    }
+    
+    .btn-outline-secondary {
+      border: 1px solid #dee2e6;
+      color: #333;
+      padding: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-outline-secondary:hover {
+      background-color: #f8f9fa;
+      border-color: #3b5d50;
+      color: #3b5d50;
+    }
+    
+    .separator {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .separator::before,
+    .separator::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .separator span {
+      padding: 0 15px;
+      color: #6c757d;
+      font-size: 14px;
+    }
+    
+    .login-options {
+      margin-top: 20px;
+    }
+    
+    .login-features {
+      background: #f8f9fa;
+      padding: 40px;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+    
+    .login-features h3 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .feature-item {
+      margin-bottom: 15px;
+      padding-left: 25px;
+      position: relative;
+    }
+    
+    .feature-item i {
+      position: absolute;
+      left: 0;
+      top: 3px;
+      color: #3b5d50;
+    }
+    
+    .password-toggle {
+      position: relative;
+    }
+    
+    .password-toggle .toggle-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #6c757d;
+      cursor: pointer;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .form-check-input:checked {
+      background-color: #3b5d50;
+      border-color: #3b5d50;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li><a class="nav-link" href="about.html">About us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li>
+            <a class="nav-link active" href="login.html">
+              <img src="images/user.svg">
+            </a>
+          </li>
+          <li>
+            <a class="nav-link position-relative" href="cart.html">
+              <img src="images/cart.svg">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Welcome Back</h1>
+            <p class="mb-4">Sign in to your Furni account to access your orders, wishlist, and personalized recommendations.</p>
+            <p><a href="#login-form" class="btn btn-secondary me-2">Sign In</a><a href="#register" class="btn btn-white-outline">Create Account</a></p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="hero-img-wrap">
+            <img src="images/login-hero.jpg" class="img-fluid rounded" alt="Login">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Login Section -->
+  <section class="untree_co-section" id="login-form">
+    <div class="container">
+      <div class="row">
+        <!-- Login Form -->
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="login-card">
+            <h1 class="text-center mb-4">Sign In to Your Account</h1>
+            <form id="loginForm" novalidate>
+              <div class="form-group mb-3">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                <div class="invalid-feedback">
+                  Please enter a valid email address.
+                </div>
+              </div>
+              
+              <div class="form-group mb-3">
+                <label for="password" class="form-label">Password *</label>
+                <div class="password-toggle">
+                  <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                  <button type="button" class="toggle-btn" id="togglePassword">
+                    <i class="far fa-eye"></i>
+                  </button>
+                </div>
+                <div class="invalid-feedback">
+                  Please enter your password.
+                </div>
+              </div>
+              
+              <div class="remember-me">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="rememberMe">
+                  <label class="form-check-label" for="rememberMe">
+                    Remember me
+                  </label>
+                </div>
+                <div>
+                  <a href="forgot-password.html" class="text-primary small">Forgot password?</a>
+                </div>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-block w-100 mb-3">
+                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+              </button>
+              
+              <div id="loginMessage" class="mt-3"></div>
+              
+              <div class="text-center mt-4">
+                <p class="mb-0">Don't have an account? 
+                  <a href="register.html" class="text-primary fw-semibold">Create one here</a>
+                </p>
+              </div>
+              
+              <div class="separator my-4">
+                <span class="text-muted">Or continue with</span>
+              </div>
+              
+              <div class="row g-3">
+                <div class="col-6">
+                  <button type="button" class="btn btn-outline-secondary w-100" id="googleLogin">
+                    <i class="fab fa-google me-2"></i> Google
+                  </button>
+                </div>
+                <div class="col-6">
+                  <button type="button" class="btn btn-outline-secondary w-100" id="facebookLogin">
+                    <i class="fab fa-facebook-f me-2"></i> Facebook
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Login Features -->
+        <div class="col-lg-6">
+          <div class="login-features">
+            <h3>Benefits of Having an Account</h3>
+            
+            <div class="feature-item">
+              <i class="fas fa-shopping-cart"></i>
+              <h5>Track Your Orders</h5>
+              <p class="text-muted">View your order history, track current orders, and manage returns easily.</p>
+            </div>
+            
+            <div class="feature-item">
+              <i class="fas fa-heart"></i>
+              <h5>Save Your Wishlist</h5>
+              <p class="text-muted">Save your favorite items and receive notifications when they go on sale.</p>
+            </div>
+            
+            <div class="feature-item">
+              <i class="fas fa-tags"></i>
+              <h5>Exclusive Offers</h5>
+              <p class="text-muted">Get access to member-only sales, promotions, and early access to new collections.</p>
+            </div>
+            
+            <div class="feature-item">
+              <i class="fas fa-shipping-fast"></i>
+              <h5>Faster Checkout</h5>
+              <p class="text-muted">Save your shipping and payment information for quicker checkout.</p>
+            </div>
+            
+            <div class="feature-item">
+              <i class="fas fa-star"></i>
+              <h5>Earn Rewards</h5>
+              <p class="text-muted">Earn points with every purchase that can be redeemed for discounts.</p>
+            </div>
+            
+            <div class="feature-item">
+              <i class="fas fa-history"></i>
+              <h5>Personalized Experience</h5>
+              <p class="text-muted">Get personalized recommendations based on your browsing and purchase history.</p>
+            </div>
+            
+            <div class="mt-4 pt-3 border-top">
+              <h5>Need Help?</h5>
+              <p class="mb-2">Email: <a href="mailto:support@furni.com">support@furni.com</a></p>
+              <p class="mb-0">Phone: <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security Section -->
+  <div class="untree_co-section bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+          <h3 class="mb-4">Your Security is Our Priority</h3>
+          <p class="mb-4">We use industry-standard encryption to protect your personal information. Your data is safe with us.</p>
+          
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                  <div class="security-feature">
+                    <i class="fas fa-lock fa-2x mb-3 text-primary"></i>
+                    <h6>SSL Encryption</h6>
+                    <p class="small text-muted">Secure connection for all data transfers</p>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="security-feature">
+                    <i class="fas fa-shield-alt fa-2x mb-3 text-primary"></i>
+                    <h6>Privacy Protection</h6>
+                    <p class="small text-muted">We never share your personal information</p>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="security-feature">
+                    <i class="fas fa-credit-card fa-2x mb-3 text-primary"></i>
+                    <h6>Secure Payments</h6>
+                    <p class="small text-muted">PCI DSS compliant payment processing</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Creating beautiful living spaces with quality furniture since 2010. Your comfort is our passion.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="shop.html">Nordic Chair</a></li>
+                <li><a href="shop.html">Kruzo Aero</a></li>
+                <li><a href="shop.html">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->  
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Login Page Cart Manager
+    class LoginCartManager {
+      constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.init();
+      }
+
+      init() {
+        this.updateCartCount();
+        this.setupCartListener();
+        this.setupLoginForm();
+        this.setupPasswordToggle();
+      }
+
+      updateCartCount() {
+        const cartCount = this.cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = cartCount;
+        }
+      }
+
+      setupCartListener() {
+        // Listen for cart updates from other pages
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.onmessage = (event) => {
+            if (event.data.type === 'cart_updated') {
+              this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+              this.updateCartCount();
+            }
+          };
+        }
+      }
+
+      setupPasswordToggle() {
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        
+        if (toggleBtn && passwordInput) {
+          toggleBtn.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle eye icon
+            const icon = toggleBtn.querySelector('i');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+          });
+        }
+      }
+
+      setupLoginForm() {
+        const form = document.getElementById('loginForm');
+        const loginMessage = document.getElementById('loginMessage');
+        
+        if (!form) return;
+        
+        // Demo user credentials (for testing purposes)
+        const demoUsers = [
+          { email: 'demo@furni.com', password: 'demo123', name: 'Demo User' },
+          { email: 'test@furni.com', password: 'test123', name: 'Test User' },
+          { email: 'user@example.com', password: 'password', name: 'Example User' }
+        ];
+        
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          if (!form.checkValidity()) {
+            e.stopPropagation();
+            form.classList.add('was-validated');
+            return;
+          }
+          
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const rememberMe = document.getElementById('rememberMe').checked;
+          
+          // Show loading state
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
+          submitBtn.disabled = true;
+          
+          // Simulate login process
+          setTimeout(() => {
+            // Check if credentials match demo users
+            const user = demoUsers.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+              // Save user session
+              const userSession = {
+                email: user.email,
+                name: user.name,
+                loggedIn: true,
+                timestamp: new Date().toISOString(),
+                remember: rememberMe
+              };
+              
+              localStorage.setItem('user_session', JSON.stringify(userSession));
+              
+              // Show success message
+              loginMessage.innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show">
+                  <i class="fas fa-check-circle me-2"></i>
+                  <strong>Welcome back, ${user.name}!</strong> Redirecting to your account...
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              `;
+              
+              // Redirect to account page
+              setTimeout(() => {
+                window.location.href = 'account.html';
+              }, 2000);
+              
+            } else {
+              // Show error message
+              loginMessage.innerHTML = `
+                <div class="alert alert-danger alert-dismissible fade show">
+                  <i class="fas fa-exclamation-circle me-2"></i>
+                  <strong>Invalid credentials!</strong> Please check your email and password.
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+              `;
+              
+              // Restore button
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+              
+              // Shake form for error feedback
+              form.classList.add('shake');
+              setTimeout(() => form.classList.remove('shake'), 500);
+            }
+          }, 1500);
+        });
+        
+        // Social login buttons
+        const googleBtn = document.getElementById('googleLogin');
+        const facebookBtn = document.getElementById('facebookLogin');
+        
+        if (googleBtn) {
+          googleBtn.addEventListener('click', () => {
+            loginMessage.innerHTML = `
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Google login integration would be implemented here in a production environment.
+              </div>
+            `;
+          });
+        }
+        
+        if (facebookBtn) {
+          facebookBtn.addEventListener('click', () => {
+            loginMessage.innerHTML = `
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                Facebook login integration would be implemented here in a production environment.
+              </div>
+            `;
+          });
+        }
+        
+        // Check for existing session
+        this.checkExistingSession();
+      }
+
+      checkExistingSession() {
+        const session = JSON.parse(localStorage.getItem('user_session'));
+        if (session && session.loggedIn) {
+          // Auto-fill email if remember me was checked
+          const emailInput = document.getElementById('email');
+          const rememberCheckbox = document.getElementById('rememberMe');
+          
+          if (emailInput && session.remember && session.email) {
+            emailInput.value = session.email;
+            rememberCheckbox.checked = true;
+          }
+        }
+      }
+    }
+
+    // Initialize login cart manager
+    const loginCartManager = new LoginCartManager();
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for cart updates from localStorage
+      const cartData = localStorage.getItem('cart');
+      if (cartData) {
+        loginCartManager.cart = JSON.parse(cartData);
+        loginCartManager.updateCartCount();
+      }
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            e.preventDefault();
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+    
+    // Add shake animation CSS
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+      }
+      .shake {
+        animation: shake 0.5s ease-in-out;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

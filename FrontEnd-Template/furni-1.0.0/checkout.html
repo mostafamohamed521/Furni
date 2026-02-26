@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - Checkout</title>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li><a class="nav-link" href="about.html">About us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="login.html"><img src="images/user.svg"></a></li>
+          <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Checkout</h1>
+            <p class="mb-4">Complete your order details</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Checkout Section -->
+  <div class="untree_co-section">
+    <div class="container">
+      <!-- Login Alert -->
+      <div class="row mb-5">
+        <div class="col-md-12">
+          <div class="checkout-alert border p-4 rounded" role="alert">
+            Returning customer? <a href="login.html" class="text-primary">Click here to login</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Billing Details -->
+        <div class="col-md-6 mb-5 mb-md-0">
+          <h2 class="h3 mb-3 text-black">Billing Details</h2>
+          <div class="p-3 p-lg-5 border bg-white">
+            <form id="billing-form">
+              <div class="form-group">
+                <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
+                <select id="c_country" class="form-control" required>
+                  <option value="">Select a country</option>
+                  <option value="US">United States</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="CA">Canada</option>
+                  <option value="AU">Australia</option>
+                  <option value="DE">Germany</option>
+                  <option value="FR">France</option>
+                </select>
+              </div>
+              
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_fname" name="c_fname" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_lname" name="c_lname" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="c_company" class="text-black">Company Name (Optional)</label>
+                <input type="text" class="form-control" id="c_company" name="c_company">
+              </div>
+
+              <div class="form-group">
+                <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control mb-2" id="c_address" name="c_address" placeholder="Street address" required>
+                <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_city" class="text-black">City <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_city" name="c_city" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="c_postcode" class="text-black">Postcode / ZIP <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_postcode" name="c_postcode" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_email" class="text-black">Email Address <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="c_email" name="c_email" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                  <input type="tel" class="form-control" id="c_phone" name="c_phone" required>
+                </div>
+              </div>
+
+              <div class="form-group mb-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="create_account">
+                  <label class="form-check-label text-black" for="create_account">
+                    Create an account?
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group mb-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="shipping_address">
+                  <label class="form-check-label text-black" for="shipping_address">
+                    Ship to a different address?
+                  </label>
+                </div>
+              </div>
+
+              <!-- Shipping Address (Hidden by default) -->
+              <div id="shipping-address-section" class="d-none">
+                <h4 class="mb-3">Shipping Address</h4>
+                <div class="form-group">
+                  <label for="s_address" class="text-black">Address <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control mb-2" id="s_address" name="s_address" placeholder="Street address">
+                  <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+                </div>
+                
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="s_city" class="text-black">City <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="s_city" name="s_city">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="s_postcode" class="text-black">Postcode / ZIP <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="s_postcode" name="s_postcode">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="order_notes" class="text-black">Order Notes</label>
+                <textarea class="form-control" id="order_notes" rows="3" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Order Summary & Payment -->
+        <div class="col-md-6">
+          <!-- Your Order -->
+          <div class="row mb-5">
+            <div class="col-md-12">
+              <h2 class="h3 mb-3 text-black">Your Order</h2>
+              <div class="p-3 p-lg-5 border bg-white">
+                <!-- Order Summary (Loaded from cart) -->
+                <div id="order-summary-container">
+                  <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading your order...</p>
+                  </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="mt-4">
+                  <h4 class="mb-3">Payment Method</h4>
+                  
+                  <div class="payment-method border p-3 mb-3 rounded" data-method="card">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="payment_method" id="credit_card" value="card" checked>
+                      <label class="form-check-label text-black" for="credit_card">
+                        <i class="fas fa-credit-card me-2"></i> Credit/Debit Card
+                      </label>
+                    </div>
+                    <div id="card-details" class="mt-3">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <label for="card_number" class="form-label">Card Number</label>
+                          <input type="text" class="form-control" id="card_number" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="card_expiry" class="form-label">Expiry Date</label>
+                          <input type="text" class="form-control" id="card_expiry" placeholder="MM/YY">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="card_cvc" class="form-label">CVC</label>
+                          <input type="text" class="form-control" id="card_cvc" placeholder="123">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="payment-method border p-3 mb-3 rounded" data-method="paypal">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
+                      <label class="form-check-label text-black" for="paypal">
+                        <i class="fab fa-paypal me-2"></i> PayPal
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="payment-method border p-3 mb-3 rounded" data-method="cod">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="payment_method" id="cod" value="cod">
+                      <label class="form-check-label text-black" for="cod">
+                        <i class="fas fa-money-bill-wave me-2"></i> Cash on Delivery
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Terms & Conditions -->
+                <div class="form-check mb-4 mt-4">
+                  <input class="form-check-input" type="checkbox" id="terms" required>
+                  <label class="form-check-label text-black" for="terms">
+                    I have read and agree to the <a href="#" class="text-primary">terms and conditions</a>
+                  </label>
+                </div>
+
+                <!-- Place Order Button -->
+                <div class="form-group">
+                  <button class="btn btn-black btn-lg py-3 btn-block w-100" id="place-order">
+                    <i class="fas fa-lock me-2"></i>Place Order
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center">
+              <span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span>
+              <span>Subscribe to Newsletter</span>
+            </h3>
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant</p>
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Nordic Chair</a></li>
+                <li><a href="#">Kruzo Aero</a></li>
+                <li><a href="#">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a hreff="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer Section -->
+
+<script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/tiny-slider.js"></script>
+		<script src="js/custom.js"></script>  
+    <script src="js/checkout.js"></script>
+</body>
+</html>

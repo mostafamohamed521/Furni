@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="" />
+  <meta name="keywords" content="bootstrap, bootstrap4" />
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="css/tiny-slider.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Furni - About Us</title>
+  
+  <style>
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #3b5d50;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .team-member {
+      margin-bottom: 30px;
+      transition: transform 0.3s ease;
+    }
+    
+    .team-member:hover {
+      transform: translateY(-10px);
+    }
+    
+    .team-member img {
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .team-member h3 {
+      margin-bottom: 10px;
+    }
+    
+    .team-member .position {
+      color: #6c757d;
+      font-style: italic;
+      margin-bottom: 15px;
+      display: block;
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: #3b5d50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .feature-icon img {
+      width: 30px;
+      height: 30px;
+      filter: brightness(0) invert(1);
+    }
+    
+    .about-stats {
+      background: #f8f9fa;
+      padding: 60px 0;
+      margin: 60px 0;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #3b5d50;
+      margin-bottom: 10px;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      color: #6c757d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Start Header/Navigation -->
+  <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Furni<span>.</span></a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsFurni">
+        <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li><a class="nav-link" href="shop.html">Shop</a></li>
+          <li class="active"><a class="nav-link" href="about.html">About us</a></li>
+          <li><a class="nav-link" href="services.html">Services</a></li>
+          <li><a class="nav-link" href="blog.html">Blog</a></li>
+          <li><a class="nav-link" href="contact.html">Contact us</a></li>
+        </ul>
+
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+          <li><a class="nav-link" href="login.html"><img src="images/user.svg"></a></li>
+          <li>
+            <a class="nav-link position-relative" href="cart.html">
+              <img src="images/cart.svg">
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+      
+  </nav>
+  <!-- End Header/Navigation -->
+
+  <!-- Start Hero Section -->
+    <div class="hero">
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-lg-6">
+            <div class="intro-excerpt">
+              <h1>About Us</h1>
+              <p class="mb-4">At Furni, we believe that great furniture should be accessible to everyone. Since 2010, we've been crafting beautiful, functional pieces that transform houses into homes.</p>
+              <p class="mb-4">Our journey began with a simple idea: to create furniture that combines timeless design with exceptional quality, all at prices that won't break the bank.</p>
+              <p><a href="shop.html" class="btn btn-secondary me-2">Shop Now</a><a href="#our-story" class="btn btn-white-outline">Our Story</a></p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="hero-img-wrap">
+              <img src="images/about-hero.jpg" class="img-fluid rounded">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- End Hero Section -->
+
+  <!-- Our Story Section -->
+  <div class="untree_co-section" id="our-story">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h2 class="section-title mb-4">Our Story</h2>
+          <p class="mb-4">Founded in a small workshop in Portland, Oregon, Furni began as a passion project between two friends who shared a love for woodworking and design. What started as crafting custom pieces for friends and family quickly grew into something much bigger.</p>
+          <p class="mb-4">Today, we're proud to be a trusted name in furniture, serving customers across the country with our commitment to quality, sustainability, and customer satisfaction.</p>
+          <p class="mb-5">Every piece in our collection is designed with care, built to last, and created to bring joy to your everyday life. We believe that the right furniture can transform a space and create memories that last a lifetime.</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="feature mb-4">
+                <div class="feature-icon">
+                  <img src="images/truck.svg" alt="Fast Shipping" class="img-fluid">
+                </div>
+                <h3>Sustainable Materials</h3>
+                <p>We use responsibly sourced wood and eco-friendly finishes in all our products.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="feature mb-4">
+                <div class="feature-icon">
+                  <img src="images/support.svg" alt="Support" class="img-fluid">
+                </div>
+                <h3>Handcrafted Quality</h3>
+                <p>Each piece is carefully crafted by skilled artisans who take pride in their work.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-5">
+          <div class="img-wrap">
+            <img src="images/workshop.jpg" alt="Our Workshop" class="img-fluid rounded">
+          </div>
+          <div class="mt-4">
+            <h4 class="mb-3">Our Values</h4>
+            <ul class="list-unstyled custom-list">
+              <li>Quality craftsmanship above all</li>
+              <li>Sustainable and ethical practices</li>
+              <li>Customer satisfaction guaranteed</li>
+              <li>Innovation in design and materials</li>
+              <li>Community involvement and support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="about-stats">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-3 col-6 mb-4 mb-md-0">
+          <div class="stat-item">
+            <div class="stat-number" data-count="5000">0</div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4 mb-md-0">
+          <div class="stat-item">
+            <div class="stat-number" data-count="12">0</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number" data-count="150">0</div>
+            <div class="stat-label">Products Designed</div>
+          </div>
+        </div>
+        <div class="col-md-3 col-6">
+          <div class="stat-item">
+            <div class="stat-number" data-count="50">0</div>
+            <div class="stat-label">Awards Won</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start Team Section -->
+  <div class="untree_co-section">
+    <div class="container">
+
+      <div class="row mb-5">
+        <div class="col-lg-5 mx-auto text-center">
+          <h2 class="section-title">Meet Our Team</h2>
+          <p class="mb-4">The talented individuals behind Furni's success</p>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <!-- Start Column 1 -->
+        <div class="col-12 col-md-6 col-lg-3 mb-5">
+          <div class="team-member">
+            <img src="images/person_1.jpg" class="img-fluid mb-4">
+            <h3><a href="#">Lawson Arnold</a></h3>
+            <span class="d-block position mb-4">CEO & Founder</span>
+            <p class="mb-3">With over 15 years in furniture design, Lawson leads our creative vision and ensures every piece meets our high standards.</p>
+            <div class="social-links">
+              <a href="#" class="me-2"><i class="fab fa-linkedin"></i></a>
+              <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div> 
+        <!-- End Column 1 -->
+
+        <!-- Start Column 2 -->
+        <div class="col-12 col-md-6 col-lg-3 mb-5">
+          <div class="team-member">
+            <img src="images/person_2.jpg" class="img-fluid mb-5">
+            <h3><a href="#">Jeremy Walker</a></h3>
+            <span class="d-block position mb-4">Head of Design</span>
+            <p class="mb-3">Jeremy brings innovative ideas to life, combining functionality with aesthetic appeal in every design.</p>
+            <div class="social-links">
+              <a href="#" class="me-2"><i class="fab fa-linkedin"></i></a>
+              <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div> 
+        <!-- End Column 2 -->
+
+        <!-- Start Column 3 -->
+        <div class="col-12 col-md-6 col-lg-3 mb-5">
+          <div class="team-member">
+            <img src="images/person_3.jpg" class="img-fluid mb-5">
+            <h3><a href="#">Patrik White</a></h3>
+            <span class="d-block position mb-4">Production Manager</span>
+            <p class="mb-3">Patrik oversees our manufacturing process, ensuring quality control and efficient production.</p>
+            <div class="social-links">
+              <a href="#" class="me-2"><i class="fab fa-linkedin"></i></a>
+              <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div> 
+        <!-- End Column 3 -->
+
+        <!-- Start Column 4 -->
+        <div class="col-12 col-md-6 col-lg-3 mb-5">
+          <div class="team-member">
+            <img src="images/person_4.jpg" class="img-fluid mb-5">
+            <h3><a href="#">Kathryn Ryan</a></h3>
+            <span class="d-block position mb-4">Customer Experience</span>
+            <p class="mb-3">Kathryn ensures every customer receives exceptional service from purchase to delivery and beyond.</p>
+            <div class="social-links">
+              <a href="#" class="me-2"><i class="fab fa-linkedin"></i></a>
+              <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div> 
+        <!-- End Column 4 -->
+
+      </div>
+    </div>
+  </div>
+  <!-- End Team Section -->
+
+  <!-- Start Why Choose Us Section -->
+  <div class="why-choose-section">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-lg-6">
+          <h2 class="section-title">Why Choose Furni</h2>
+          <p class="mb-4">We're committed to providing more than just furniture - we deliver experiences that enhance your daily life.</p>
+
+          <div class="row my-5">
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="images/truck.svg" alt="Image" class="img-fluid">
+                </div>
+                <h3>Fast &amp; Free Shipping</h3>
+                <p>Enjoy free shipping on all orders over $100. Most items arrive within 3-5 business days.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="images/bag.svg" alt="Image" class="img-fluid">
+                </div>
+                <h3>Easy to Shop</h3>
+                <p>Our intuitive website makes finding the perfect piece for your space simple and enjoyable.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="images/support.svg" alt="Image" class="img-fluid">
+                </div>
+                <h3>24/7 Support</h3>
+                <p>Have questions? Our customer support team is always here to help, day or night.</p>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-6">
+              <div class="feature">
+                <div class="icon">
+                  <img src="images/return.svg" alt="Image" class="img-fluid">
+                </div>
+                <h3>Hassle Free Returns</h3>
+                <p>Not satisfied? We offer a 30-day return policy with free returns on all products.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="img-wrap">
+            <img src="images/why-choose-us-img.jpg" alt="Image" class="img-fluid">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- End Why Choose Us Section -->
+
+  <!-- Start Testimonial Slider -->
+  <div class="testimonial-section before-footer-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 mx-auto text-center">
+          <h2 class="section-title">What Our Customers Say</h2>
+          <p class="mb-5">Hear from people who have transformed their spaces with Furni</p>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="testimonial-slider-wrap text-center">
+
+            <div id="testimonial-nav">
+              <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+              <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+            </div>
+
+            <div class="testimonial-slider">
+              
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;I bought the Nordic Chair for my home office and it has completely changed my workday. The quality is exceptional and it arrived faster than expected. Furni has earned a customer for life!&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-1.png" alt="Maria Jones" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Maria Jones</h3>
+                        <span class="position d-block mb-3">Interior Designer, New York</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;The Ergonomic Chair has been a game-changer for my back pain. Working from home was becoming unbearable until I found this chair. Thank you Furni for creating such quality products!&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-2.jpg" alt="James Wilson" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">James Wilson</h3>
+                        <span class="position d-block mb-3">Software Developer, San Francisco</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;We furnished our entire living room with Furni pieces and couldn't be happier. The quality, design, and customer service exceeded our expectations. Highly recommend to anyone looking for beautiful furniture!&rdquo;</p>
+                      </blockquote>
+
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="images/person-3.jpg" alt="Sarah Miller" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">Sarah Miller</h3>
+                        <span class="position d-block mb-3">Marketing Director, Chicago</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> 
+              <!-- END item -->
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Testimonial Slider -->
+
+  <!-- Start Footer Section -->
+  <footer class="footer-section">
+    <div class="container relative">
+
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a></div>
+          <p class="mb-4">Crafting beautiful, functional furniture since 2010. Our mission is to transform your living spaces with quality pieces that stand the test of time.</p>
+
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="about.html">About us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact us</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="shop.html">Nordic Chair</a></li>
+                <li><a href="shop.html">Kruzo Aero</a></li>
+                <li><a href="shop.html">Ergonomic Chair</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a></p>
+          </div>
+
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <!-- End Footer Section -->  
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    // Simple Cart Manager for About Page
+    class AboutCartManager {
+      constructor() {
+        this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        this.init();
+      }
+
+      init() {
+        this.updateCartCount();
+        this.setupCartListener();
+        this.setupStatsAnimation();
+      }
+
+      updateCartCount() {
+        const cartCount = this.cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        const countElement = document.getElementById('cart-count');
+        if (countElement) {
+          countElement.textContent = cartCount;
+        }
+      }
+
+      setupCartListener() {
+        // Listen for cart updates from other pages
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('cart_channel');
+          channel.onmessage = (event) => {
+            if (event.data.type === 'cart_updated') {
+              this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+              this.updateCartCount();
+            }
+          };
+        }
+      }
+
+      setupStatsAnimation() {
+        // Animate stats counter
+        const statNumbers = document.querySelectorAll('.stat-number');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const element = entry.target;
+              const target = parseInt(element.getAttribute('data-count'));
+              this.animateCounter(element, target);
+              observer.unobserve(element);
+            }
+          });
+        }, { threshold: 0.5 });
+
+        statNumbers.forEach(stat => {
+          observer.observe(stat);
+        });
+      }
+
+      animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 100;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+          } else {
+            element.textContent = Math.floor(current);
+          }
+        }, 20);
+      }
+    }
+
+    // Initialize cart manager
+    const aboutCartManager = new AboutCartManager();
+
+    // Update cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check for cart updates from localStorage
+      const cartData = localStorage.getItem('cart');
+      if (cartData) {
+        aboutCartManager.cart = JSON.parse(cartData);
+        aboutCartManager.updateCartCount();
+      }
+    });
+  </script>
+</body>
+</html>
