@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5"><div class="intro-excerpt"><h1>Login</h1></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="p-4 p-lg-5 border bg-white rounded">
+            {% if form.non_field_errors %}<div class="alert alert-danger">Invalid username or password.</div>{% endif %}
+            <form method="post" novalidate>
+              {% csrf_token %}
+              <div class="mb-3">{{ form.username }}</div>
+              <div class="mb-3">{{ form.password }}</div>
+              <div class="d-flex justify-content-between mb-4">
+                <a href="{% url 'accounts:password_reset' %}" class="small text-muted">Forgot password?</a>
+              </div>
+              <input type="hidden" name="next" value="{{ next }}">
+              <button type="submit" class="btn btn-black w-100 py-2">Login</button>
+            </form>
+            <p class="text-center mt-4 mb-0 text-muted">Don't have an account? <a href="{% url 'accounts:register' %}">Create one</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
