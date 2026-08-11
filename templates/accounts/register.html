@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+
+{% block content %}
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5"><div class="intro-excerpt"><h1>Create Account</h1></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+          <div class="p-4 p-lg-5 border bg-white rounded">
+            {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {{ form.website }}
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  {{ form.first_name }}
+                  {% for error in form.first_name.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="col-md-6 mb-3">
+                  {{ form.last_name }}
+                  {% for error in form.last_name.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
+                </div>
+              </div>
+              <div class="mb-3">
+                {{ form.username }}
+                {% for error in form.username.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
+              </div>
+              <div class="mb-3">
+                {{ form.email }}
+                {% for error in form.email.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
+              </div>
+              <div class="mb-3">
+                {{ form.password1 }}
+                {% for error in form.password1.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
+              </div>
+              <div class="mb-4">
+                {{ form.password2 }}
+                {% for error in form.password2.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
+              </div>
+              <button type="submit" class="btn btn-black w-100 py-2">Create Account</button>
+            </form>
+            <p class="text-center mt-4 mb-0 text-muted">Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
