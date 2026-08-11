@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5"><div class="intro-excerpt"><h1>My Profile</h1></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 mb-4 mb-lg-0">
+          <div class="list-group">
+            <a href="{% url 'accounts:profile' %}" class="list-group-item list-group-item-action active">Profile Info</a>
+            <a href="{% url 'accounts:change_password' %}" class="list-group-item list-group-item-action">Change Password</a>
+            <a href="{% url 'orders:order_history' %}" class="list-group-item list-group-item-action">My Orders</a>
+            <a href="{% url 'shop:wishlist' %}" class="list-group-item list-group-item-action">Wishlist</a>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <div class="p-4 p-lg-5 border bg-white rounded">
+            <form method="post" enctype="multipart/form-data" novalidate>
+              {% csrf_token %}
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="text-black">First Name</label>
+                  {{ form.first_name }}
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black">Last Name</label>
+                  {{ form.last_name }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="text-black">Email</label>
+                {{ form.email }}
+              </div>
+              <div class="mb-3">
+                <label class="text-black">Avatar</label>
+                {{ form.avatar }}
+                {% for error in form.avatar.errors %}<small class="text-danger d-block mt-1">{{ error }}</small>{% endfor %}
+                <small class="text-muted d-block mt-1">JPEG, PNG أو WEBP فقط — حتى 3 ميجابايت.</small>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label class="text-black">Phone</label>
+                  {{ form.phone }}
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black">City</label>
+                  {{ form.city }}
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="text-black">Address</label>
+                {{ form.address }}
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <label class="text-black">Country</label>
+                  {{ form.country }}
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black">Postal Code</label>
+                  {{ form.postal_code }}
+                </div>
+              </div>
+              <button type="submit" class="btn btn-black">Save Changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
