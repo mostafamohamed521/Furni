@@ -3,13 +3,16 @@ from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_POST
 from django.core.cache import cache
-from django.core.exceptions import ValidationError
+from django.utils import timezone
 
-from .forms import RegisterForm, LoginForm, ProfileUpdateForm
+from .forms import RegisterForm, LoginForm, ProfileUpdateForm, OTPVerifyForm
+from .models import OTPCode
+from .utils import generate_and_send_otp, RESEND_COOLDOWN_SECONDS
 
 LOGIN_ATTEMPT_LIMIT = 5
 LOGIN_LOCKOUT_SECONDS = 300  # 5 minutes
@@ -26,6 +29,10 @@ def _throttle_key(request):
     return f'login_attempts:{_client_ip(request)}'
 
 
+# ==========================================================
+# Registration (creates the account, then requires an email OTP
+# before the session is actually started)
+# ==========================================================
 def register_view(request):
     if request.user.is_authenticated:
         return redirect('core:home')
@@ -33,14 +40,21 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            messages.success(request, f'مرحباً بك {user.first_name}! تم إنشاء حسابك بنجاح.')
-            return redirect('core:home')
+            generate_and_send_otp(user, purpose='register')
+            request.session['otp_pending_user_id'] = user.pk
+            request.session['otp_purpose'] = 'register'
+            request.session['otp_next'] = ''
+            messages.info(request, f'We sent a 6-digit verification code to {user.email}.')
+            return redirect('accounts:verify_otp')
     else:
         form = RegisterForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 
+# ==========================================================
+# Login (step 1: verify credentials, then require an email OTP
+# before actually starting the session — two-factor login)
+# ==========================================================
 class CustomLoginView(LoginView):
     template_name = 'accounts/login.html'
     authentication_form = LoginForm
@@ -51,14 +65,20 @@ class CustomLoginView(LoginView):
             key = _throttle_key(request)
             attempts = cache.get(key, 0)
             if attempts >= LOGIN_ATTEMPT_LIMIT:
-                messages.error(request, 'تم إيقاف محاولات الدخول مؤقتاً بسبب محاولات فاشلة متكررة. الرجاء المحاولة بعد 5 دقائق.')
+                messages.error(request, 'Too many failed login attempts. Please try again in 5 minutes.')
                 return redirect('accounts:login')
         return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
+        # Credentials are correct, but do NOT start the session yet — send an OTP first.
         cache.delete(_throttle_key(self.request))
-        messages.success(self.request, f'مرحباً بعودتك، {form.get_user().first_name or form.get_user().username}!')
-        return super().form_valid(form)
+        user = form.get_user()
+        generate_and_send_otp(user, purpose='login')
+        self.request.session['otp_pending_user_id'] = user.pk
+        self.request.session['otp_purpose'] = 'login'
+        self.request.session['otp_next'] = self.request.POST.get('next') or self.get_redirect_url() or ''
+        messages.info(self.request, f'We sent a 6-digit verification code to {user.email}.')
+        return redirect('accounts:verify_otp')
 
     def form_invalid(self, form):
         key = _throttle_key(self.request)
@@ -66,16 +86,111 @@ class CustomLoginView(LoginView):
         cache.set(key, attempts, LOGIN_LOCKOUT_SECONDS)
         remaining = LOGIN_ATTEMPT_LIMIT - attempts
         if remaining <= 0:
-            messages.error(self.request, 'تم تجاوز عدد المحاولات المسموح بها. تم إيقاف الدخول مؤقتاً لمدة 5 دقائق.')
+            messages.error(self.request, 'Too many failed attempts. Login has been temporarily locked for 5 minutes.')
         elif remaining <= 2:
-            messages.warning(self.request, f'بيانات الدخول غير صحيحة. لديك {remaining} محاولة/محاولات متبقية قبل الإيقاف المؤقت.')
+            messages.warning(self.request, f'Invalid username or password. {remaining} attempt(s) left before a temporary lock.')
         return super().form_invalid(form)
+
+
+# ==========================================================
+# OTP verification (shared by register + login flows)
+# ==========================================================
+def verify_otp(request):
+    user_id = request.session.get('otp_pending_user_id')
+    purpose = request.session.get('otp_purpose')
+
+    if not user_id or purpose not in ('register', 'login'):
+        messages.error(request, 'Your verification session has expired. Please log in or register again.')
+        return redirect('accounts:login')
+
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        request.session.pop('otp_pending_user_id', None)
+        return redirect('accounts:login')
+
+    if request.method == 'POST':
+        form = OTPVerifyForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            otp = OTPCode.objects.filter(user=user, purpose=purpose, code=code).order_by('-created_at').first()
+            if otp and otp.is_valid():
+                otp.is_used = True
+                otp.save(update_fields=['is_used'])
+                # Invalidate any other outstanding codes for this purpose.
+                OTPCode.objects.filter(user=user, purpose=purpose, is_used=False).update(is_used=True)
+
+                login(request, user)
+                next_url = request.session.pop('otp_next', '') or 'core:home'
+                request.session.pop('otp_pending_user_id', None)
+                request.session.pop('otp_purpose', None)
+
+                if purpose == 'register':
+                    messages.success(request, f'Welcome to Furni, {user.first_name or user.username}! Your account is verified.')
+                else:
+                    messages.success(request, f'Welcome back, {user.first_name or user.username}!')
+
+                return redirect(next_url if next_url.startswith('/') else 'core:home')
+            elif otp and otp.is_expired():
+                messages.error(request, 'This code has expired. Please request a new one.')
+            else:
+                messages.error(request, 'Invalid verification code. Please try again.')
+    else:
+        form = OTPVerifyForm()
+
+    can_resend = True
+    last_otp = OTPCode.objects.filter(user=user, purpose=purpose).order_by('-created_at').first()
+    seconds_left = 0
+    if last_otp:
+        elapsed = (timezone.now() - last_otp.created_at).total_seconds()
+        if elapsed < RESEND_COOLDOWN_SECONDS:
+            can_resend = False
+            seconds_left = int(RESEND_COOLDOWN_SECONDS - elapsed)
+
+    context = {
+        'form': form,
+        'email': user.email,
+        'purpose': purpose,
+        'can_resend': can_resend,
+        'seconds_left': seconds_left,
+    }
+    return render(request, 'accounts/verify_otp.html', context)
+
+
+def resend_otp(request):
+    user_id = request.session.get('otp_pending_user_id')
+    purpose = request.session.get('otp_purpose')
+    if not user_id or purpose not in ('register', 'login'):
+        return redirect('accounts:login')
+
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        return redirect('accounts:login')
+
+    last_otp = OTPCode.objects.filter(user=user, purpose=purpose).order_by('-created_at').first()
+    if last_otp:
+        elapsed = (timezone.now() - last_otp.created_at).total_seconds()
+        if elapsed < RESEND_COOLDOWN_SECONDS:
+            messages.warning(request, 'Please wait a moment before requesting another code.')
+            return redirect('accounts:verify_otp')
+
+    generate_and_send_otp(user, purpose=purpose)
+    messages.success(request, f'A new verification code was sent to {user.email}.')
+    return redirect('accounts:verify_otp')
+
+
+def cancel_otp(request):
+    request.session.pop('otp_pending_user_id', None)
+    request.session.pop('otp_purpose', None)
+    request.session.pop('otp_next', None)
+    return redirect('accounts:login')
 
 
 @require_POST
 def logout_view(request):
     logout(request)
-    messages.info(request, 'تم تسجيل الخروج بنجاح. نراك قريباً!')
+    messages.info(request, "You've been logged out successfully. See you soon!")
     return redirect('core:home')
 
 
@@ -90,7 +205,7 @@ def profile_view(request):
             request.user.email = form.cleaned_data['email']
             request.user.save()
             form.save()
-            messages.success(request, 'تم تحديث بياناتك بنجاح.')
+            messages.success(request, 'Your profile has been updated successfully.')
             return redirect('accounts:profile')
     else:
         form = ProfileUpdateForm(instance=profile, initial={
@@ -108,7 +223,7 @@ def change_password_view(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'تم تغيير كلمة المرور بنجاح.')
+            messages.success(request, 'Your password has been changed successfully.')
             return redirect('accounts:profile')
     else:
         form = PasswordChangeForm(request.user)
