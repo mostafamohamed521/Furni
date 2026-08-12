@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <!-- Start Hero Section -->
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Modern Interior <span class="d-block">Design Studio</span></h1>
+            <p class="mb-4">Modern furniture crafted with exceptional care, combining quality and elegant design to give your home a distinctive touch.</p>
+            <p><a href="{% url 'shop:shop_list' %}" class="btn btn-secondary me-2">Shop Now</a><a href="{% url 'core:about' %}" class="btn btn-white-outline">Explore</a></p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="hero-img-wrap">
+            <img src="{% static 'images/couch.png' %}" class="img-fluid" alt="Furni couch">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Hero Section -->
+
+  <!-- Start Product Section -->
+  <div class="product-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+          <h2 class="mb-4 section-title">Crafted with excellent material.</h2>
+          <p class="mb-4">A curated selection of the finest furniture pieces, made from premium materials built to last.</p>
+          <p><a href="{% url 'shop:shop_list' %}" class="btn">Explore</a></p>
+        </div>
+
+        {% for product in featured_products %}
+        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+          {% include "partials/product_card.html" %}
+        </div>
+        {% empty %}
+        <div class="col-12 col-lg-9 text-center text-muted py-4">
+          No featured products yet. Add products from the admin dashboard.
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <!-- End Product Section -->
+
+  <!-- Start Why Choose Us Section -->
+  <div class="why-choose-section">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-6">
+          <h2 class="section-title">Why Choose Us</h2>
+          <p>We offer a unique shopping experience that combines quality, fair prices, and outstanding customer service.</p>
+
+          <div class="row my-5">
+            <div class="col-6 col-md-6">
+              <div class="feature reveal-up">
+                <div class="icon"><img src="{% static 'images/truck.svg' %}" alt="Image" class="imf-fluid"></div>
+                <h3>Fast &amp; Free Shipping</h3>
+                <p>Fast, free shipping on orders over $300.</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-6">
+              <div class="feature reveal-up">
+                <div class="icon"><img src="{% static 'images/bag.svg' %}" alt="Image" class="imf-fluid"></div>
+                <h3>Easy to Shop</h3>
+                <p>A smooth, easy shopping experience from any device.</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-6">
+              <div class="feature reveal-up">
+                <div class="icon"><img src="{% static 'images/support.svg' %}" alt="Image" class="imf-fluid"></div>
+                <h3>24/7 Support</h3>
+                <p>A support team available around the clock to help you.</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-6">
+              <div class="feature reveal-up">
+                <div class="icon"><img src="{% static 'images/return.svg' %}" alt="Image" class="imf-fluid"></div>
+                <h3>Hassle Free Returns</h3>
+                <p>A flexible, hassle-free return policy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="img-wrap reveal-up">
+            <img src="{% static 'images/why-choose-us-img.jpg' %}" alt="Image" class="img-fluid">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Why Choose Us Section -->
+
+  <!-- Start We Help Section -->
+  <div class="we-help-section">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-7 mb-5 mb-lg-0">
+          <div class="imgs-grid">
+            <div class="grid grid-1"><img src="{% static 'images/img-grid-1.jpg' %}" alt="Furni"></div>
+            <div class="grid grid-2"><img src="{% static 'images/img-grid-2.jpg' %}" alt="Furni"></div>
+            <div class="grid grid-3"><img src="{% static 'images/img-grid-3.jpg' %}" alt="Furni"></div>
+          </div>
+        </div>
+        <div class="col-lg-5 ps-lg-5">
+          <h2 class="section-title mb-4">We Help You Make Modern Interior Design</h2>
+          <p>Our team of professional designers helps you choose the right pieces for your space to achieve harmony and comfort.</p>
+
+          <ul class="list-unstyled custom-list my-4">
+            <li>Free design consultation with every order</li>
+            <li>A wide range that suits every taste</li>
+            <li>Quality guarantee on all products</li>
+            <li>Professional delivery and assembly service</li>
+          </ul>
+          <p><a href="{% url 'core:services' %}" class="btn">Explore</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End We Help Section -->
+
+  <!-- Start Popular Product -->
+  <div class="popular-product">
+    <div class="container">
+      <div class="row">
+        {% for product in popular_products %}
+        <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
+          <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-reset">
+            <div class="product-item-sm d-flex reveal-up">
+              <div class="thumbnail">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/product-1.png' %}{% endif %}" alt="{{ product.name }}" class="img-fluid">
+              </div>
+              <div class="pt-3">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.short_description|default:product.description|truncatewords:10 }}</p>
+                <p><span class="text-decoration-underline">Read More</span></p>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <!-- End Popular Product -->
+
+  <!-- Start Testimonial Slider -->
+  {% if testimonials %}
+  <div class="testimonial-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 mx-auto text-center">
+          <h2 class="section-title">Testimonials</h2>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="testimonial-slider-wrap text-center">
+            <div id="testimonial-nav">
+              <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+              <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+            </div>
+
+            <div class="testimonial-slider">
+              {% for t in testimonials %}
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5">
+                        <p>&ldquo;{{ t.content }}&rdquo;</p>
+                      </blockquote>
+                      <div class="author-info">
+                        <div class="author-pic">
+                          <img src="{% if t.photo %}{{ t.photo.url }}{% else %}{% static 'images/person-1.png' %}{% endif %}" alt="{{ t.name }}" class="img-fluid">
+                        </div>
+                        <h3 class="font-weight-bold">{{ t.name }}</h3>
+                        <span class="position d-block mb-3">{{ t.position }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <!-- End Testimonial Slider -->
+
+  <!-- Start Blog Section -->
+  {% if recent_posts %}
+  <div class="blog-section">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-md-6">
+          <h2 class="section-title">Recent Blog</h2>
+        </div>
+        <div class="col-md-6 text-start text-md-end">
+          <a href="{% url 'blog:blog_list' %}" class="more">View All Posts</a>
+        </div>
+      </div>
+
+      <div class="row">
+        {% for post in recent_posts %}
+        <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+          <div class="post-entry reveal-up">
+            <a href="{{ post.get_absolute_url }}" class="post-thumbnail"><img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid"></a>
+            <div class="post-content-entry">
+              <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+              <div class="meta">
+                <span>by <a href="#">{{ post.author.get_full_name|default:post.author.username }}</a></span> <span>on {{ post.created_at|date:"M d, Y" }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <!-- End Blog Section -->
+{% endblock %}
