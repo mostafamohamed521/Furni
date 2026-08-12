@@ -37,7 +37,7 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'شكراً لتواصلك معنا! سيتم الرد عليك في أقرب وقت ممكن.')
+            messages.success(request, "Thanks for reaching out! We'll get back to you as soon as possible.")
             return redirect('core:contact')
     else:
         form = ContactForm()
@@ -56,7 +56,7 @@ def faq(request):
 def terms(request):
     page, _ = LegalPage.objects.get_or_create(page_type='terms', defaults={
         'title': 'Terms & Conditions',
-        'content': '<p>محتوى الشروط والأحكام سيتم تحديثه قريباً.</p>',
+        'content': '<p>Terms & conditions content will be updated soon.</p>',
     })
     return render(request, 'core/legal_page.html', {'page': page})
 
@@ -64,7 +64,7 @@ def terms(request):
 def privacy(request):
     page, _ = LegalPage.objects.get_or_create(page_type='privacy', defaults={
         'title': 'Privacy Policy',
-        'content': '<p>محتوى سياسة الخصوصية سيتم تحديثه قريباً.</p>',
+        'content': '<p>Privacy policy content will be updated soon.</p>',
     })
     return render(request, 'core/legal_page.html', {'page': page})
 
