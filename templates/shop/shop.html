@@ -3,7 +3,7 @@
 {% block title %}Shop{% endblock %}
 
 {% block content %}
-  <div class="hero">
+  <div class="hero hero-inner">
     <div class="container">
       <div class="row justify-content-between">
         <div class="col-lg-5">
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="untree_co-section product-section before-footer-section">
+  <div class="untree_co-section product-section before-footer-section tight-section">
     <div class="container">
       <div class="row mb-5">
         <div class="col-lg-3 mb-4 mb-lg-0">
@@ -75,8 +75,8 @@
             <div class="col-12">
               <div class="empty-state">
                 <i class="fa-solid fa-couch" style="font-size:60px;color:#ddd;"></i>
-                <h4 class="mt-3">لا توجد منتجات مطابقة</h4>
-                <p class="text-muted">جرّب تغيير معايير البحث أو الفلترة.</p>
+                <h4 class="mt-3">No matching products found</h4>
+                <p class="text-muted">Try adjusting your search or filters.</p>
                 <a href="{% url 'shop:shop_list' %}" class="btn btn-black btn-sm mt-2">View all products</a>
               </div>
             </div>
