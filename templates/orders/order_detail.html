@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Order {{ order.order_number }}{% endblock %}
+
+{% block content %}
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-7"><div class="intro-excerpt"><h1>Order {{ order.order_number }}</h1></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section tight-section">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <h5>Shipping to</h5>
+          <p class="mb-1">{{ order.full_name }}</p>
+          <p class="mb-1">{{ order.address }}{% if order.apartment %}, {{ order.apartment }}{% endif %}</p>
+          <p class="mb-1">{{ order.state }}, {{ order.postal_code }}, {{ order.country }}</p>
+          <p class="mb-1">{{ order.email }} — {{ order.phone }}</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <h5>Status</h5>
+          <span class="badge bg-{% if order.status == 'delivered' %}success{% elif order.status == 'cancelled' %}danger{% else %}warning text-dark{% endif %} fs-6">{{ order.get_status_display }}</span>
+          <p class="text-muted mt-2">Placed on {{ order.created_at|date:"M d, Y H:i" }}</p>
+        </div>
+      </div>
+
+      <table class="table site-block-order-table mb-4">
+        <thead><tr><th>Product</th><th>Price</th><th>Qty</th><th>Total</th></tr></thead>
+        <tbody>
+          {% for item in order.items.all %}
+          <tr>
+            <td>{{ item.product_name }}</td>
+            <td>${{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ item.total_price }}</td>
+          </tr>
+          {% endfor %}
+          <tr><td colspan="3" class="text-end fw-bold">Subtotal</td><td>${{ order.items_subtotal }}</td></tr>
+          <tr><td colspan="3" class="text-end fw-bold">Shipping</td><td>${{ order.shipping_cost }}</td></tr>
+          {% if order.discount_amount > 0 %}<tr><td colspan="3" class="text-end fw-bold">Discount</td><td>-${{ order.discount_amount }}</td></tr>{% endif %}
+          <tr><td colspan="3" class="text-end fw-bold">Grand Total</td><td class="fw-bold">${{ order.grand_total }}</td></tr>
+        </tbody>
+      </table>
+      <a href="{% url 'orders:order_history' %}" class="btn btn-outline-black btn-sm">Back to Orders</a>
+    </div>
+  </div>
+{% endblock %}
