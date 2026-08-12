@@ -1,3 +1,9 @@
 Django==5.0.9
 Pillow>=10.0.0
+python-dotenv>=1.0.0
 
+# Optional — only needed if you switch DB_ENGINE=postgres in .env
+# psycopg2-binary>=2.9.0
+
+# Optional — only needed if you switch REDIS_URL in .env
+# redis>=5.0.0
