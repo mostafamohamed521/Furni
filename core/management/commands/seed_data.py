@@ -4,7 +4,6 @@ from django.core.management.base import BaseCommand
 from django.core.files import File
 from django.contrib.auth.models import User
 from django.conf import settings
-import os
 
 from shop.models import Category, Product
 from core.models import Testimonial, TeamMember, Service, SiteSetting, FAQ, LegalPage
@@ -109,30 +108,29 @@ class Command(BaseCommand):
 
         # --- Team ---
         team_data = [
-            ('Aliaa Hassan', 'Founder & Creative Director', 'person_1.jpg'),
-            ('Omar Khaled', 'Lead Interior Designer', 'person_2.jpg'),
-            ('Sara Ahmed', 'Head of Operations', 'person_3.jpg'),
-            ('Youssef Adel', 'Customer Experience Lead', 'person_4.jpg'),
+            ('Alicia Harper', 'Founder & Creative Director', 'person_1.jpg'),
+            ('Omar Khalid', 'Lead Interior Designer', 'person_2.jpg'),
+            ('Sarah Ahmed', 'Head of Operations', 'person_3.jpg'),
+            ('Joseph Adel', 'Customer Experience Lead', 'person_4.jpg'),
         ]
         for i, (name, role, img) in enumerate(team_data):
-            if not TeamMember.objects.filter(name=name).exists():
-                m = TeamMember(name=name, role=role, order=i)
+            member, _ = TeamMember.objects.update_or_create(role=role, defaults={'name': name, 'order': i})
+            if not member.photo:
                 img_file = get_image_file(img)
                 if img_file:
-                    m.photo.save(img, img_file, save=False)
-                m.save()
+                    member.photo.save(img, img_file, save=True)
 
         # --- Services ---
         services_data = [
-            ('Interior Design Consultation', 'fa-solid fa-couch', 'استشارات تصميم داخلي مخصصة تناسب ذوقك ومساحتك مع فريق من الخبراء.'),
-            ('Fast Delivery & Installation', 'fa-solid fa-truck', 'توصيل سريع وتركيب احترافي لجميع القطع في نفس اليوم.'),
-            ('Hassle-Free Returns', 'fa-solid fa-arrows-rotate', 'سياسة استرجاع مرنة خلال 14 يوم من الاستلام بدون تعقيد.'),
-            ('Custom Furniture Making', 'fa-solid fa-hammer', 'تصنيع قطع أثاث مخصصة حسب المقاسات والتفضيلات الخاصة بك.'),
-            ('24/7 Customer Support', 'fa-solid fa-headset', 'فريق دعم متواجد على مدار الساعة للإجابة عن جميع استفساراتك.'),
-            ('Home Styling Service', 'fa-solid fa-palette', 'خدمة تنسيق كاملة لمساعدتك على اختيار الألوان والقطع المناسبة.'),
+            ('Interior Design Consultation', 'fa-solid fa-couch', 'Personalized interior design consultations that match your taste and space, with a team of experts.'),
+            ('Fast Delivery & Installation', 'fa-solid fa-truck', 'Fast delivery and professional installation for every piece, often on the same day.'),
+            ('Hassle-Free Returns', 'fa-solid fa-arrows-rotate', 'A flexible return policy within 14 days of delivery, with no hassle.'),
+            ('Custom Furniture Making', 'fa-solid fa-hammer', 'Custom-made furniture pieces built to your exact measurements and preferences.'),
+            ('24/7 Customer Support', 'fa-solid fa-headset', 'A support team available around the clock to answer all your questions.'),
+            ('Home Styling Service', 'fa-solid fa-palette', 'A complete styling service to help you choose the right colors and pieces.'),
         ]
         for i, (title, icon, desc) in enumerate(services_data):
-            Service.objects.get_or_create(title=title, defaults={'icon_class': icon, 'description': desc, 'order': i})
+            Service.objects.update_or_create(title=title, defaults={'icon_class': icon, 'description': desc, 'order': i})
 
         # --- Blog ---
         blog_cat, _ = BlogCategory.objects.get_or_create(name='Home Tips')
@@ -156,48 +154,54 @@ class Command(BaseCommand):
 
         # --- FAQs ---
         faqs_data = [
-            ('What are your delivery times?', 'يستغرق التوصيل عادة من 3 إلى 7 أيام عمل حسب موقعك، وتظهر مدة التوصيل التقديرية عند إتمام الطلب.'),
-            ('Can I return a product?', 'نعم، يمكنك إرجاع أي منتج خلال 14 يوماً من الاستلام بشرط أن يكون بحالته الأصلية.'),
-            ('Do you offer free shipping?', 'نعم، الشحن مجاني لجميع الطلبات التي تتجاوز 300$، وإلا تُضاف رسوم شحن ثابتة.'),
-            ('How can I track my order?', 'يمكنك تتبع طلبك من صفحة "Track Order" باستخدام رقم الطلب والبريد الإلكتروني، أو من صفحة "My Orders" إذا كان لديك حساب.'),
-            ('What payment methods do you accept?', 'نقبل الدفع عند الاستلام (Cash on Delivery)، التحويل البنكي المباشر، وPayPal.'),
-            ('Can I cancel or modify my order?', 'يمكنك التواصل معنا فور إتمام الطلب لتعديله أو إلغائه قبل شحنه.'),
+            ('What are your delivery times?', 'Delivery usually takes 3 to 7 business days depending on your location. An estimated delivery time is shown at checkout.'),
+            ('Can I return a product?', 'Yes, you can return any product within 14 days of delivery as long as it is in its original condition.'),
+            ('Do you offer free shipping?', 'Yes, shipping is free on all orders over $300; otherwise a flat shipping fee applies.'),
+            ('How can I track my order?', 'You can track your order from the "Track Order" page using your order number and email, or from "My Orders" if you have an account.'),
+            ('What payment methods do you accept?', 'We accept Cash on Delivery, Direct Bank Transfer, and PayPal.'),
+            ('Can I cancel or modify my order?', 'Please contact us as soon as you place your order to modify or cancel it before it ships.'),
         ]
         for i, (q, a) in enumerate(faqs_data):
-            FAQ.objects.get_or_create(question=q, defaults={'answer': a, 'order': i})
+            FAQ.objects.update_or_create(question=q, defaults={'answer': a, 'order': i})
 
         # --- Legal pages ---
-        LegalPage.objects.get_or_create(page_type='terms', defaults={
+        LegalPage.objects.update_or_create(page_type='terms', defaults={
             'title': 'Terms & Conditions',
             'content': (
-                '<h4>1. المقدمة</h4>'
-                '<p>باستخدامك لموقع Furni فإنك توافق على الالتزام بالشروط والأحكام التالية. '
-                'يرجى قراءتها بعناية قبل إتمام أي عملية شراء.</p>'
-                '<h4>2. الطلبات والدفع</h4>'
-                '<p>يتم تأكيد الطلب بعد استكمال بيانات الفوترة والشحن بشكل صحيح. '
-                'الأسعار المعروضة تشمل جميع الضرائب المطبقة ما لم يُذكر خلاف ذلك.</p>'
-                '<h4>3. الشحن والتوصيل</h4>'
-                '<p>نسعى لتوصيل الطلبات خلال المدة المحددة، وقد تختلف المدة حسب الموقع الجغرافي والظروف الخارجة عن إرادتنا.</p>'
-                '<h4>4. الإرجاع والاستبدال</h4>'
-                '<p>يحق للعميل إرجاع المنتج خلال 14 يوماً من تاريخ الاستلام، بشرط أن يكون بحالته الأصلية وغير مستخدم.</p>'
-                '<h4>5. الملكية الفكرية</h4>'
-                '<p>جميع المحتويات الموجودة على الموقع (نصوص، صور، تصاميم) هي ملك حصري لـ Furni ولا يجوز استخدامها دون إذن مسبق.</p>'
+                '<h4>1. Introduction</h4>'
+                '<p>By using the Furni website, you agree to be bound by the following terms and conditions. '
+                'Please read them carefully before making a purchase.</p>'
+                '<h4>2. Orders & Payment</h4>'
+                '<p>An order is confirmed once billing and shipping details have been correctly completed. '
+                'Displayed prices include all applicable taxes unless otherwise stated.</p>'
+                '<h4>3. Shipping & Delivery</h4>'
+                '<p>We aim to deliver orders within the stated timeframe; delivery times may vary depending on '
+                'location and circumstances beyond our control.</p>'
+                '<h4>4. Returns & Exchanges</h4>'
+                '<p>Customers may return a product within 14 days of delivery, provided it is unused and in its '
+                'original condition.</p>'
+                '<h4>5. Intellectual Property</h4>'
+                '<p>All content on this website (text, images, designs) is the exclusive property of Furni and '
+                'may not be used without prior permission.</p>'
             ),
         })
-        LegalPage.objects.get_or_create(page_type='privacy', defaults={
+        LegalPage.objects.update_or_create(page_type='privacy', defaults={
             'title': 'Privacy Policy',
             'content': (
-                '<h4>1. المعلومات التي نجمعها</h4>'
-                '<p>نقوم بجمع المعلومات التي تقدمها مباشرة مثل الاسم، البريد الإلكتروني، رقم الهاتف، وعنوان الشحن '
-                'عند إنشاء حساب أو إتمام عملية شراء.</p>'
-                '<h4>2. كيفية استخدام المعلومات</h4>'
-                '<p>نستخدم بياناتك لمعالجة الطلبات، تحسين تجربة التسوق، والتواصل معك بخصوص طلباتك وعروضنا (إن وافقت على ذلك).</p>'
-                '<h4>3. حماية البيانات</h4>'
-                '<p>نتخذ إجراءات أمنية معقولة لحماية بياناتك من الوصول أو الاستخدام أو الإفصاح غير المصرح به.</p>'
-                '<h4>4. مشاركة البيانات</h4>'
-                '<p>لا نشارك بياناتك الشخصية مع أطراف ثالثة إلا في حدود ما يلزم لإتمام عملية الشحن والدفع.</p>'
-                '<h4>5. حقوقك</h4>'
-                '<p>يمكنك في أي وقت طلب الاطلاع على بياناتك أو تعديلها أو حذفها من خلال التواصل معنا.</p>'
+                '<h4>1. Information We Collect</h4>'
+                '<p>We collect information you provide directly, such as your name, email, phone number, and '
+                'shipping address, when you create an account or place an order.</p>'
+                '<h4>2. How We Use Your Information</h4>'
+                '<p>We use your data to process orders, improve your shopping experience, and communicate with '
+                'you about your orders and our offers (if you have opted in).</p>'
+                '<h4>3. Data Protection</h4>'
+                '<p>We take reasonable security measures to protect your data from unauthorized access, use, or '
+                'disclosure.</p>'
+                '<h4>4. Sharing Your Data</h4>'
+                '<p>We do not share your personal data with third parties except as necessary to complete '
+                'shipping and payment.</p>'
+                '<h4>5. Your Rights</h4>'
+                '<p>You may request access to, correction of, or deletion of your data at any time by contacting us.</p>'
             ),
         })
 
