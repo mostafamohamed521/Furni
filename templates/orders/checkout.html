@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5"><div class="intro-excerpt"><h1>Checkout</h1></div></div>
+        <div class="col-lg-7"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section tight-section">
+    <div class="container">
+      {% if not user.is_authenticated %}
+      <div class="row mb-5">
+        <div class="col-md-12">
+          <div class="border p-4 rounded" role="alert">
+            Returning customer? <a href="{% url 'accounts:login' %}?next={% url 'orders:checkout' %}">Click here</a> to login
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6 mb-5 mb-md-0">
+            <h2 class="h3 mb-3 text-black">Billing Details</h2>
+            <div class="p-3 p-lg-5 border bg-white">
+              <div class="form-group mb-3">
+                <label class="text-black">Country <span class="text-danger">*</span></label>
+                {{ form.country }}
+              </div>
+              <div class="form-group row mb-3">
+                <div class="col-md-6">
+                  <label class="text-black">First Name <span class="text-danger">*</span></label>
+                  {{ form.first_name }}
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black">Last Name <span class="text-danger">*</span></label>
+                  {{ form.last_name }}
+                </div>
+              </div>
+              <div class="form-group mb-3">
+                <label class="text-black">Company Name</label>
+                {{ form.company_name }}
+              </div>
+              <div class="form-group mb-3">
+                <label class="text-black">Address <span class="text-danger">*</span></label>
+                {{ form.address }}
+              </div>
+              <div class="form-group mt-3 mb-3">
+                {{ form.apartment }}
+              </div>
+              <div class="form-group row mb-3">
+                <div class="col-md-6">
+                  <label class="text-black">State / City <span class="text-danger">*</span></label>
+                  {{ form.state }}
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black">Postal / Zip <span class="text-danger">*</span></label>
+                  {{ form.postal_code }}
+                </div>
+              </div>
+              <div class="form-group row mb-3">
+                <div class="col-md-6">
+                  <label class="text-black">Email Address <span class="text-danger">*</span></label>
+                  {{ form.email }}
+                </div>
+                <div class="col-md-6">
+                  <label class="text-black">Phone <span class="text-danger">*</span></label>
+                  {{ form.phone }}
+                </div>
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="text-black" data-bs-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false">
+                  {{ form.ship_to_different_address }} Ship To A Different Address?
+                </label>
+                <div class="collapse" id="ship_different_address">
+                  <div class="py-2">
+                    <div class="form-group mb-3">
+                      <label class="text-black">Shipping Address</label>
+                      {{ form.shipping_address }}
+                    </div>
+                    <div class="form-group row mb-3">
+                      <div class="col-md-6">
+                        <label class="text-black">City</label>
+                        {{ form.shipping_city }}
+                      </div>
+                      <div class="col-md-6">
+                        <label class="text-black">Country</label>
+                        {{ form.shipping_country }}
+                      </div>
+                    </div>
+                    <div class="form-group mb-3">
+                      <label class="text-black">Postal / Zip</label>
+                      {{ form.shipping_postal_code }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="text-black">Order Notes</label>
+                {{ form.notes }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+                <div class="p-3 p-lg-5 border bg-white">
+                  <label class="text-black mb-3">Enter your coupon code if you have one</label>
+                  <div class="input-group w-100 couponcode-wrap">
+                    <input type="text" name="code" form="coupon-form" class="form-control me-2" placeholder="Coupon Code">
+                    <button class="btn btn-black btn-sm" type="submit" form="coupon-form">Apply</button>
+                  </div>
+                  {% if coupon %}<p class="text-success mt-2 mb-0">Applied: {{ coupon.code }} (-{{ coupon.discount_percent }}%)</p>{% endif %}
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-5">
+              <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Your Order</h2>
+                <div class="p-3 p-lg-5 border bg-white">
+                  <table class="table site-block-order-table mb-4">
+                    <thead><tr><th>Product</th><th>Total</th></tr></thead>
+                    <tbody>
+                      {% for item in cart %}
+                      <tr>
+                        <td>{{ item.product.name }} <strong class="mx-2">x</strong> {{ item.quantity }}</td>
+                        <td>${{ item.total_price }}</td>
+                      </tr>
+                      {% endfor %}
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Subtotal</strong></td>
+                        <td class="text-black">${{ subtotal }}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-black">Shipping</td>
+                        <td class="text-black">{% if shipping_cost == 0 %}Free{% else %}${{ shipping_cost }}{% endif %}</td>
+                      </tr>
+                      {% if discount_amount > 0 %}
+                      <tr>
+                        <td class="text-black">Discount</td>
+                        <td class="text-success">-${{ discount_amount }}</td>
+                      </tr>
+                      {% endif %}
+                      <tr>
+                        <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                        <td class="text-black font-weight-bold"><strong>${{ grand_total }}</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="mb-3">
+                    {% for radio in form.payment_method %}
+                    <div class="border p-3 mb-2 d-flex align-items-center">
+                      {{ radio.tag }}
+                      <label class="ms-2 mb-0" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                    </div>
+                    {% endfor %}
+                  </div>
+
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-black btn-lg py-3 btn-block w-100">Place Order</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <form id="coupon-form" action="{% url 'orders:apply_coupon' %}" method="post" class="d-none">{% csrf_token %}</form>
+    </div>
+  </div>
+{% endblock %}
