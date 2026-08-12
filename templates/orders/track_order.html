@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Track Order{% endblock %}
+
+{% block content %}
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-6"><div class="intro-excerpt"><h1>Track Your Order</h1>
+          <p class="mb-0">Enter your order number and the email used at checkout to follow your order's status.</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section tight-section">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-6">
+          <div class="p-4 p-lg-5 border bg-white rounded">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              <div class="mb-3">
+                <label class="text-black">Order Number</label>
+                {{ form.order_number }}
+              </div>
+              <div class="mb-4">
+                <label class="text-black">Email</label>
+                {{ form.email }}
+              </div>
+              <button type="submit" class="btn btn-black w-100 py-2">Track Order</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {% if order %}
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="p-4 p-lg-5 border bg-white rounded">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h4 class="mb-0">Order {{ order.order_number }}</h4>
+              <span class="badge bg-{% if order.status == 'delivered' %}success{% elif order.status == 'cancelled' %}danger{% else %}warning text-dark{% endif %} fs-6">{{ order.get_status_display }}</span>
+            </div>
+            <p class="text-muted mb-4">Placed on {{ order.created_at|date:"M d, Y H:i" }}</p>
+
+            <table class="table site-block-order-table mb-4">
+              <thead><tr><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
+              <tbody>
+                {% for item in order.items.all %}
+                <tr>
+                  <td>{{ item.product_name }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>${{ item.total_price }}</td>
+                </tr>
+                {% endfor %}
+                <tr><td colspan="2" class="text-end fw-bold">Grand Total</td><td class="fw-bold">${{ order.grand_total }}</td></tr>
+              </tbody>
+            </table>
+
+            <div class="progress mb-2" style="height: 8px;">
+              {% if order.status == 'cancelled' %}
+              <div class="progress-bar bg-danger" style="width: 100%"></div>
+              {% else %}
+              <div class="progress-bar bg-dark" style="width:
+                {% if order.status == 'pending' %}25%
+                {% elif order.status == 'processing' %}50%
+                {% elif order.status == 'shipped' %}75%
+                {% elif order.status == 'delivered' %}100%
+                {% endif %}"></div>
+              {% endif %}
+            </div>
+            <div class="d-flex justify-content-between small text-muted">
+              <span>Pending</span><span>Processing</span><span>Shipped</span><span>Delivered</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% elif searched %}
+      <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+          <p class="text-muted">No matching order was found. Please double-check your details and try again.</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
