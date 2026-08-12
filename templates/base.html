@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="ar" dir="ltr">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,15 +22,15 @@
   <title>{% block title %}Furni{% endblock %} | Modern Interior Design Studio</title>
 </head>
 
-<body class="furni-loading">
+<body>
 
-  <!-- Preloader -->
+  <!-- Preloader (shown only on the very first page of a browsing session) -->
   <div id="preloader">
     <div class="preloader-logo">Furni<span>.</span></div>
     <div class="preloader-bar"></div>
   </div>
 
-  <!-- Welcome Overlay (first visit) -->
+  <!-- Welcome Overlay (first visit only) -->
   <div id="welcomeOverlay">
     <div class="welcome-content">
       <div class="welcome-icon">
@@ -39,10 +39,24 @@
         </svg>
       </div>
       <h1 class="welcome-title">Welcome to Furni<span>.</span></h1>
-      <p class="welcome-subtitle">أثاث عصري بتصميم يليق بذوقك. استمتع بتجربة تسوق مريحة وسلسة.</p>
+      <p class="welcome-subtitle">Modern furniture, thoughtfully designed. Enjoy a smooth, comfortable shopping experience.</p>
       <div class="welcome-dots"><span></span><span></span><span></span></div>
     </div>
   </div>
+
+  <!-- Runs synchronously, before the rest of the page paints: decides — once per
+       browsing session — whether the preloader/welcome overlay should appear at all.
+       On every page after the first, both elements stay display:none (see extra-style.css)
+       and are never shown, so there is no "loading" flash on internal navigation. -->
+  <script>
+    (function () {
+      if (!sessionStorage.getItem('furni_site_entered')) {
+        document.getElementById('preloader').classList.add('preloader-active');
+        document.getElementById('welcomeOverlay').classList.add('welcome-eligible');
+        sessionStorage.setItem('furni_site_entered', '1');
+      }
+    })();
+  </script>
 
   <!-- Start Header/Navigation -->
   <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
@@ -76,15 +90,15 @@
               <img src="{% static 'images/user.svg' %}" alt="account">
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><h6 class="dropdown-header">مرحباً، {{ user.first_name|default:user.username }}</h6></li>
-              <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="fa-solid fa-user me-2"></i>الملف الشخصي</a></li>
-              <li><a class="dropdown-item" href="{% url 'orders:order_history' %}"><i class="fa-solid fa-box me-2"></i>طلباتي</a></li>
-              <li><a class="dropdown-item" href="{% url 'shop:wishlist' %}"><i class="fa-solid fa-heart me-2"></i>المفضلة</a></li>
+              <li><h6 class="dropdown-header">Hi, {{ user.first_name|default:user.username }}</h6></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:profile' %}"><i class="fa-solid fa-user me-2"></i>My Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'orders:order_history' %}"><i class="fa-solid fa-box me-2"></i>My Orders</a></li>
+              <li><a class="dropdown-item" href="{% url 'shop:wishlist' %}"><i class="fa-solid fa-heart me-2"></i>Wishlist</a></li>
               <li><hr class="dropdown-divider"></li>
               <li>
                 <form action="{% url 'accounts:logout' %}" method="post" class="px-3">
                   {% csrf_token %}
-                  <button type="submit" class="btn btn-sm btn-link p-0 text-danger text-decoration-none"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>تسجيل الخروج</button>
+                  <button type="submit" class="btn btn-sm btn-link p-0 text-danger text-decoration-none"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Logout</button>
                 </form>
               </li>
             </ul>
@@ -157,7 +171,7 @@
         <div class="row g-5 mb-5">
           <div class="col-lg-4">
             <div class="mb-4 footer-logo-wrap"><a href="{% url 'core:home' %}" class="footer-logo">Furni<span>.</span></a></div>
-            <p class="mb-4">متجرك المتكامل للأثاث العصري وتصميم الديكور الداخلي. جودة عالية، تصميم أنيق، وتوصيل سريع.</p>
+            <p class="mb-4">Your complete destination for modern furniture and interior design. High quality, elegant design, and fast delivery.</p>
 
             <ul class="list-unstyled custom-social">
               <li><a href="{{ site_settings.facebook_url }}"><span class="fa fa-brands fa-facebook-f"></span></a></li>
