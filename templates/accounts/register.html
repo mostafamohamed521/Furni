@@ -2,15 +2,15 @@
 {% block title %}Create Account{% endblock %}
 
 {% block content %}
-  <div class="hero">
+  <div class="hero hero-inner">
     <div class="container">
       <div class="row justify-content-between">
-        <div class="col-lg-5"><div class="intro-excerpt"><h1>Create Account</h1></div></div>
+        <div class="col-lg-6"><div class="intro-excerpt"><h1>Create Account</h1></div></div>
       </div>
     </div>
   </div>
 
-  <div class="untree_co-section before-footer-section">
+  <div class="untree_co-section before-footer-section tight-section">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-7 col-lg-6">
@@ -45,6 +45,7 @@
                 {{ form.password2 }}
                 {% for error in form.password2.errors %}<small class="text-danger">{{ error }}</small>{% endfor %}
               </div>
+              <p class="text-muted small mb-3"><i class="fa-solid fa-shield-halved me-1"></i>We'll email you a 6-digit code to verify your account.</p>
               <button type="submit" class="btn btn-black w-100 py-2">Create Account</button>
             </form>
             <p class="text-center mt-4 mb-0 text-muted">Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
