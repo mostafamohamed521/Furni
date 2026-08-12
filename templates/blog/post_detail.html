@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-8"><div class="intro-excerpt"><h1>{{ post.title }}</h1></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section tight-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <img src="{{ post.image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+          <div class="meta mb-3 text-muted">
+            <span>by {{ post.author.get_full_name|default:post.author.username }}</span> &middot; <span>{{ post.created_at|date:"M d, Y" }}</span>
+            {% if post.category %} &middot; <span>{{ post.category.name }}</span>{% endif %}
+          </div>
+          <div class="post-body mb-5">{{ post.content|linebreaks }}</div>
+
+          <h4 class="mb-4">Comments ({{ post.comment_count }})</h4>
+          {% for comment in comments %}
+          <div class="d-flex mb-4 pb-3 border-bottom">
+            <div class="avatar-sm d-flex align-items-center justify-content-center bg-dark text-white rounded-circle me-3">{{ comment.name|slice:":1"|upper }}</div>
+            <div>
+              <h6 class="mb-1">{{ comment.name }}</h6>
+              <p class="mb-1">{{ comment.body }}</p>
+              <small class="text-muted">{{ comment.created_at|date:"M d, Y H:i" }}</small>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-muted">No comments yet. Be the first to comment!</p>
+          {% endfor %}
+
+          <h5 class="mt-5 mb-3">Leave a Comment</h5>
+          <form method="post" class="p-4 border bg-white rounded">
+            {% csrf_token %}
+            {{ form.website }}
+            <div class="row">
+              <div class="col-md-6 mb-3">{{ form.name }}</div>
+              <div class="col-md-6 mb-3">{{ form.email }}</div>
+            </div>
+            <div class="mb-3">{{ form.body }}</div>
+            <button type="submit" class="btn btn-black">Submit Comment</button>
+          </form>
+        </div>
+
+        <div class="col-lg-4">
+          <h5 class="mb-3">Recent Posts</h5>
+          {% for rp in recent_posts %}
+          <div class="d-flex mb-3">
+            <img src="{{ rp.image.url }}" style="width:60px;height:60px;object-fit:cover;" class="rounded me-2" alt="{{ rp.title }}">
+            <div>
+              <a href="{{ rp.get_absolute_url }}" class="d-block text-black text-decoration-none small fw-bold">{{ rp.title|truncatechars:40 }}</a>
+              <small class="text-muted">{{ rp.created_at|date:"M d, Y" }}</small>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
