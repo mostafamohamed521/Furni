@@ -1,25 +1,29 @@
 /* ==========================================================
    Furni Store — Extra styles: Preloader, Welcome overlay,
-   Toasts, small UI polish. Complements the original style.css
+   Toasts, small UI polish. Uses the SAME brand palette as
+   style.css: dark green primary (#3b5d50) + gold accent (#f9bf29).
    ========================================================== */
 
 :root {
-  --furni-primary: #f9a94b;
-  --furni-dark: #16110d;
+  --furni-primary: #3b5d50;
+  --furni-primary-dark: #2c463c;
+  --furni-accent: #f9bf29;
+  --furni-dark-text: #2f2f2f;
 }
 
-/* ---------- Preloader ---------- */
+/* ---------- Preloader (shown once per browser session, on the very first page) ---------- */
 #preloader {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: #16110d;
-  display: flex;
+  background: var(--furni-primary);
+  display: none; /* stays hidden by default; only unhidden by inline script on first visit */
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  transition: opacity .6s ease, visibility .6s ease;
+  transition: opacity .5s ease, visibility .5s ease;
 }
+#preloader.preloader-active { display: flex; }
 #preloader.preloader-hidden {
   opacity: 0;
   visibility: hidden;
@@ -35,11 +39,11 @@
   opacity: 0;
   animation: furniFadeUp .8s ease forwards .1s;
 }
-.preloader-logo span { color: var(--furni-primary); }
+.preloader-logo span { color: var(--furni-accent); }
 .preloader-bar {
   width: 160px;
   height: 3px;
-  background: rgba(255,255,255,.15);
+  background: rgba(255,255,255,.2);
   border-radius: 4px;
   overflow: hidden;
   opacity: 0;
@@ -50,7 +54,7 @@
   display: block;
   width: 40%;
   height: 100%;
-  background: var(--furni-primary);
+  background: var(--furni-accent);
   border-radius: 4px;
   animation: preloaderSlide 1.1s ease-in-out infinite;
 }
@@ -64,13 +68,13 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- Welcome overlay (first visit only) ---------- */
+/* ---------- Welcome overlay (first visit only, appears right after the preloader) ---------- */
 #welcomeOverlay {
   position: fixed;
   inset: 0;
   z-index: 99998;
-  background: radial-gradient(circle at 50% 40%, #241c15 0%, #16110d 75%);
-  display: flex;
+  background: radial-gradient(circle at 50% 40%, var(--furni-primary-dark) 0%, var(--furni-primary) 75%);
+  display: none;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -78,6 +82,7 @@
   visibility: hidden;
   transition: opacity .7s ease, visibility .7s ease;
 }
+#welcomeOverlay.welcome-eligible { display: flex; }
 #welcomeOverlay.welcome-show {
   opacity: 1;
   visibility: visible;
@@ -92,16 +97,16 @@
   height: 84px;
   margin: 0 auto 24px;
   border-radius: 50%;
-  background: rgba(249,169,75,.12);
+  background: rgba(249,191,41,.15);
   display: flex;
   align-items: center;
   justify-content: center;
   animation: welcomePulse 2.2s ease-in-out infinite;
 }
-.welcome-icon svg { width: 38px; height: 38px; color: var(--furni-primary); }
+.welcome-icon svg { width: 38px; height: 38px; color: var(--furni-accent); }
 @keyframes welcomePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(249,169,75,.35); }
-  50% { box-shadow: 0 0 0 18px rgba(249,169,75,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(249,191,41,.35); }
+  50% { box-shadow: 0 0 0 18px rgba(249,191,41,0); }
 }
 .welcome-title {
   font-family: 'Jost', sans-serif;
@@ -112,9 +117,9 @@
   opacity: 0;
   animation: furniFadeUp .8s ease forwards .15s;
 }
-.welcome-title span { color: var(--furni-primary); }
+.welcome-title span { color: var(--furni-accent); }
 .welcome-subtitle {
-  color: rgba(255,255,255,.65);
+  color: rgba(255,255,255,.75);
   font-size: 1.05rem;
   max-width: 420px;
   margin: 0 auto;
@@ -131,7 +136,7 @@
 }
 .welcome-dots span {
   width: 8px; height: 8px; border-radius: 50%;
-  background: var(--furni-primary);
+  background: var(--furni-accent);
   animation: welcomeDotBounce 1.4s ease-in-out infinite;
 }
 .welcome-dots span:nth-child(2) { animation-delay: .15s; }
@@ -141,11 +146,10 @@
   40% { transform: translateY(-8px); opacity: 1; }
 }
 
-/* ---------- Page fade-in after loaders ---------- */
-body.furni-loading { overflow: hidden; }
-.page-fade-in { animation: pageFadeIn .6s ease both; }
+/* ---------- Page fade-in ---------- */
+.page-fade-in { animation: pageFadeIn .5s ease both; }
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -160,14 +164,31 @@ body.furni-loading { overflow: hidden; }
   transform: translateY(0);
 }
 
+/* ---------- Compact hero for inner pages (keeps identity, removes excess empty space) ---------- */
+.hero.hero-inner {
+  padding: 2.5rem 0 !important;
+}
+@media (min-width: 768px) {
+  .hero.hero-inner { padding: 3rem 0 !important; }
+}
+@media (min-width: 992px) {
+  .hero.hero-inner { padding: 3.5rem 0 !important; }
+}
+.hero.hero-inner h1 { margin-bottom: 6px; font-size: 2.2rem; }
+.hero.hero-inner .intro-excerpt p { margin-bottom: 0; }
+
+/* ---------- Section spacing normalizer (reduces excess blank space) ---------- */
+.untree_co-section.tight-section { padding: 3rem 0; }
+.before-footer-section.tight-section { padding-bottom: 3rem; }
+
 /* ---------- Cart badge ---------- */
 .cart-icon-wrap { position: relative; display: inline-flex; }
 .cart-badge {
   position: absolute;
   top: -8px;
   right: -10px;
-  background: var(--furni-primary);
-  color: #16110d;
+  background: var(--furni-accent);
+  color: var(--furni-dark-text);
   font-size: .68rem;
   font-weight: 700;
   min-width: 18px;
@@ -204,13 +225,13 @@ body.furni-loading { overflow: hidden; }
   border-radius: 4px;
   z-index: 2;
 }
-.star-rating { color: #f9a94b; letter-spacing: 1px; }
+.star-rating { color: var(--furni-accent); letter-spacing: 1px; }
 .avatar-sm { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
-.form-control:focus { border-color: var(--furni-primary); box-shadow: 0 0 0 .2rem rgba(249,169,75,.2); }
-.btn-black { background: #16110d; color: #fff; border: 1px solid #16110d; transition: all .3s ease; }
-.btn-black:hover { background: transparent; color: #16110d; }
-.btn-outline-black { border: 1px solid #16110d; color: #16110d; transition: all .3s ease; }
-.btn-outline-black:hover { background: #16110d; color: #fff; }
+.form-control:focus { border-color: var(--furni-primary); box-shadow: 0 0 0 .2rem rgba(59,93,80,.2); }
+.btn-black { background: var(--furni-primary); color: #fff; border: 1px solid var(--furni-primary); transition: all .3s ease; }
+.btn-black:hover { background: transparent; color: var(--furni-primary); }
+.btn-outline-black { border: 1px solid var(--furni-primary); color: var(--furni-primary); transition: all .3s ease; }
+.btn-outline-black:hover { background: var(--furni-primary); color: #fff; }
 .product-card-actions {
   position: absolute;
   bottom: -50px;
@@ -229,14 +250,26 @@ body.furni-loading { overflow: hidden; }
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 10px rgba(0,0,0,.15);
-  color: #16110d;
+  color: var(--furni-primary);
   border: none;
 }
-.quick-action-btn:hover { background: var(--furni-primary); color: #fff; }
-.empty-state { padding: 80px 20px; text-align: center; }
-.empty-state svg { width: 70px; height: 70px; color: #ccc; margin-bottom: 20px; }
+.quick-action-btn:hover { background: var(--furni-accent); color: #fff; }
+.empty-state { padding: 60px 20px; text-align: center; }
+.empty-state svg, .empty-state i { color: #ccc; margin-bottom: 16px; }
 .toast-container { z-index: 100000; }
 .spinner-inline { width: 1rem; height: 1rem; }
-.pagination .page-link { color: #16110d; }
-.pagination .page-item.active .page-link { background: #16110d; border-color: #16110d; }
-.social-login-btn { border: 1px solid #e2e2e2; padding: 10px; border-radius: 6px; text-align: center; display: block; color: #16110d; }
+.pagination .page-link { color: var(--furni-primary); }
+.pagination .page-item.active .page-link { background: var(--furni-primary); border-color: var(--furni-primary); }
+.social-login-btn { border: 1px solid #e2e2e2; padding: 10px; border-radius: 6px; text-align: center; display: block; color: var(--furni-primary); }
+
+/* ---------- OTP verification screen ---------- */
+.otp-input-group { display: flex; gap: 10px; justify-content: center; }
+.otp-input-group input {
+  width: 52px; height: 60px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.otp-input-group input:focus { border-color: var(--furni-primary); box-shadow: 0 0 0 .2rem rgba(59,93,80,.2); outline: none; }
