@@ -76,7 +76,7 @@ def product_detail(request, slug):
 
     if request.method == 'POST' and request.user.is_authenticated:
         if user_has_reviewed:
-            messages.warning(request, 'لقد قمت بتقييم هذا المنتج من قبل.')
+            messages.warning(request, "You've already reviewed this product.")
             return redirect(product.get_absolute_url())
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
@@ -84,10 +84,10 @@ def product_detail(request, slug):
             review.product = product
             review.user = request.user
             review.save()
-            messages.success(request, 'شكراً لك! تم إضافة تقييمك بنجاح.')
+            messages.success(request, 'Thank you! Your review has been added successfully.')
             return redirect(product.get_absolute_url())
     elif request.method == 'POST':
-        messages.info(request, 'الرجاء تسجيل الدخول لإضافة تقييم.')
+        messages.info(request, 'Please log in to add a review.')
         return redirect('accounts:login')
 
     is_wishlisted = False
@@ -112,10 +112,10 @@ def toggle_wishlist(request, slug):
     if not created:
         wishlist_item.delete()
         added = False
-        messages.info(request, f'تمت إزالة "{product.name}" من قائمة الرغبات.')
+        messages.info(request, f'"{product.name}" was removed from your wishlist.')
     else:
         added = True
-        messages.success(request, f'تمت إضافة "{product.name}" إلى قائمة الرغبات.')
+        messages.success(request, f'"{product.name}" was added to your wishlist.')
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({'added': added})
