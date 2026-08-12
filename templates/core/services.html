@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Services{% endblock %}
+
+{% block content %}
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-6"><div class="intro-excerpt"><h1>Our Services</h1>
+          <p class="mb-0">A complete range of services to turn your space into somewhere that reflects your taste.</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section tight-section">
+    <div class="container">
+      <div class="row">
+        {% for service in services %}
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="p-4 border rounded h-100 reveal-up">
+            <div class="mb-3"><i class="{{ service.icon_class }}" style="font-size:34px;color:#3b5d50;"></i></div>
+            <h4 class="mb-2">{{ service.title }}</h4>
+            <p class="text-muted mb-0">{{ service.description }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="p-4 border rounded h-100">
+            <div class="mb-3"><i class="fa-solid fa-couch" style="font-size:34px;color:#3b5d50;"></i></div>
+            <h4 class="mb-2">Interior Design Consultation</h4>
+            <p class="text-muted mb-0">Personalized interior design consultations that match your taste and your space.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="p-4 border rounded h-100">
+            <div class="mb-3"><i class="fa-solid fa-truck" style="font-size:34px;color:#3b5d50;"></i></div>
+            <h4 class="mb-2">Fast Delivery & Installation</h4>
+            <p class="text-muted mb-0">Professional delivery and installation for every piece, often on the same day.</p>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="p-4 border rounded h-100">
+            <div class="mb-3"><i class="fa-solid fa-arrows-rotate" style="font-size:34px;color:#3b5d50;"></i></div>
+            <h4 class="mb-2">Hassle-Free Returns</h4>
+            <p class="text-muted mb-0">A flexible return policy within 14 days of delivery.</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
