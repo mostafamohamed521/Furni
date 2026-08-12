@@ -1,16 +1,57 @@
 """
 Django settings for Furni E-Commerce project.
+
+Every value that differs between development and production (secret key,
+debug flag, database, email/SMTP credentials, cache backend, etc.) is read
+from environment variables — see `.env.example` for the full list and
+instructions on how to fill in a real `.env` file.
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-CHANGE-THIS-SECRET-KEY-IN-PRODUCTION-abc123xyz987'
+# Load variables from a .env file placed at the project root (same folder as manage.py).
+# If no .env file exists, this is a no-op and the os.environ defaults below are used instead.
+load_dotenv(BASE_DIR / '.env')
 
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# ==========================================================
+# Small helpers for reading typed values out of the environment
+# ==========================================================
+def env(key, default=None):
+    return os.environ.get(key, default)
+
+
+def env_bool(key, default=False):
+    value = os.environ.get(key)
+    if value is None:
+        return default
+    return value.strip().lower() in ('1', 'true', 'yes', 'on')
+
+
+def env_int(key, default=None):
+    value = os.environ.get(key)
+    if value is None or value == '':
+        return default
+    return int(value)
+
+
+def env_list(key, default=''):
+    value = os.environ.get(key, default)
+    return [item.strip() for item in value.split(',') if item.strip()]
+
+
+# ==========================================================
+# Core
+# ==========================================================
+SECRET_KEY = env('SECRET_KEY', 'django-insecure-CHANGE-THIS-SECRET-KEY-IN-PRODUCTION-abc123xyz987')
+
+DEBUG = env_bool('DEBUG', True)
+
+ALLOWED_HOSTS = env_list('ALLOWED_HOSTS', '*')
 
 # ==========================================================
 # Applications
@@ -71,22 +112,49 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # ==========================================================
 # Database
 # ==========================================================
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Defaults to SQLite (zero setup, great for development/demos).
+# Set DB_ENGINE=postgres in .env to switch to PostgreSQL for production.
+if env('DB_ENGINE', 'sqlite') == 'postgres':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_NAME', 'furni'),
+            'USER': env('DB_USER', 'furni'),
+            'PASSWORD': env('DB_PASSWORD', ''),
+            'HOST': env('DB_HOST', 'localhost'),
+            'PORT': env('DB_PORT', '5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # ==========================================================
-# Cache (used for login brute-force throttling; swap for Redis/Memcached in production)
+# Cache (used for login brute-force throttling)
 # ==========================================================
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'furni-throttle-cache',
+# Defaults to Django's in-process LocMemCache (fine for a single dev server).
+# Set REDIS_URL in .env to switch to Redis — required in production whenever
+# you run more than one worker process, or the login-throttle counters won't
+# be shared correctly between processes.
+REDIS_URL = env('REDIS_URL', '')
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'furni-throttle-cache',
+        }
+    }
 
 # ==========================================================
 # Password validation
@@ -102,7 +170,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # ==========================================================
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Africa/Cairo'
+TIME_ZONE = env('TIME_ZONE', 'Africa/Cairo')
 USE_I18N = True
 USE_TZ = True
 
@@ -138,18 +206,36 @@ MESSAGE_TAGS = {
 }
 
 # ==========================================================
-# Email (console backend for development)
+# Email — used to send OTP codes (login/register) and password resets
 # ==========================================================
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Furni Store <no-reply@furni.local>'
+# Defaults to the console backend: OTP/reset emails are printed to the
+# terminal running `manage.py runserver` instead of actually being sent —
+# perfect for local development, no setup required.
+#
+# To send REAL emails (required in production), set EMAIL_BACKEND=smtp in
+# .env and fill in EMAIL_HOST / EMAIL_HOST_USER / EMAIL_HOST_PASSWORD.
+# See .env.example for a ready-to-edit Gmail example.
+if env('EMAIL_BACKEND', 'console') == 'smtp':
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST', 'smtp.gmail.com')
+    EMAIL_PORT = env_int('EMAIL_PORT', 587)
+    EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
+    EMAIL_USE_SSL = env_bool('EMAIL_USE_SSL', False)
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER', '')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', '')
+    EMAIL_TIMEOUT = 10
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', 'Furni Store <no-reply@furni.local>')
 
 # ==========================================================
 # Site settings
 # ==========================================================
-SITE_NAME = 'Furni'
-FREE_SHIPPING_THRESHOLD = 300
-SHIPPING_COST = 25
-TAX_RATE = 0.0
+SITE_NAME = env('SITE_NAME', 'Furni')
+FREE_SHIPPING_THRESHOLD = env_int('FREE_SHIPPING_THRESHOLD', 300)
+SHIPPING_COST = env_int('SHIPPING_COST', 25)
+TAX_RATE = float(env('TAX_RATE', '0.0'))
 
 # ==========================================================
 # Session security
@@ -165,7 +251,7 @@ SECURE_BROWSER_XSS_FILTER = True
 # Production hardening (auto-enabled only when DEBUG = False)
 # ==========================================================
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = env_bool('SECURE_SSL_REDIRECT', True)
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
