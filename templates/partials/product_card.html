@@ -1,0 +1,29 @@
+{% load static %}
+<div class="position-relative product-item-wrap reveal-up">
+  {% if product.discount_percent > 0 %}<span class="badge-discount">-{{ product.discount_percent }}%</span>{% endif %}
+  {% if not product.in_stock %}<span class="badge-outstock">Out of stock</span>{% endif %}
+
+  <a class="product-item" href="{{ product.get_absolute_url }}">
+    <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'images/product-1.png' %}{% endif %}" class="img-fluid product-thumbnail" alt="{{ product.name }}">
+    <h3 class="product-title">{{ product.name }}</h3>
+    <strong class="product-price">
+      ${{ product.price }}
+      {% if product.old_price %}<del class="text-muted ms-1" style="font-size:.8em;">${{ product.old_price }}</del>{% endif %}
+    </strong>
+  </a>
+
+  <div class="product-card-actions">
+    {% if product.in_stock %}
+    <form action="{% url 'cart:cart_add' product.id %}" method="post" class="d-inline">
+      {% csrf_token %}
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="override" value="False">
+      <button type="submit" class="quick-action-btn" title="Add to cart"><i class="fa-solid fa-cart-plus"></i></button>
+    </form>
+    {% endif %}
+    {% if user.is_authenticated %}
+    <a href="{% url 'shop:toggle_wishlist' product.slug %}" class="quick-action-btn" title="Wishlist"><i class="fa-solid fa-heart"></i></a>
+    {% endif %}
+    <a href="{{ product.get_absolute_url }}" class="quick-action-btn" title="View"><i class="fa-solid fa-eye"></i></a>
+  </div>
+</div>
