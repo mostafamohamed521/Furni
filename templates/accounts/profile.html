@@ -2,7 +2,7 @@
 {% block title %}My Profile{% endblock %}
 
 {% block content %}
-  <div class="hero">
+  <div class="hero hero-inner">
     <div class="container">
       <div class="row justify-content-between">
         <div class="col-lg-5"><div class="intro-excerpt"><h1>My Profile</h1></div></div>
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <div class="untree_co-section before-footer-section">
+  <div class="untree_co-section before-footer-section tight-section">
     <div class="container">
       <div class="row">
         <div class="col-lg-3 mb-4 mb-lg-0">
@@ -43,7 +43,7 @@
                 <label class="text-black">Avatar</label>
                 {{ form.avatar }}
                 {% for error in form.avatar.errors %}<small class="text-danger d-block mt-1">{{ error }}</small>{% endfor %}
-                <small class="text-muted d-block mt-1">JPEG, PNG أو WEBP فقط — حتى 3 ميجابايت.</small>
+                <small class="text-muted d-block mt-1">JPEG, PNG, or WEBP only — up to 3 MB.</small>
               </div>
               <div class="row mb-3">
                 <div class="col-md-6">
