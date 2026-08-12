@@ -2,15 +2,15 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-  <div class="hero">
+  <div class="hero hero-inner">
     <div class="container">
       <div class="row justify-content-between">
-        <div class="col-lg-5"><div class="intro-excerpt"><h1>Login</h1></div></div>
+        <div class="col-lg-6"><div class="intro-excerpt"><h1>Login</h1></div></div>
       </div>
     </div>
   </div>
 
-  <div class="untree_co-section before-footer-section">
+  <div class="untree_co-section before-footer-section tight-section">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
@@ -24,6 +24,7 @@
                 <a href="{% url 'accounts:password_reset' %}" class="small text-muted">Forgot password?</a>
               </div>
               <input type="hidden" name="next" value="{{ next }}">
+              <p class="text-muted small mb-3"><i class="fa-solid fa-shield-halved me-1"></i>We'll send a 6-digit verification code to your email after your password is checked.</p>
               <button type="submit" class="btn btn-black w-100 py-2">Login</button>
             </form>
             <p class="text-center mt-4 mb-0 text-muted">Don't have an account? <a href="{% url 'accounts:register' %}">Create one</a></p>
