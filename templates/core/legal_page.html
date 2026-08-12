@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block content %}
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-6"><div class="intro-excerpt"><h1>{{ page.title }}</h1></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section before-footer-section tight-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          <p class="text-muted mb-4">Last updated: {{ page.updated_at|date:"M d, Y" }}</p>
+          <div class="legal-content">{{ page.content|safe }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
