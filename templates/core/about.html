@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}About us{% endblock %}
+
+{% block content %}
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-6">
+          <div class="intro-excerpt">
+            <h1>About Us</h1>
+            <p class="mb-2">Our story began with a simple passion for interior design — today we're your go-to destination for modern furniture.</p>
+            <p class="mb-0"><a href="{% url 'shop:shop_list' %}" class="btn btn-secondary me-2">Shop Now</a><a href="{% url 'core:contact' %}" class="btn btn-white-outline">Contact</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section tight-section">
+    <div class="container">
+      <div class="row justify-content-between mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <img src="{% static 'images/why-choose-us-img.jpg' %}" class="img-fluid rounded reveal-up" alt="About Furni">
+        </div>
+        <div class="col-lg-5">
+          <h2 class="section-title mb-4">Our Story</h2>
+          <p>Furni was founded with a clear vision: to offer high-quality furniture with modern design at fair prices. We work with the finest craftsmen and designers to ensure every piece combines beauty and durability.</p>
+          <p>Today, we're proud to serve thousands of customers who have trusted us to furnish their homes and offices with pieces that reflect their personality.</p>
+          <ul class="list-unstyled custom-list my-4">
+            <li>Over 10 years of furniture design experience</li>
+            <li>A team of professional designers</li>
+            <li>Sustainable, eco-friendly materials</li>
+            <li>Quality guarantee on every product</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if team_members %}
+  <div class="untree_co-section bg-light tight-section">
+    <div class="container">
+      <div class="row mb-5"><div class="col-lg-6 mx-auto text-center"><h2 class="section-title">Meet Our Team</h2></div></div>
+      <div class="row">
+        {% for member in team_members %}
+        <div class="col-6 col-md-3 mb-4 text-center reveal-up">
+          <img src="{% if member.photo %}{{ member.photo.url }}{% else %}{% static 'images/person-1.png' %}{% endif %}" class="img-fluid rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;" alt="{{ member.name }}">
+          <h5 class="mb-0">{{ member.name }}</h5>
+          <p class="text-muted small">{{ member.role }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if testimonials %}
+  <div class="testimonial-section tight-section">
+    <div class="container">
+      <div class="row"><div class="col-lg-7 mx-auto text-center"><h2 class="section-title">What Our Clients Say</h2></div></div>
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="testimonial-slider-wrap text-center">
+            <div id="testimonial-nav">
+              <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+              <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+            </div>
+            <div class="testimonial-slider">
+              {% for t in testimonials %}
+              <div class="item">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 mx-auto">
+                    <div class="testimonial-block text-center">
+                      <blockquote class="mb-5"><p>&ldquo;{{ t.content }}&rdquo;</p></blockquote>
+                      <div class="author-info">
+                        <div class="author-pic"><img src="{% if t.photo %}{{ t.photo.url }}{% else %}{% static 'images/person-1.png' %}{% endif %}" class="img-fluid"></div>
+                        <h3 class="font-weight-bold">{{ t.name }}</h3>
+                        <span class="position d-block mb-3">{{ t.position }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}
