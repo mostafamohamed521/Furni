@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Server Error{% endblock %}
+{% block content %}
+  <div class="untree_co-section before-footer-section">
+    <div class="container text-center py-5">
+      <h1 class="display-1 fw-bold" style="color:#e74c3c;">500</h1>
+      <h3 class="mb-3">Something Went Wrong</h3>
+      <p class="text-muted mb-4">We're working on fixing the issue. Please try again shortly.</p>
+      <a href="{% url 'core:home' %}" class="btn btn-black">Back to Home</a>
+    </div>
+  </div>
+{% endblock %}
