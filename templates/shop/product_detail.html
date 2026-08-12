@@ -3,7 +3,7 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-  <div class="hero">
+  <div class="hero hero-inner">
     <div class="container">
       <div class="row justify-content-between">
         <div class="col-lg-8">
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="untree_co-section before-footer-section">
+  <div class="untree_co-section before-footer-section tight-section">
     <div class="container">
       <div class="row mb-5">
         <div class="col-md-6 mb-4 mb-md-0">
@@ -110,7 +110,7 @@
             </div>
           </div>
           {% empty %}
-          <p class="text-muted">لا توجد تقييمات بعد. كن أول من يقيّم هذا المنتج!</p>
+          <p class="text-muted">No reviews yet. Be the first to review this product!</p>
           {% endfor %}
 
           {% if user.is_authenticated and not user_has_reviewed %}
@@ -132,7 +132,7 @@
             <button type="submit" class="btn btn-black">Submit Review</button>
           </form>
           {% elif not user.is_authenticated %}
-          <p class="text-muted mt-4"><a href="{% url 'accounts:login' %}">سجّل الدخول</a> لإضافة تقييمك.</p>
+          <p class="text-muted mt-4"><a href="{% url 'accounts:login' %}">Log in</a> to add your review.</p>
           {% endif %}
         </div>
       </div>
