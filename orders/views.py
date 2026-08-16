@@ -5,10 +5,19 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.conf import settings
 from django.utils import timezone
+from django.db import transaction
 
 from cart.cart import Cart
 from .forms import OrderCreateForm, CouponApplyForm, TrackOrderForm
 from .models import Order, OrderItem, Coupon
+from .utils import send_order_confirmation_email
+from shop.models import Product
+
+
+class _StockUnavailable(Exception):
+    """Internal control-flow signal: raised inside the atomic block to force
+    a rollback when stock isn't sufficient, then caught right outside it."""
+    pass
 
 
 def checkout(request):
@@ -49,26 +58,56 @@ def checkout(request):
     if request.method == 'POST':
         form = OrderCreateForm(request.POST, initial=initial)
         if form.is_valid():
-            order = form.save(commit=False)
-            if request.user.is_authenticated:
-                order.user = request.user
-            order.coupon = coupon
-            order.discount_amount = discount_amount
-            order.shipping_cost = shipping_cost
-            order.save()
+            # Lock each product row for the duration of the transaction so two
+            # concurrent checkouts for the same last-in-stock item can't both
+            # succeed (a classic race condition that would oversell stock).
+            # We validate availability BEFORE creating the order, so a
+            # customer is never charged for an item that turns out to be
+            # unavailable at the exact moment of checkout.
+            product_ids = [item['product'].id for item in cart]
+            try:
+                with transaction.atomic():
+                    locked_products = {
+                        p.id: p for p in Product.objects.select_for_update().filter(id__in=product_ids)
+                    }
 
-            for item in cart:
-                OrderItem.objects.create(
-                    order=order,
-                    product=item['product'],
-                    product_name=item['product'].name,
-                    price=item['price'],
-                    quantity=item['quantity'],
-                )
-                product = item['product']
-                if product.stock >= item['quantity']:
-                    product.stock -= item['quantity']
-                    product.save(update_fields=['stock'])
+                    insufficient = []
+                    for item in cart:
+                        locked_product = locked_products.get(item['product'].id)
+                        if not locked_product or locked_product.stock < item['quantity']:
+                            insufficient.append((locked_product, item['quantity']))
+
+                    if insufficient:
+                        for locked_product, requested_qty in insufficient:
+                            if locked_product:
+                                messages.error(
+                                    request,
+                                    f'Sorry, only {locked_product.stock} unit(s) of "{locked_product.name}" '
+                                    f'are left in stock (you requested {requested_qty}). Please update your cart.'
+                                )
+                        raise _StockUnavailable()
+
+                    order = form.save(commit=False)
+                    if request.user.is_authenticated:
+                        order.user = request.user
+                    order.coupon = coupon
+                    order.discount_amount = discount_amount
+                    order.shipping_cost = shipping_cost
+                    order.save()
+
+                    for item in cart:
+                        locked_product = locked_products[item['product'].id]
+                        OrderItem.objects.create(
+                            order=order,
+                            product=locked_product,
+                            product_name=locked_product.name,
+                            price=item['price'],
+                            quantity=item['quantity'],
+                        )
+                        locked_product.stock -= item['quantity']
+                        locked_product.save(update_fields=['stock'])
+            except _StockUnavailable:
+                return redirect('cart:cart_detail')
 
             cart.clear()
             request.session.pop('coupon_code', None)
@@ -77,6 +116,7 @@ def checkout(request):
             recent_orders = request.session.get('recent_guest_orders', [])
             recent_orders.append(order.order_number)
             request.session['recent_guest_orders'] = recent_orders[-10:]
+            send_order_confirmation_email(order, request=request)
             return redirect('orders:thank_you', order_number=order.order_number)
     else:
         form = OrderCreateForm(initial=initial)
