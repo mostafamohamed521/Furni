@@ -79,8 +79,9 @@
           <li class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}"><a class="nav-link" href="{% url 'core:contact' %}">Contact us</a></li>
         </ul>
 
-        <form class="d-flex mx-md-3 my-2 my-md-0 position-relative" action="{% url 'shop:shop_list' %}" method="get" role="search">
-          <input class="form-control form-control-sm" type="search" name="q" placeholder="Search products..." value="{{ request.GET.q|default:'' }}" aria-label="Search" style="min-width: 170px;">
+        <form class="d-flex mx-md-3 my-2 my-md-0 position-relative" action="{% url 'shop:shop_list' %}" method="get" role="search" autocomplete="off">
+          <input id="navSearchInput" class="form-control form-control-sm" type="search" name="q" placeholder="Search products..." value="{{ request.GET.q|default:'' }}" aria-label="Search" style="min-width: 170px;">
+          <div id="navSearchSuggestions" class="search-suggestions-dropdown"></div>
         </form>
 
         <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-md-3">
