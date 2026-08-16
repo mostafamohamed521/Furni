@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
@@ -14,7 +15,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8">
-          <img src="{{ post.image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+          <img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/post-1.jpg' %}{% endif %}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
           <div class="meta mb-3 text-muted">
             <span>by {{ post.author.get_full_name|default:post.author.username }}</span> &middot; <span>{{ post.created_at|date:"M d, Y" }}</span>
             {% if post.category %} &middot; <span>{{ post.category.name }}</span>{% endif %}
@@ -52,7 +53,7 @@
           <h5 class="mb-3">Recent Posts</h5>
           {% for rp in recent_posts %}
           <div class="d-flex mb-3">
-            <img src="{{ rp.image.url }}" style="width:60px;height:60px;object-fit:cover;" class="rounded me-2" alt="{{ rp.title }}">
+            <img src="{% if rp.image %}{{ rp.image.url }}{% else %}{% static 'images/post-1.jpg' %}{% endif %}" style="width:60px;height:60px;object-fit:cover;" class="rounded me-2" alt="{{ rp.title }}">
             <div>
               <a href="{{ rp.get_absolute_url }}" class="d-block text-black text-decoration-none small fw-bold">{{ rp.title|truncatechars:40 }}</a>
               <small class="text-muted">{{ rp.created_at|date:"M d, Y" }}</small>
