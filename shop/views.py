@@ -3,13 +3,33 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db import IntegrityError
 from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from .models import Category, Product, Wishlist
 from .forms import ReviewForm
 
 
+from decimal import Decimal, InvalidOperation
+
 PRODUCTS_PER_PAGE = 9
+
+
+def _parse_price(raw_value):
+    """Safely parse a price value from the querystring. Returns None (i.e.
+    "don't filter on this") for anything that isn't a valid, non-negative
+    number — instead of letting Django's ORM raise an uncaught
+    ValidationError/500 for garbage input like ?min_price=abc."""
+    if not raw_value:
+        return None
+    try:
+        value = Decimal(raw_value)
+    except (InvalidOperation, ValueError, TypeError):
+        return None
+    if not value.is_finite() or value < 0:
+        return None
+    return value
 
 
 def shop_list(request):
@@ -27,11 +47,11 @@ def shop_list(request):
             Q(name__icontains=query) | Q(description__icontains=query) | Q(short_description__icontains=query)
         )
 
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
-    if min_price:
+    min_price = _parse_price(request.GET.get('min_price'))
+    max_price = _parse_price(request.GET.get('max_price'))
+    if min_price is not None:
         products = products.filter(price__gte=min_price)
-    if max_price:
+    if max_price is not None:
         products = products.filter(price__lte=max_price)
 
     sort = request.GET.get('sort', 'newest')
@@ -72,7 +92,12 @@ def product_detail(request, slug):
     user_has_reviewed = False
     review_form = ReviewForm()
     if request.user.is_authenticated:
-        user_has_reviewed = reviews.filter(user=request.user).exists()
+        # Checked against ALL of the user's reviews for this product (not just
+        # approved ones) — Review has a one-per-user-per-product DB constraint,
+        # and the ReviewForm doesn't expose product/user for Django to validate
+        # that itself, so this check is what actually prevents a duplicate
+        # submission from crashing with an IntegrityError.
+        user_has_reviewed = product.reviews.filter(user=request.user).exists()
 
     if request.method == 'POST' and request.user.is_authenticated:
         if user_has_reviewed:
@@ -83,8 +108,14 @@ def product_detail(request, slug):
             review = review_form.save(commit=False)
             review.product = product
             review.user = request.user
-            review.save()
-            messages.success(request, 'Thank you! Your review has been added successfully.')
+            try:
+                review.save()
+            except IntegrityError:
+                # Defense in depth: covers the rare case of two near-simultaneous
+                # submissions slipping past the user_has_reviewed check above.
+                messages.warning(request, "You've already reviewed this product.")
+                return redirect(product.get_absolute_url())
+            messages.success(request, 'Thank you! Your review has been submitted and will appear once approved by our team.')
             return redirect(product.get_absolute_url())
     elif request.method == 'POST':
         messages.info(request, 'Please log in to add a review.')
@@ -106,6 +137,7 @@ def product_detail(request, slug):
 
 
 @login_required
+@require_POST
 def toggle_wishlist(request, slug):
     product = get_object_or_404(Product, slug=slug)
     wishlist_item, created = Wishlist.objects.get_or_create(user=request.user, product=product)
