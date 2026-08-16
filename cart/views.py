@@ -22,6 +22,8 @@ def cart_add(request, product_id):
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], override_quantity=cd['override'])
         messages.success(request, f'"{product.name}" was added to your cart.')
+    else:
+        messages.error(request, 'Please enter a valid quantity.')
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         return JsonResponse({'total_items': len(cart), 'total_price': str(cart.get_total_price())})
