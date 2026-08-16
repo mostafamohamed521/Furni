@@ -1,7 +1,8 @@
 /* ==========================================================
    Furni Store — App JS: first-visit preloader + welcome
-   overlay, scroll reveal, quantity steppers, OTP inputs,
-   toasts.
+   overlay, scroll reveal, quantity steppers, toasts.
+   (OTP input-box logic lives inline in verify_otp.html so it
+   never depends on this file's load timing/caching.)
    ========================================================== */
 (function () {
   "use strict";
@@ -11,7 +12,7 @@
     initScrollReveal();
     initQuantitySteppers();
     initAutoDismissAlerts();
-    initOtpInputs();
+    initSearchSuggestions();
   });
 
   // ---------- Preloader + Welcome overlay: only on the FIRST page of a browsing session ----------
@@ -122,41 +123,105 @@
     });
   }
 
-  // ---------- OTP input boxes: auto-advance, backspace, paste ----------
-  function initOtpInputs() {
-    var group = document.querySelector(".otp-input-group");
-    if (!group) return;
-    var inputs = Array.prototype.slice.call(group.querySelectorAll("input"));
-    var hidden = document.getElementById("id_code");
+  // ---------- Live search suggestions (navbar search box) ----------
+  function initSearchSuggestions() {
+    var input = document.getElementById("navSearchInput");
+    var box = document.getElementById("navSearchSuggestions");
+    if (!input || !box) return;
 
-    function syncHidden() {
-      if (hidden) hidden.value = inputs.map(function (i) { return i.value; }).join("");
+    var debounceTimer = null;
+    var activeIndex = -1;
+    var currentItems = [];
+    var currentRequest = null;
+
+    function closeBox() {
+      box.classList.remove("show");
+      box.innerHTML = "";
+      activeIndex = -1;
+      currentItems = [];
     }
 
-    inputs.forEach(function (input, idx) {
-      input.addEventListener("input", function () {
-        input.value = input.value.replace(/[^0-9]/g, "").slice(0, 1);
-        if (input.value && inputs[idx + 1]) inputs[idx + 1].focus();
-        syncHidden();
-      });
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Backspace" && !input.value && inputs[idx - 1]) {
-          inputs[idx - 1].focus();
-        }
-      });
-      input.addEventListener("paste", function (e) {
-        var text = (e.clipboardData || window.clipboardData).getData("text").replace(/[^0-9]/g, "");
-        if (!text) return;
-        e.preventDefault();
-        text.split("").forEach(function (ch, i) {
-          if (inputs[i]) inputs[i].value = ch;
-        });
-        syncHidden();
-        var next = inputs[Math.min(text.length, inputs.length - 1)];
-        if (next) next.focus();
-      });
+    function escapeHtml(str) {
+      var div = document.createElement("div");
+      div.textContent = str == null ? "" : String(str);
+      return div.innerHTML;
+    }
+
+    function renderResults(results) {
+      if (!results.length) {
+        box.innerHTML = '<div class="search-suggestions-empty">No products found.</div>';
+        box.classList.add("show");
+        currentItems = [];
+        return;
+      }
+      box.innerHTML = results.map(function (item) {
+        var img = item.image ? '<img src="' + escapeHtml(item.image) + '" alt="">' : "";
+        return (
+          '<a href="' + escapeHtml(item.url) + '" class="search-suggestion-item">' +
+            img +
+            '<span class="name">' + escapeHtml(item.name) + '</span>' +
+            '<span class="price">$' + escapeHtml(item.price) + '</span>' +
+          '</a>'
+        );
+      }).join("");
+      box.classList.add("show");
+      currentItems = Array.prototype.slice.call(box.querySelectorAll(".search-suggestion-item"));
+      activeIndex = -1;
+    }
+
+    input.addEventListener("input", function () {
+      var query = input.value.trim();
+      clearTimeout(debounceTimer);
+
+      if (query.length < 2) {
+        closeBox();
+        return;
+      }
+
+      debounceTimer = setTimeout(function () {
+        if (currentRequest) currentRequest.abort();
+        var controller = new AbortController();
+        currentRequest = controller;
+
+        fetch("/shop/search-suggestions/?q=" + encodeURIComponent(query), { signal: controller.signal })
+          .then(function (res) { return res.json(); })
+          .then(function (data) { renderResults(data.results || []); })
+          .catch(function (err) {
+            if (err.name !== "AbortError") closeBox();
+          });
+      }, 250);
     });
 
-    if (inputs[0]) inputs[0].focus();
+    input.addEventListener("keydown", function (e) {
+      if (!currentItems.length) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, currentItems.length - 1);
+        highlightActive();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        highlightActive();
+      } else if (e.key === "Enter" && activeIndex >= 0) {
+        e.preventDefault();
+        currentItems[activeIndex].click();
+      } else if (e.key === "Escape") {
+        closeBox();
+      }
+    });
+
+    function highlightActive() {
+      currentItems.forEach(function (item, idx) {
+        item.classList.toggle("active", idx === activeIndex);
+      });
+      var active = currentItems[activeIndex];
+      if (active && typeof active.scrollIntoView === "function") {
+        active.scrollIntoView({ block: "nearest" });
+      }
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!box.contains(e.target) && e.target !== input) closeBox();
+    });
   }
 })();
