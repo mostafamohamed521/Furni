@@ -1,6 +1,7 @@
 import random
 from django.core.mail import send_mail
 from django.conf import settings
+from django.utils import timezone
 
 from .models import OTPCode
 
@@ -26,3 +27,21 @@ def generate_and_send_otp(user, purpose):
     )
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=True)
     return code
+
+
+def send_login_otp(user, purpose):
+    """Send an OTP for a fresh login/register attempt, but respect the same
+    cooldown window as the "resend" button.
+
+    Without this, someone who already knows a valid password could spam the
+    login form repeatedly to flood the account owner's inbox with codes
+    (email bombing) — every successful password check would otherwise
+    trigger a brand new email. If a still-valid code was already sent very
+    recently, we simply reuse it instead of generating/emailing a new one.
+    """
+    last_otp = OTPCode.objects.filter(user=user, purpose=purpose, is_used=False).order_by('-created_at').first()
+    if last_otp and not last_otp.is_expired():
+        elapsed = (timezone.now() - last_otp.created_at).total_seconds()
+        if elapsed < RESEND_COOLDOWN_SECONDS:
+            return last_otp.code
+    return generate_and_send_otp(user, purpose)
