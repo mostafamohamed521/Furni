@@ -1,22 +1,63 @@
 /* ==========================================================
-   Furni Store — Extra styles: Preloader, Welcome overlay,
-   Toasts, small UI polish. Uses the SAME brand palette as
-   style.css: dark green primary (#3b5d50) + gold accent (#f9bf29).
+   Furni Store — Extra styles: brand palette, Preloader,
+   Welcome overlay, Toasts, small UI polish.
+
+   Palette (Olive):
+     Olive (primary)........ #6B705C
+     Warm White (bg)........ #F7F3EA
+     Charcoal (nav/headings). #252525
+     Light Olive (secondary). #A5A58D
+     Muted (secondary text).. #8A8A7A
+     Button hover............ #4F5344
+     Body text............... #5F5F58
+     Cards................... #FFFFFF
+     Borders.................. #DDD9CE
    ========================================================== */
 
 :root {
-  --furni-primary: #3b5d50;
-  --furni-primary-dark: #2c463c;
-  --furni-accent: #f9bf29;
-  --furni-dark-text: #2f2f2f;
+  --furni-primary: #6B705C;        /* Olive */
+  --furni-primary-dark: #4F5344;   /* Button hover */
+  --furni-accent: #A5A58D;         /* Light Olive */
+  --furni-accent-dark: #8A8A7A;    /* Muted */
+  --furni-charcoal: #252525;       /* Navbar / headings */
+  --furni-bg: #F7F3EA;             /* Warm White background */
+  --furni-body-text: #5F5F58;      /* Body text */
+  --furni-card: #FFFFFF;           /* Cards */
+  --furni-border: #DDD9CE;         /* Borders */
+
+  /* Kept for backwards-compatible references elsewhere in this file */
+  --furni-dark-text: #252525;
 }
+
+/* ---------- Global surface colors ---------- */
+body {
+  background-color: var(--furni-bg);
+  color: var(--furni-body-text);
+}
+h1, h2, h3, h4, h5, h6,
+.section-title {
+  color: var(--furni-charcoal);
+}
+a { color: var(--furni-primary); }
+a:hover { color: var(--furni-primary-dark); }
+
+/* Cards / panels used throughout (checkout, forms, product info, etc.) */
+.border.bg-white,
+.p-4.border,
+.p-4.p-lg-5.border {
+  background-color: var(--furni-card) !important;
+  border-color: var(--furni-border) !important;
+}
+.border { border-color: var(--furni-border) !important; }
+.border-top, .border-bottom { border-color: var(--furni-border) !important; }
+.table, .site-blocks-table, .site-block-order-table { --bs-table-border-color: var(--furni-border); }
 
 /* ---------- Preloader (shown once per browser session, on the very first page) ---------- */
 #preloader {
   position: fixed;
   inset: 0;
   z-index: 99999;
-  background: var(--furni-primary);
+  background: var(--furni-charcoal);
   display: none; /* stays hidden by default; only unhidden by inline script on first visit */
   align-items: center;
   justify-content: center;
@@ -73,7 +114,7 @@
   position: fixed;
   inset: 0;
   z-index: 99998;
-  background: radial-gradient(circle at 50% 40%, var(--furni-primary-dark) 0%, var(--furni-primary) 75%);
+  background: radial-gradient(circle at 50% 40%, #1c1c1c 0%, var(--furni-charcoal) 75%);
   display: none;
   align-items: center;
   justify-content: center;
@@ -97,7 +138,7 @@
   height: 84px;
   margin: 0 auto 24px;
   border-radius: 50%;
-  background: rgba(249,191,41,.15);
+  background: rgba(165,165,141,.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,8 +146,8 @@
 }
 .welcome-icon svg { width: 38px; height: 38px; color: var(--furni-accent); }
 @keyframes welcomePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(249,191,41,.35); }
-  50% { box-shadow: 0 0 0 18px rgba(249,191,41,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(165,165,141,.35); }
+  50% { box-shadow: 0 0 0 18px rgba(165,165,141,0); }
 }
 .welcome-title {
   font-family: 'Jost', sans-serif;
@@ -188,7 +229,7 @@
   top: -8px;
   right: -10px;
   background: var(--furni-accent);
-  color: var(--furni-dark-text);
+  color: var(--furni-charcoal);
   font-size: .68rem;
   font-weight: 700;
   min-width: 18px;
@@ -205,7 +246,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background: #e74c3c;
+  background: #b0483f;
   color: #fff;
   font-size: .72rem;
   font-weight: 700;
@@ -217,7 +258,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #6c757d;
+  background: var(--furni-accent-dark);
   color: #fff;
   font-size: .72rem;
   font-weight: 700;
@@ -225,11 +266,14 @@
   border-radius: 4px;
   z-index: 2;
 }
-.star-rating { color: var(--furni-accent); letter-spacing: 1px; }
+.star-rating { color: var(--furni-accent-dark); letter-spacing: 1px; }
 .avatar-sm { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
-.form-control:focus { border-color: var(--furni-primary); box-shadow: 0 0 0 .2rem rgba(59,93,80,.2); }
+.form-control {
+  border-color: var(--furni-border);
+}
+.form-control:focus { border-color: var(--furni-primary); box-shadow: 0 0 0 .2rem rgba(107,112,92,.2); }
 .btn-black { background: var(--furni-primary); color: #fff; border: 1px solid var(--furni-primary); transition: all .3s ease; }
-.btn-black:hover { background: transparent; color: var(--furni-primary); }
+.btn-black:hover { background: var(--furni-primary-dark); border-color: var(--furni-primary-dark); color: #fff; }
 .btn-outline-black { border: 1px solid var(--furni-primary); color: var(--furni-primary); transition: all .3s ease; }
 .btn-outline-black:hover { background: var(--furni-primary); color: #fff; }
 .product-card-actions {
@@ -249,18 +293,82 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,.15);
+  box-shadow: 0 4px 10px rgba(37,37,37,.12);
   color: var(--furni-primary);
   border: none;
 }
 .quick-action-btn:hover { background: var(--furni-accent); color: #fff; }
 .empty-state { padding: 60px 20px; text-align: center; }
-.empty-state svg, .empty-state i { color: #ccc; margin-bottom: 16px; }
+.empty-state svg, .empty-state i { color: var(--furni-border); margin-bottom: 16px; }
 .toast-container { z-index: 100000; }
 .spinner-inline { width: 1rem; height: 1rem; }
-.pagination .page-link { color: var(--furni-primary); }
+.pagination .page-link { color: var(--furni-primary); border-color: var(--furni-border); }
 .pagination .page-item.active .page-link { background: var(--furni-primary); border-color: var(--furni-primary); }
-.social-login-btn { border: 1px solid #e2e2e2; padding: 10px; border-radius: 6px; text-align: center; display: block; color: var(--furni-primary); }
+.social-login-btn { border: 1px solid var(--furni-border); padding: 10px; border-radius: 6px; text-align: center; display: block; color: var(--furni-primary); }
+
+/* Bootstrap's own "primary" utility classes default to Bootstrap blue —
+   pull them into the site palette so nothing looks off-brand. */
+.text-primary { color: var(--furni-primary) !important; }
+.bg-primary { background-color: var(--furni-primary) !important; }
+.btn-primary { background-color: var(--furni-primary) !important; border-color: var(--furni-primary) !important; }
+.btn-primary:hover { background-color: var(--furni-primary-dark) !important; border-color: var(--furni-primary-dark) !important; }
+
+/* Muted/secondary text used across cards, meta lines, helper copy */
+.text-muted { color: var(--furni-accent-dark) !important; }
+
+/* ---------- Live search suggestions dropdown ---------- */
+.search-suggestions-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  min-width: 260px;
+  background: var(--furni-card);
+  border: 1px solid var(--furni-border);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(37,37,37,.18);
+  z-index: 1050;
+  overflow: hidden;
+  display: none;
+}
+.search-suggestions-dropdown.show { display: block; }
+.search-suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--furni-charcoal);
+  border-bottom: 1px solid var(--furni-border);
+}
+.search-suggestion-item:last-child { border-bottom: none; }
+.search-suggestion-item:hover, .search-suggestion-item.active {
+  background: rgba(107,112,92,.08);
+}
+.search-suggestion-item img {
+  width: 36px; height: 36px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.search-suggestion-item .name {
+  font-size: .85rem;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.search-suggestion-item .price {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--furni-primary);
+  flex-shrink: 0;
+}
+.search-suggestions-empty {
+  padding: 10px 12px;
+  font-size: .82rem;
+  color: var(--furni-accent-dark);
+}
 
 /* ---------- OTP verification screen ---------- */
 .otp-input-group { display: flex; gap: 10px; justify-content: center; }
@@ -269,7 +377,42 @@
   text-align: center;
   font-size: 1.6rem;
   font-weight: 700;
-  border: 1px solid #ddd;
+  border: 2px solid var(--furni-border);
   border-radius: 8px;
+  background: #fff;
+  color: var(--furni-charcoal);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .12s ease, background .18s ease;
+  caret-color: var(--furni-primary);
 }
-.otp-input-group input:focus { border-color: var(--furni-primary); box-shadow: 0 0 0 .2rem rgba(59,93,80,.2); outline: none; }
+.otp-input-group input:hover {
+  border-color: var(--furni-accent-dark);
+}
+.otp-input-group input:focus {
+  border-color: var(--furni-primary);
+  box-shadow: 0 0 0 .2rem rgba(107,112,92,.18);
+  outline: none;
+  transform: translateY(-2px);
+}
+.otp-input-group input.otp-filled {
+  border-color: var(--furni-primary);
+  background: rgba(107,112,92,.06);
+  color: var(--furni-primary);
+}
+.otp-input-group.otp-shake {
+  animation: otpShake .45s ease;
+}
+.otp-input-group.otp-shake input {
+  border-color: #b0483f !important;
+}
+@keyframes otpShake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+.otp-client-error {
+  color: #b0483f;
+  font-size: .85rem;
+  margin-top: 10px;
+  min-height: 1.2em;
+}
