@@ -63,7 +63,10 @@ class Comment(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     body = models.TextField()
-    is_approved = models.BooleanField(default=True)
+    is_approved = models.BooleanField(
+        default=False,
+        help_text='Comments are hidden from the public until an admin approves them.',
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
