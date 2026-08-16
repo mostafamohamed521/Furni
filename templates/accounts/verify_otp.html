@@ -15,28 +15,30 @@
       <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5">
           <div class="p-4 p-lg-5 border bg-white rounded text-center">
-            <i class="fa-solid fa-shield-halved mb-3" style="font-size:42px;color:#3b5d50;"></i>
+            <i class="fa-solid fa-shield-halved mb-3" style="font-size:42px;color:#6B705C;"></i>
             <h4 class="mb-2">Enter Verification Code</h4>
             <p class="text-muted mb-4">
               We sent a 6-digit code to <strong>{{ email }}</strong>.
               {% if purpose == 'register' %}Enter it below to activate your account.{% else %}Enter it below to complete your login.{% endif %}
             </p>
 
-            <form method="post" novalidate>
+            <form method="post" id="otpForm" novalidate>
               {% csrf_token %}
               {{ form.code }}
-              <div class="otp-input-group mb-2">
-                <input type="text" inputmode="numeric" maxlength="1">
-                <input type="text" inputmode="numeric" maxlength="1">
-                <input type="text" inputmode="numeric" maxlength="1">
-                <input type="text" inputmode="numeric" maxlength="1">
-                <input type="text" inputmode="numeric" maxlength="1">
-                <input type="text" inputmode="numeric" maxlength="1">
+              <div class="otp-input-group mb-2" id="otpBoxes">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 2">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 3">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 4">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 5">
+                <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="1" aria-label="Digit 6">
               </div>
+              <p class="otp-client-error" id="otpClientError"></p>
               {% for error in form.code.errors %}<p class="text-danger small mt-2">{{ error }}</p>{% endfor %}
               {% if form.non_field_errors %}<p class="text-danger small mt-2">{{ form.non_field_errors }}</p>{% endif %}
 
               <button type="submit" class="btn btn-black w-100 py-2 mt-4">Verify & Continue</button>
+              <noscript><p class="text-danger small mt-2">JavaScript is required to fill in the code boxes above. Please enable it, or contact support.</p></noscript>
             </form>
 
             <div class="mt-4 pt-3 border-top">
@@ -60,4 +62,92 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // Self-contained on purpose: this runs immediately (the DOM above already
+    // exists by the time the parser reaches this script tag), so it doesn't
+    // depend on external files, load order, or DOMContentLoaded timing.
+    (function () {
+      var group = document.getElementById('otpBoxes');
+      var form = document.getElementById('otpForm');
+      var hidden = document.getElementById('id_code');
+      var clientError = document.getElementById('otpClientError');
+      if (!group || !form || !hidden) return;
+
+      var boxes = Array.prototype.slice.call(group.querySelectorAll('input'));
+
+      function currentCode() {
+        return boxes.map(function (b) { return b.value; }).join('');
+      }
+
+      function syncHidden() {
+        hidden.value = currentCode();
+      }
+
+      function markFilledState() {
+        boxes.forEach(function (b) {
+          b.classList.toggle('otp-filled', b.value.length === 1);
+        });
+      }
+
+      function shakeAndFocusFirstEmpty() {
+        group.classList.remove('otp-shake');
+        // Force reflow so the animation can restart if triggered twice in a row.
+        void group.offsetWidth;
+        group.classList.add('otp-shake');
+        var firstEmpty = boxes.find(function (b) { return !b.value; }) || boxes[0];
+        firstEmpty.focus();
+      }
+
+      boxes.forEach(function (input, idx) {
+        input.addEventListener('input', function () {
+          input.value = input.value.replace(/[^0-9]/g, '').slice(0, 1);
+          markFilledState();
+          syncHidden();
+          if (clientError.textContent) clientError.textContent = '';
+          if (input.value && boxes[idx + 1]) {
+            boxes[idx + 1].focus();
+          } else if (input.value && idx === boxes.length - 1) {
+            // Last digit typed: auto-submit once the code is complete.
+            if (currentCode().length === 6) form.requestSubmit();
+          }
+        });
+
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Backspace' && !input.value && boxes[idx - 1]) {
+            boxes[idx - 1].focus();
+          }
+        });
+
+        input.addEventListener('paste', function (e) {
+          var text = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
+          if (!text) return;
+          e.preventDefault();
+          text.split('').forEach(function (ch, i) {
+            if (boxes[i]) boxes[i].value = ch;
+          });
+          markFilledState();
+          syncHidden();
+          var next = boxes[Math.min(text.length, boxes.length - 1)];
+          if (next) next.focus();
+          if (currentCode().length === 6) form.requestSubmit();
+        });
+      });
+
+      // Safety net: always re-sync right before the form actually submits
+      // (covers autofill, browser suggestion bars, and any edge case the
+      // per-keystroke sync above might have missed), and block submission
+      // client-side with a clear message if the code isn't complete yet.
+      form.addEventListener('submit', function (e) {
+        syncHidden();
+        if (hidden.value.length !== 6) {
+          e.preventDefault();
+          clientError.textContent = 'Please fill in all 6 digits.';
+          shakeAndFocusFirstEmpty();
+        }
+      });
+
+      if (boxes[0]) boxes[0].focus();
+    })();
+  </script>
 {% endblock %}
