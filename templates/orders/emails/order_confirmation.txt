@@ -1,0 +1,28 @@
+{% autoescape off %}Hi {{ order.first_name }},
+
+Thanks for shopping with {{ site_name }}! Your order has been received and is being processed.
+
+ORDER NUMBER: {{ order.order_number }}
+ORDER DATE:   {{ order.created_at|date:"M d, Y H:i" }}
+PAYMENT:      {{ order.get_payment_method_display }}
+
+ITEMS
+{% for item in items %}  - {{ item.product_name }}  x{{ item.quantity }}  ${{ item.total_price }}
+{% endfor %}
+Subtotal: ${{ order.items_subtotal }}
+Shipping: {% if order.shipping_cost == 0 %}Free{% else %}${{ order.shipping_cost }}{% endif %}
+{% if order.discount_amount > 0 %}Discount: -${{ order.discount_amount }}
+{% endif %}Total:    ${{ order.grand_total }}
+
+SHIPPING TO
+{{ order.full_name }}
+{{ order.address }}{% if order.apartment %}, {{ order.apartment }}{% endif %}
+{{ order.state }}, {{ order.postal_code }}, {{ order.country }}
+
+You can track your order any time at:
+{{ site_url }}{{ track_path }}
+(use order number {{ order.order_number }} and this email address)
+
+Thanks again for choosing {{ site_name }}!
+— The {{ site_name }} Team
+{% endautoescape %}
