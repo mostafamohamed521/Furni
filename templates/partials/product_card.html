@@ -22,7 +22,10 @@
     </form>
     {% endif %}
     {% if user.is_authenticated %}
-    <a href="{% url 'shop:toggle_wishlist' product.slug %}" class="quick-action-btn" title="Wishlist"><i class="fa-solid fa-heart"></i></a>
+    <form action="{% url 'shop:toggle_wishlist' product.slug %}" method="post" class="d-inline">
+      {% csrf_token %}
+      <button type="submit" class="quick-action-btn" title="Wishlist"><i class="fa-solid fa-heart"></i></button>
+    </form>
     {% endif %}
     <a href="{{ product.get_absolute_url }}" class="quick-action-btn" title="View"><i class="fa-solid fa-eye"></i></a>
   </div>
