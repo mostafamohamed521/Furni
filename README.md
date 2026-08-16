@@ -48,13 +48,14 @@ seeded by `seed_data` — is in **English**.
 - **Complete checkout**: billing address, optional different shipping address, coupon codes,
   automatic free shipping above a threshold, multiple payment methods
 - Order confirmation ("Thank You") page with a unique order number
+- **Order confirmation email** sent automatically right after checkout (order number, items, totals, shipping address, and a tracking link) — see the OTP email note below for where it goes in development
 - **Two-factor account security (email OTP)** — see the dedicated section below
 - User accounts: register / login / logout / edit profile / change password / forgot password
 - Order history and per-order detail page
 - **Guest order tracking** (order number + email — no login required)
 - Wishlist
 - Blog comments
-- Newsletter signup from the footer on every page
+- Newsletter signup from the footer on every page, with a secure one-click **unsubscribe** link (no login required)
 - **FAQ page** and **Terms & Conditions / Privacy Policy** pages (editable from the admin)
 - `sitemap.xml` and `robots.txt` for SEO
 - **One-time entrance animation** (loading screen + welcome overlay) — shown once per
@@ -172,6 +173,16 @@ real SMTP email delivery.
 
 ---
 
+## ☁️ Deploying for Free (No Credit Card)
+
+Want to put this online without spending anything? See
+**[`DEPLOYMENT_FREE.md`](./DEPLOYMENT_FREE.md)** — a complete, step-by-step
+guide to deploying this exact project to PythonAnywhere's free tier, the
+only genuinely free Django host that won't wipe your database and uploaded
+images on every deploy.
+
+---
+
 ## ⚙️ Running Locally
 
 ```bash
@@ -222,6 +233,53 @@ out rather than padded with empty space.
 
 ---
 
+## ✅ Deployment Readiness Checklist
+
+Before this ships, everything below was actually verified — not assumed:
+
+- **`python manage.py check --deploy`** → 0 issues when `.env` is configured for production (`DEBUG=False`, a real `SECRET_KEY`, real `ALLOWED_HOSTS`) — all 6 default warnings resolve automatically.
+- **`python manage.py makemigrations --check`** → no pending model changes; every app's migrations are committed and in sync.
+- **Real automated test suite** (`python manage.py test` — see below) covering the exact regressions found and fixed during development: OTP flows, brute-force/email-bombing protections, stock race conditions, content moderation, CSRF-protected wishlist, and crash-proof shop filters.
+- **Every admin-registered model** (22 across all 7 apps) loads its changelist and change page without error, including inline editors (product images inside the product page, order line items inside the order page).
+- **Every page renders successfully**: all 16 seeded products, all 6 categories, all 3 blog posts, every public page, every login-required page (correctly redirecting anonymous users), and shop pagination — checked individually, not just spot-checked.
+- **No dead links or missing pages** — every `{% url %}` reference in every template resolves to a real, working view.
+
+### Running the test suite
+```bash
+python manage.py test
+```
+This runs 40 tests across all 7 apps in a temporary throwaway database (your real `db.sqlite3` is never touched). Run this after making any future changes to catch regressions early — several of the fixes described in this README were originally caught this way.
+
+---
+
+## 🎨 Brand Palette (Olive)
+
+The entire site — every page, form, button, badge, and the loading/welcome animation —
+uses a single consistent Olive color palette:
+
+| Role | Color | Hex |
+|---|---|---|
+| Background | Warm White | `#F7F3EA` |
+| Navbar | Charcoal | `#252525` |
+| Primary buttons | Olive | `#6B705C` |
+| Button hover | — | `#4F5344` |
+| Headings | Charcoal | `#252525` |
+| Body text | — | `#5F5F58` |
+| Cards | White | `#FFFFFF` |
+| Borders | — | `#DDD9CE` |
+| Secondary accents (badges, focus rings, star ratings) | Light Olive / Muted | `#A5A58D` / `#8A8A7A` |
+
+The only colors kept outside this palette are semantic/functional ones that follow
+universal UX convention regardless of brand — success green and error red for status
+messages, badges, and validation states — since recoloring those to the brand palette
+would reduce clarity rather than improve consistency.
+
+All CSS values live in `static/css/extra-style.css` under `:root` as CSS custom
+properties (`--furni-primary`, `--furni-bg`, etc.), so the whole palette can be
+re-themed from one place without touching template files.
+
+---
+
 ## 🔐 Security Hardening Actually Implemented in the Code
 
 The accounts and orders flows were fully audited, and the following protections were added
@@ -232,6 +290,19 @@ The accounts and orders flows were fully audited, and the following protections 
 | **Two-factor login/register (OTP)** | See the dedicated section above — a stolen password alone is not enough to log in |
 | **CSRF** | Every form (including the footer newsletter form) includes `{% csrf_token %}` — verified across the whole project |
 | **Login brute-force protection** | After 5 failed attempts from the same IP, login is locked for 5 minutes (via Django's cache framework), evaluated before OTP is even reached |
+| **OTP brute-force protection** | After 5 incorrect verification-code attempts, the pending session is cancelled and a fresh code must be requested — the 6-digit code can no longer be guessed with unlimited attempts |
+| **OTP email-bombing protection** | Repeatedly submitting a correct password to the login form (or resubmitting registration) no longer sends a fresh email each time — if a still-valid code was issued in the last 30 seconds, it's reused instead of spamming a new one to the account owner's inbox |
+| **Wishlist CSRF protection** | Adding/removing a wishlist item now requires a POST request with a CSRF token (previously a plain link), so a malicious external page can no longer silently modify a logged-in user's wishlist |
+| **Overselling / stock race-condition protection** | Checkout locks each product row (`select_for_update`) and validates stock availability inside a single atomic transaction before the order is created — two customers can no longer both "win" the last unit of a product at the same time, and a customer is never charged for an item that turns out to be unavailable |
+| **Password-reset email-bombing protection** | Repeatedly submitting the same email to "Forgot password?" no longer sends a fresh reset link every time — additional requests for the same address within 60 seconds are silently skipped while still showing the same generic success page (so it can't be used to detect which emails are registered) |
+| **Content moderation by default** | Product reviews and blog comments no longer appear publicly the instant they're submitted — they're held for admin approval first (`is_approved=False` by default), closing the door on live spam/abuse appearing on public pages. Approving is a one-click checkbox in the admin list view |
+| **Duplicate-review crash protection** | Submitting a second review for the same product is now checked against *all* of that user's reviews (not just approved ones) before saving, and the save itself is wrapped to gracefully handle the rare race case — previously this could throw an unhandled database error (`IntegrityError`) once moderation was turned on |
+| **Order confirmation emails, resiliently** | Sent right after checkout with `fail_silently=True` — if the SMTP server is briefly unreachable in production, the customer's order still goes through and isn't blocked by an email delivery hiccup |
+| **Clean plain-text emails** | Order confirmation and password-reset emails explicitly disable Django's HTML auto-escaping — without this, a name or address containing `&`, `'`, or `"` (e.g. "O'Brien & Sons") would render as garbled HTML entities (`O&#x27;Brien &amp; Sons`) in a plain-text email instead of the actual characters |
+| **Unforgeable unsubscribe links** | The newsletter unsubscribe link uses a cryptographically signed token (Django's `signing` module, backed by `SECRET_KEY`) rather than a plain `?email=` parameter — nobody can unsubscribe an address that isn't theirs just by guessing or editing the URL |
+| **Crash-proof price filters** | The shop page's `min_price`/`max_price` filters (and page numbers) now safely ignore garbage input — visiting `/shop/?min_price=abc` previously crashed the entire page with a server error (500); it now just shows all products as if no filter was applied |
+| **Cart quantity validation matches reality** | The "add to cart" quantity field used to silently reject (with zero error message) any quantity above 10, even though the product page's own input allows typing up to the real stock level — a customer trying to buy 15 of an in-stock item would get nothing added to their cart with no explanation. It's now a proper validated integer field with a clear error message on invalid input |
+| **Missing-image crash protection** | Every place that displays a product, product-gallery, or blog-post image now checks the image exists first before building its URL — previously a product or post without an image (possible via bulk imports, data migrations, or any path that bypasses the admin form) would crash the entire page with an unhandled `ValueError` |
 | **Logout via POST only** | `/accounts/logout/` rejects GET requests (405) to prevent logging a user out via a malicious link |
 | **Safe avatar uploads** | Profile pictures are actually validated (real file type via Pillow, 3MB max size, JPEG/PNG/WEBP only) — tested by uploading a `.php` file disguised as an image, which was correctly rejected |
 | **Honeypot anti-bot fields** | Registration, contact, newsletter, and blog comment forms include a hidden field — if it's filled in (typical bot behavior), the submission is automatically rejected |
