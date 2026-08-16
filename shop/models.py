@@ -110,7 +110,10 @@ class Review(models.Model):
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     title = models.CharField(max_length=150, blank=True)
     comment = models.TextField()
-    is_approved = models.BooleanField(default=True)
+    is_approved = models.BooleanField(
+        default=False,
+        help_text='Reviews are hidden from the public until an admin approves them.',
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
