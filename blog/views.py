@@ -40,7 +40,7 @@ def post_detail(request, slug):
             if request.user.is_authenticated:
                 comment.user = request.user
             comment.save()
-            messages.success(request, 'Your comment has been added successfully.')
+            messages.success(request, 'Your comment has been submitted and will appear once approved.')
             return redirect(post.get_absolute_url())
     else:
         initial = {}
