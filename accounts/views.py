@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, update_session_auth_hash
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
@@ -12,10 +12,15 @@ from django.utils import timezone
 
 from .forms import RegisterForm, LoginForm, ProfileUpdateForm, OTPVerifyForm
 from .models import OTPCode
-from .utils import generate_and_send_otp, RESEND_COOLDOWN_SECONDS
+from .utils import generate_and_send_otp, send_login_otp, RESEND_COOLDOWN_SECONDS
 
 LOGIN_ATTEMPT_LIMIT = 5
 LOGIN_LOCKOUT_SECONDS = 300  # 5 minutes
+
+OTP_ATTEMPT_LIMIT = 5
+OTP_LOCKOUT_SECONDS = 300  # 5 minutes
+
+PASSWORD_RESET_COOLDOWN_SECONDS = 60  # per submitted email, prevents inbox-flooding
 
 
 def _client_ip(request):
@@ -29,6 +34,10 @@ def _throttle_key(request):
     return f'login_attempts:{_client_ip(request)}'
 
 
+def _otp_attempt_key(user_id, purpose):
+    return f'otp_attempts:{user_id}:{purpose}'
+
+
 # ==========================================================
 # Registration (creates the account, then requires an email OTP
 # before the session is actually started)
@@ -40,7 +49,7 @@ def register_view(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            generate_and_send_otp(user, purpose='register')
+            send_login_otp(user, purpose='register')
             request.session['otp_pending_user_id'] = user.pk
             request.session['otp_purpose'] = 'register'
             request.session['otp_next'] = ''
@@ -73,7 +82,7 @@ class CustomLoginView(LoginView):
         # Credentials are correct, but do NOT start the session yet — send an OTP first.
         cache.delete(_throttle_key(self.request))
         user = form.get_user()
-        generate_and_send_otp(user, purpose='login')
+        send_login_otp(user, purpose='login')
         self.request.session['otp_pending_user_id'] = user.pk
         self.request.session['otp_purpose'] = 'login'
         self.request.session['otp_next'] = self.request.POST.get('next') or self.get_redirect_url() or ''
@@ -110,11 +119,22 @@ def verify_otp(request):
         return redirect('accounts:login')
 
     if request.method == 'POST':
+        attempt_key = _otp_attempt_key(user.pk, purpose)
+        attempts = cache.get(attempt_key, 0)
+
+        if attempts >= OTP_ATTEMPT_LIMIT:
+            messages.error(request, 'Too many incorrect attempts. Please request a new code and try again.')
+            request.session.pop('otp_pending_user_id', None)
+            request.session.pop('otp_purpose', None)
+            request.session.pop('otp_next', None)
+            return redirect('accounts:login')
+
         form = OTPVerifyForm(request.POST)
         if form.is_valid():
             code = form.cleaned_data['code']
             otp = OTPCode.objects.filter(user=user, purpose=purpose, code=code).order_by('-created_at').first()
             if otp and otp.is_valid():
+                cache.delete(attempt_key)
                 otp.is_used = True
                 otp.save(update_fields=['is_used'])
                 # Invalidate any other outstanding codes for this purpose.
@@ -134,7 +154,19 @@ def verify_otp(request):
             elif otp and otp.is_expired():
                 messages.error(request, 'This code has expired. Please request a new one.')
             else:
-                messages.error(request, 'Invalid verification code. Please try again.')
+                attempts += 1
+                cache.set(attempt_key, attempts, OTP_LOCKOUT_SECONDS)
+                remaining = OTP_ATTEMPT_LIMIT - attempts
+                if remaining <= 0:
+                    messages.error(request, 'Too many incorrect attempts. Please request a new code and try again.')
+                    request.session.pop('otp_pending_user_id', None)
+                    request.session.pop('otp_purpose', None)
+                    request.session.pop('otp_next', None)
+                    return redirect('accounts:login')
+                elif remaining <= 2:
+                    messages.warning(request, f'Invalid verification code. {remaining} attempt(s) left before you must request a new one.')
+                else:
+                    messages.error(request, 'Invalid verification code. Please try again.')
     else:
         form = OTPVerifyForm()
 
@@ -176,6 +208,7 @@ def resend_otp(request):
             return redirect('accounts:verify_otp')
 
     generate_and_send_otp(user, purpose=purpose)
+    cache.delete(_otp_attempt_key(user.pk, purpose))
     messages.success(request, f'A new verification code was sent to {user.email}.')
     return redirect('accounts:verify_otp')
 
@@ -185,6 +218,29 @@ def cancel_otp(request):
     request.session.pop('otp_purpose', None)
     request.session.pop('otp_next', None)
     return redirect('accounts:login')
+
+
+class ThrottledPasswordResetView(PasswordResetView):
+    """Same behavior as Django's PasswordResetView, but protects against
+    someone repeatedly submitting a victim's email to flood their inbox
+    with password-reset links.
+
+    The cooldown is keyed by the submitted email address (not the caller's
+    IP), because the goal is to protect the *target* inbox regardless of
+    who is sending the requests. To avoid leaking whether an email exists
+    in the system, throttled requests still redirect to the same generic
+    success page — they just silently skip actually sending another email.
+    """
+
+    def form_valid(self, form):
+        email = (form.cleaned_data.get('email') or '').strip().lower()
+        key = f'password_reset_cooldown:{email}'
+        if email and cache.get(key):
+            from django.http import HttpResponseRedirect
+            return HttpResponseRedirect(self.get_success_url())
+        if email:
+            cache.set(key, True, PASSWORD_RESET_COOLDOWN_SECONDS)
+        return super().form_valid(form)
 
 
 @require_POST
