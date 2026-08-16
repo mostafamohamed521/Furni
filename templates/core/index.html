@@ -216,7 +216,7 @@
         {% for post in recent_posts %}
         <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
           <div class="post-entry reveal-up">
-            <a href="{{ post.get_absolute_url }}" class="post-thumbnail"><img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid"></a>
+            <a href="{{ post.get_absolute_url }}" class="post-thumbnail"><img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/post-1.jpg' %}{% endif %}" alt="{{ post.title }}" class="img-fluid"></a>
             <div class="post-content-entry">
               <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
               <div class="meta">
